@@ -242,6 +242,41 @@
   .kbd{font:10px Consolas,monospace;padding:2px 6px;background:#243247;border-radius:5px;color:#fff}
 
   @media(max-aspect-ratio:1.45/1){.kpi-row{left:22vw;gap:12px}.status-card{width:24vw}.date-card{min-width:200px}}
+
+
+  /* ===== SAMSUNG TV / LEGACY BROWSER SAFE OVERRIDES ===== */
+  html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#09111a;color:#f7f9fc;font-family:Tahoma,Arial,sans-serif!important}
+  *,*:before,*:after{box-sizing:border-box;font-family:Tahoma,Arial,sans-serif!important}
+  .scene{position:fixed!important;top:0!important;right:0!important;bottom:0!important;left:0!important;width:100%!important;height:100%!important;background-image:url('assets/background.png')!important;background-position:center center!important;background-repeat:no-repeat!important;background-size:cover!important;animation:none!important;overflow:hidden!important}
+  .scene:after{top:0;right:0;bottom:0;left:0}
+  .ambient-light,.mist-layer,.dust-layer{display:none!important}
+  .glass{background:rgba(15,27,42,.72)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .glass:before{display:none!important}
+  .brand-panel{left:2.2%!important;top:3.2%!important;width:27%!important}
+  .brand-head{display:block!important}.brand-head .araz-wrap{width:155px!important;height:48px!important;margin-bottom:8px!important}
+  .brand-copy{border-right:0!important;padding-right:0!important;margin-right:0!important}
+  .date-card{right:2%!important;top:2.6%!important;width:215px!important;min-width:0!important}
+  .sync-badge{right:2%!important;top:18%!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .status-card{left:2.2%!important;top:27%!important;width:385px!important;max-width:22%!important}
+  .status-top{display:flex!important;align-items:center!important;direction:ltr!important}
+  .progress-ring{display:flex!important;align-items:center!important;justify-content:center!important;background:#263c52!important;border:10px solid #4d6983!important}
+  .progress-ring:after{top:10px!important;right:10px!important;bottom:10px!important;left:10px!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .status-list{flex:1!important;margin-right:14px!important}
+  .compare-grid{display:flex!important}.compare-grid .cmini{width:25%!important}
+  .kpi-row{position:absolute!important;z-index:11!important;left:26%!important;right:2.2%!important;bottom:5.5%!important;display:flex!important;direction:rtl!important}
+  .kpi-card{width:24%!important;min-width:0!important;margin-left:1.2%!important}.kpi-card:last-child{margin-left:0!important}
+  .goal-pill,.pascal-footer,.quote{z-index:12!important}
+  .detail-page{position:fixed!important;top:0!important;right:0!important;bottom:0!important;left:0!important;width:100%!important;height:100%!important}
+  .detail-bg,.detail-page:before,.season-particles,.editor-backdrop{top:0!important;right:0!important;bottom:0!important;left:0!important}
+  .detail-card,.weekly-panel,.season-badge,.editor-backdrop{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .detail-shell{padding:3% 3% 2.5%!important}.detail-grid{display:flex!important;direction:ltr!important;height:58%!important}
+  .detail-card{width:32.4%!important;margin-right:1.4%!important;direction:rtl!important}.detail-card:last-child{margin-right:0!important}
+  .ig-grid,.lead-hero,.seo-summary{display:flex!important;flex-wrap:wrap!important}.ig-grid .dmetric,.seo-summary .dmetric,.lead-hero .lead-big{width:48%!important;margin:1%!important}
+  .weekly-panel{height:27%!important;min-height:0!important}.page-dots{display:none!important}
+  .editor{width:900px!important;max-width:90%!important}.formgrid{display:flex!important;flex-wrap:wrap!important}.field{width:23%!important;margin:1%!important}
+  .season-particles{display:none!important}
+  @media screen and (max-width:1280px){.brand-panel{width:28%!important}.status-card{max-width:25%!important;width:320px!important}.kpi-row{left:27%!important}.kpi-card{padding:12px!important}.kpi-title{font-size:14px!important}.kpi-main strong{font-size:28px!important}}
+
 </style>
 </head>
 <body>
@@ -464,208 +499,30 @@
 </div>
 
 <script>
-
-// ===== LIVE GOOGLE SHEET CONFIG =====
-const GOOGLE_SHEET_API = 'https://script.google.com/macros/s/AKfycbyAyVoKq8PhBVyESqHXnr5uSBl2fZ85OprnQvnNBCcpXS_xxyLLHuubzQQhxPPlWZUr4A/exec?key=PASKAL-TV-1405';
-const GOOGLE_SYNC_MS = 60 * 1000; // every 60 seconds
-const GOOGLE_CACHE_KEY = 'pascal_kpi_google_cache_v1';
-// ====================================
-
-const fa = n => new Intl.NumberFormat('fa-IR',{maximumFractionDigits:1}).format(n);
-const enCompact = n => {
-  if(n==null || !isFinite(n)) return '0';
-  if(n>=1000000) return (n/1000000).toFixed(n%1000000?1:0)+'M';
-  if(n>=1000) return (n/1000).toFixed(n%1000?1:0)+'K';
-  return String(Math.round(n));
-};
-const targets = {
-  'مهر':   {views:140000,median:9000, nonFollower:70, clicks:5600, rank:14.5, leads:45, followers:14000,reels:5},
-  'آبان':  {views:160000,median:12000,nonFollower:70, clicks:6200, rank:14,   leads:50, followers:15000,reels:5},
-  'آذر':   {views:185000,median:15000,nonFollower:70, clicks:6900, rank:13,   leads:55, followers:16000,reels:6},
-  'دی':    {views:210000,median:18000,nonFollower:70, clicks:7600, rank:12,   leads:60, followers:17000,reels:6},
-  'بهمن':  {views:230000,median:21000,nonFollower:70, clicks:8300, rank:11,   leads:68, followers:18000,reels:6},
-  'اسفند': {views:250000,median:24000,nonFollower:70, clicks:9000, rank:10,   leads:75, followers:19500,reels:6}
-};
-const defaults = {
-  month:'مهر',views:120000,median:7000,nonFollower:0,nonFollowerReach:0,followersGained:0,followers:13100,reels:4,sharesPer1k:0,savesPer1k:0,leads:40,
-  content:0,projects:0,website:0,design:0,reporting:0,
-  w1Imp:35000,w1Clicks:1150,w1Rank:15.0,w2Imp:36000,w2Clicks:1220,w2Rank:14.8,w3Imp:37500,w3Clicks:1280,w3Rank:14.6,w4Imp:39000,w4Clicks:1350,w4Rank:14.4,w5Imp:0,w5Clicks:0,w5Rank:0
-};
-function detectedPersianMonth(){
-  try{
-    const m=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{month:'long'}).format(new Date()).replace(/\s/g,'');
-    return targets[m]?m:null;
-  }catch(e){return null}
-}
-let data = load();
-const detectedMonth = detectedPersianMonth();
-if(detectedMonth) data.month = detectedMonth;
-function load(){try{return {...defaults,...JSON.parse(localStorage.getItem('pascal_kpi_v2')||localStorage.getItem('pascal_kpi_v1')||'{}')}}catch(e){return {...defaults}}}
-function save(){localStorage.setItem('pascal_kpi_v2',JSON.stringify(data))}
-function num(v,fallback=0){const x=Number(v);return Number.isFinite(x)?x:fallback}
-function normalMonth(v){return String(v??'').replace(/\s/g,'').trim()}
-function digitToEn(s){return String(s??'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d))}
-function weekNo(v){const m=digitToEn(v).match(/(\d+)/);return m?Number(m[1]):0}
-function setSyncState(state,label){const b=by('syncBadge'),t=by('syncText');if(!b||!t)return;b.classList.remove('ok','error','syncing');b.classList.add(state);t.textContent=label}
-function applyGooglePayload(payload,fromCache=false){
-  if(!payload||!Array.isArray(payload.monthly)) throw new Error('Invalid monthly payload');
-  const autoMonth=detectedPersianMonth();
-  const wanted=autoMonth||data.month||'مهر';
-  const row=payload.monthly.find(r=>normalMonth(r.month)===normalMonth(wanted));
-  if(!row) throw new Error('Current month not found in Dashboard_Data: '+wanted);
-
-  // Remote targets override built-in targets, so changes in the Sheet flow directly to the dashboard.
-  const t=targets[wanted]||targets['مهر'];
-  t.views=num(row.target_reel_views,t.views);
-  t.median=num(row.target_median_7d,t.median);
-  t.nonFollower=num(row.target_non_follower,t.nonFollower);
-  t.leads=num(row.target_leads,t.leads);
-  t.clicks=num(row.target_clicks,t.clicks);
-  t.rank=num(row.target_avg_rank_72,t.rank);
-  if(num(row.followers_outcome_target,0)>0)t.followers=num(row.followers_outcome_target,t.followers);
-
-  data={...data,
-    month:wanted,
-    views:num(row.reel_views,0),
-    median:num(row.median_7d,0),
-    nonFollower:num(row.non_follower,0),
-    nonFollowerReach:num(row.non_follower_reach,0),
-    followersGained:num(row.followers_gained,0),
-    reels:num(row.reels_published,0),
-    sharesPer1k:num(row.shares_per_1k,0),
-    savesPer1k:num(row.saves_per_1k,0),
-    leads:num(row.leads,0),
-    content:num(row.mgmt_content,0),
-    projects:num(row.mgmt_projects,0),
-    website:num(row.mgmt_website,0),
-    design:num(row.mgmt_design,0),
-    reporting:num(row.mgmt_reporting,0)
-  };
-  const af=num(row.actual_followers,0);if(af>0)data.followers=af;
-
-  // Clear and refill current month's 5 weekly SEO slots.
-  for(let i=1;i<=5;i++){data['w'+i+'Imp']=0;data['w'+i+'Clicks']=0;data['w'+i+'Rank']=0}
-  const weekRows=Array.isArray(payload.weekly_seo)?payload.weekly_seo.filter(r=>normalMonth(r['ماه']??r.month)===normalMonth(wanted)):[];
-  weekRows.forEach(r=>{
-    const i=weekNo(r['هفته']??r.week);if(i<1||i>5)return;
-    data['w'+i+'Imp']=num(r['Impressions']??r.impressions,0);
-    data['w'+i+'Clicks']=num(r['Clicks']??r.clicks,0);
-    data['w'+i+'Rank']=num(r['Average Rank کل 72 کلمه']??r.avg_rank_72??r.rank,0);
-  });
-
-  render();
-  if(!fromCache){
-    try{localStorage.setItem(GOOGLE_CACHE_KEY,JSON.stringify(payload))}catch(e){}
-  }
-}
-function loadGoogleCache(){
-  try{const c=JSON.parse(localStorage.getItem(GOOGLE_CACHE_KEY)||'null');if(c)applyGooglePayload(c,true);return !!c}catch(e){return false}
-}
-async function syncGoogleSheet(){
-  setSyncState('syncing','Google Sheet · در حال همگام‌سازی');
-  try{
-    const sep=GOOGLE_SHEET_API.includes('?')?'&':'?';
-    const res=await fetch(GOOGLE_SHEET_API+sep+'_ts='+Date.now(),{cache:'no-store'});
-    if(!res.ok)throw new Error('HTTP '+res.status);
-    const payload=await res.json();
-    if(payload.ok!==true)throw new Error(payload.error||'API response not ok');
-    applyGooglePayload(payload,false);
-    const now=new Date();
-    const tm=new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit',hour12:false}).format(now);
-    setSyncState('ok','Google Sheet · بروزرسانی '+tm);
-  }catch(err){
-    console.error('Google Sheet sync error:',err);
-    setSyncState('error','Google Sheet · اتصال ناموفق');
-  }
-}
-
-function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
-function ratio(a,t){return t>0 ? a/t : 0}
-function weeklyRows(){
-  return [1,2,3,4,5].map(i=>({
-    week:i,imp:Number(data['w'+i+'Imp']||0),clicks:Number(data['w'+i+'Clicks']||0),rank:Number(data['w'+i+'Rank']||0)
-  })).filter(r=>r.imp>0||r.clicks>0||r.rank>0);
-}
-function monthlySEO(){
-  const rows=weeklyRows();
-  const impressions=rows.reduce((s,r)=>s+r.imp,0);
-  const clicks=rows.reduce((s,r)=>s+r.clicks,0);
-  const ctr=impressions>0?clicks/impressions*100:0;
-  const ranks=rows.filter(r=>r.rank>0).map(r=>r.rank);
-  const rank=ranks.length?ranks.reduce((a,b)=>a+b,0)/ranks.length:0;
-  return {rows,impressions,clicks,ctr,rank};
-}
-function calc(){
-  const seo=monthlySEO();
-  const t=targets[data.month]||targets['مهر'];
-  const viewsS = 10*ratio(data.views,t.views);
-  const medianS = 6*ratio(data.median,t.median);
-  const nfS = 4*ratio(data.nonFollower,t.nonFollower);
-  const clickS = 7.5*ratio(seo.clicks,t.clicks);
-  const rankS = seo.rank>0 ? 7.5*(t.rank/seo.rank) : 0;
-  const visibility = viewsS+medianS+nfS+clickS+rankS;
-  const lead = 40*ratio(data.leads,t.leads);
-  const mgmt = clamp(data.content,0,100)/100*7 + clamp(data.projects,0,100)/100*6 + clamp(data.website,0,100)/100*4 + clamp(data.design,0,100)/100*4 + clamp(data.reporting,0,100)/100*4;
-  return {t,seo,visibility,lead,mgmt,total:visibility+lead+mgmt};
-}
-function setText(id,val){const el=by(id);if(el)el.textContent=val}
-function setWidth(id,val){const el=by(id);if(el)el.style.width=clamp(val,0,100)+'%'}
-function render(){
-  const s=calc(),t=s.t,total=s.total,seo=s.seo;
-  const totalClamped=Math.max(0,total); setText('totalScore',fa(totalClamped)+'%'); setText('totalScoreCard',fa(totalClamped));
-  by('scoreRing').style.setProperty('--score-angle',Math.min(totalClamped,100)*3.6+'deg');
-  setText('visScore',fa(s.visibility)); setText('leadScore',fa(s.lead)); setText('mgmtScore',fa(s.mgmt));
-  const visPct=Math.min(s.visibility/35*100,100), leadPct=Math.min(s.lead/40*100,100), mgmtPct=Math.min(s.mgmt/25*100,100), totalPct=Math.min(totalClamped,100);
-  setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);
-  setText('visPct',fa(visPct)+'%'); setText('leadPct',fa(leadPct)+'%'); setText('mgmtPct',fa(mgmtPct)+'%'); setText('totalPct',fa(totalPct)+'%');
-  setText('currentMonth','ماه جاری: '+data.month); setText('scoreDelta',(total>=100?'+':'')+fa(total-100));
-  const ahead=total>105, on=total>=95 && total<=105, behind=total<95;
-  by('stAhead').classList.toggle('active',ahead);by('stOn').classList.toggle('active',on);by('stBehind').classList.toggle('active',behind);
-  const statusCard=by('statusCard');statusCard.classList.toggle('status-ahead',ahead);statusCard.classList.toggle('status-on',on);statusCard.classList.toggle('status-behind',behind);
-  const ring=by('scoreRing');ring.classList.toggle('ring-ahead',ahead);ring.classList.toggle('ring-on',on);ring.classList.toggle('ring-behind',behind);
-  setText('views',enCompact(data.views)); setText('viewsTarget','/ '+enCompact(t.views));
-  setText('median',enCompact(data.median)); setText('medianTarget','/ '+enCompact(t.median));
-  setText('nonFollower',data.nonFollower?fa(data.nonFollower)+'%':'ثبت نشده');
-  setText('clicks',enCompact(seo.clicks));setText('clicksTarget','/ '+enCompact(t.clicks));
-  setText('rank',seo.rank?fa(seo.rank):'--');setText('rankTarget','هدف '+fa(t.rank));
-  setText('leads',fa(data.leads));setText('leadsTarget','/ '+fa(t.leads));
-  setText('followers',enCompact(data.followers)); setText('reelsCount',fa(data.reels));
-  setText('cmpImpr',enCompact(seo.impressions));setText('cmpClicks',fa(Math.min((seo.clicks/t.clicks)*100,999))+'%');setText('cmpLeads',fa(Math.min((data.leads/t.leads)*100,999))+'%');setText('cmpRank',seo.rank?fa((t.rank/seo.rank)*100)+'%':'0%');
-  renderDetail(s);
-}
-function renderDetail(s){
-  const t=s.t,seo=s.seo,month=data.month;
-  const autumn=['مهر','آبان','آذر'].includes(month);
-  const page=by('detailPage');page.classList.toggle('autumn',autumn);page.classList.toggle('winter',!autumn);
-  setText('seasonBadge',autumn?'🍂':'❄️');setText('seasonName',autumn?'تم پاییزی':'تم زمستانی');setText('detailMonth',month);setText('detailMonth2',month);setText('weeklyMonth',month);
-  setText('dViews',enCompact(data.views));setText('dViewsTarget','Target '+enCompact(t.views));
-  setText('dMedian',enCompact(data.median));setText('dMedianTarget','Target '+enCompact(t.median));
-  setText('dNonFollower',fa(data.nonFollower)+'%');setText('dNFReach',enCompact(data.nonFollowerReach));setText('dFollowersGained',fa(data.followersGained));setText('dReels',fa(data.reels));setText('dReelsTarget','Target '+fa(t.reels));setText('dShares',fa(data.sharesPer1k));setText('dSaves',fa(data.savesPer1k));
-  setText('dLeads',fa(data.leads));setText('dLeadsTarget','Target '+fa(t.leads));const leadAtt=ratio(data.leads,t.leads)*100;setText('dLeadAtt',fa(leadAtt)+'%');setText('dLeadStatus',leadAtt>=110?'جلوتر از هدف':leadAtt>=90?'روی مسیر':'نیاز به جبران');
-  setText('dImpressions',enCompact(seo.impressions));setText('dClicks',enCompact(seo.clicks));setText('dClicksTarget','Target '+enCompact(t.clicks));setText('dCTR',fa(seo.ctr)+'%');setText('dRank',seo.rank?fa(seo.rank):'--');setText('dRankTarget','Target '+fa(t.rank));
-  const mg=[['content','mContentText','mContentBar'],['projects','mProjectsText','mProjectsBar'],['website','mWebsiteText','mWebsiteBar'],['design','mDesignText','mDesignBar'],['reporting','mReportingText','mReportingBar']];
-  mg.forEach(([k,txt,bar])=>{setText(txt,fa(data[k])+'%');setWidth(bar,data[k])});setText('dMgmtScore',fa(s.mgmt)+' / 25');
-  const tbody=by('weeklyBody');tbody.innerHTML='';seo.rows.forEach(r=>{const ctr=r.imp>0?r.clicks/r.imp*100:0;const tr=document.createElement('tr');const rc=r.rank>0 && r.rank<=t.rank?'rank-good':'rank-mid';tr.innerHTML=`<td>هفته ${fa(r.week)}</td><td>${enCompact(r.imp)}</td><td>${enCompact(r.clicks)}</td><td>${fa(ctr)}%</td><td class="${rc}">${r.rank?fa(r.rank):'--'}</td>`;tbody.appendChild(tr)});
-  setText('chipClicks',enCompact(seo.clicks));setText('chipCTR',fa(seo.ctr)+'%');setText('chipRank',seo.rank?fa(seo.rank):'--');
-}
-function by(id){return document.getElementById(id)}
-function tick(){const now=new Date();setText('time',new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now));const dateTxt=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(now);setText('date',dateTxt);setText('detailDate',dateTxt)}
-setInterval(tick,1000);tick();render();loadGoogleCache();syncGoogleSheet();setInterval(syncGoogleSheet,GOOGLE_SYNC_MS);
-
-const map=['month','views','median','nonFollower','nonFollowerReach','followersGained','followers','reels','sharesPer1k','savesPer1k','leads','content','projects','website','design','reporting','w1Imp','w1Clicks','w1Rank','w2Imp','w2Clicks','w2Rank','w3Imp','w3Clicks','w3Rank','w4Imp','w4Clicks','w4Rank','w5Imp','w5Clicks','w5Rank'];
-function openEditor(){map.forEach(k=>{const el=by('f_'+k);if(el)el.value=data[k]});by('editorBackdrop').classList.add('open')}
-function closeEditor(){by('editorBackdrop').classList.remove('open')}
-by('editBtn').onclick=openEditor;by('closeBtn').onclick=closeEditor;
-by('saveBtn').onclick=()=>{map.forEach(k=>{const el=by('f_'+k);if(!el)return;data[k]=k==='month'?el.value:Number(el.value||0)});const auto=detectedPersianMonth();if(auto)data.month=auto;save();render();closeEditor()};
-by('resetBtn').onclick=()=>{if(confirm('داده‌های ذخیره‌شده ریست شود؟')){data={...defaults};const auto=detectedPersianMonth();if(auto)data.month=auto;save();render();openEditor()}};
-by('demoBtn').onclick=()=>{data={...data,views:152000,median:10500,nonFollower:72,nonFollowerReach:94000,followersGained:620,followers:13720,reels:5,sharesPer1k:8.4,savesPer1k:5.9,leads:47,content:92,projects:84,website:90,design:96,reporting:88,w1Imp:38500,w1Clicks:1330,w1Rank:14.7,w2Imp:40200,w2Clicks:1440,w2Rank:14.4,w3Imp:41700,w3Clicks:1530,w3Rank:14.2,w4Imp:43000,w4Clicks:1620,w4Rank:13.9,w5Imp:0,w5Clicks:0,w5Rank:0};save();render();openEditor()};
-by('editorBackdrop').addEventListener('click',e=>{if(e.target===by('editorBackdrop'))closeEditor()});
-
-let currentPage=0;const ROTATE_MS=10*60*1000;
-function setPage(i){currentPage=i%2;document.body.classList.toggle('show-detail',currentPage===1);by('dot0').classList.toggle('active',currentPage===0);by('dot1').classList.toggle('active',currentPage===1)}
-function nextPage(){setPage((currentPage+1)%2)}
-setInterval(nextPage,ROTATE_MS);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeEditor();if((e.key==='e'||e.key==='E')&&!['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)){by('editorBackdrop').classList.contains('open')?closeEditor():openEditor()}if((e.key==='ArrowRight'||e.key==='ArrowLeft'||e.code==='Space')&&!by('editorBackdrop').classList.contains('open')){e.preventDefault();nextPage()}});
+(function(){
+  var GOOGLE_SHEET_API='https://script.google.com/macros/s/AKfycbyAyVoKq8PhBVyESqHXnr5uSBl2fZ85OprnQvnNBCcpXS_xxyLLHuubzQQhxPPlWZUr4A/exec?key=PASKAL-TV-1405';
+  var GOOGLE_SYNC_MS=60000, GOOGLE_CACHE_KEY='pascal_kpi_google_cache_v1';
+  var months=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+  var targets={'مهر':{views:140000,median:9000,nonFollower:70,clicks:5600,rank:14.5,leads:45,followers:14000,reels:5},'آبان':{views:160000,median:12000,nonFollower:70,clicks:6200,rank:14,leads:50,followers:15000,reels:5},'آذر':{views:185000,median:15000,nonFollower:70,clicks:6900,rank:13,leads:55,followers:16000,reels:6},'دی':{views:210000,median:18000,nonFollower:70,clicks:7600,rank:12,leads:60,followers:17000,reels:6},'بهمن':{views:230000,median:21000,nonFollower:70,clicks:8300,rank:11,leads:68,followers:18000,reels:6},'اسفند':{views:250000,median:24000,nonFollower:70,clicks:9000,rank:10,leads:75,followers:19500,reels:6}};
+  var defaults={month:'مهر',views:120000,median:7000,nonFollower:0,nonFollowerReach:0,followersGained:0,followers:13100,reels:4,sharesPer1k:0,savesPer1k:0,leads:40,content:0,projects:0,website:0,design:0,reporting:0,w1Imp:35000,w1Clicks:1150,w1Rank:15,w2Imp:36000,w2Clicks:1220,w2Rank:14.8,w3Imp:37500,w3Clicks:1280,w3Rank:14.6,w4Imp:39000,w4Clicks:1350,w4Rank:14.4,w5Imp:0,w5Clicks:0,w5Rank:0};
+  function by(id){return document.getElementById(id)}function hasClass(el,c){return el&&(' '+el.className+' ').indexOf(' '+c+' ')>-1}function addClass(el,c){if(el&&!hasClass(el,c))el.className+=(el.className?' ':'')+c}function removeClass(el,c){if(el)el.className=(' '+el.className+' ').replace(' '+c+' ',' ').replace(/^\s+|\s+$/g,'')}function toggleClass(el,c,on){if(on)addClass(el,c);else removeClass(el,c)}
+  function cloneObj(o){var r={},k;for(k in o)if(o.hasOwnProperty(k))r[k]=o[k];return r}function merge(a,b){var r=cloneObj(a),k;if(b)for(k in b)if(b.hasOwnProperty(k))r[k]=b[k];return r}function num(v,f){var x=parseFloat(v);return isFinite(x)?x:(f||0)}function clamp(x,a,b){return Math.max(a,Math.min(b,x))}function ratio(a,t){return t>0?a/t:0}
+  function pdigits(s){return String(s).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.charAt(parseInt(d,10))})}function fa(n){if(!isFinite(n))n=0;return pdigits(Math.round(n*10)/10)}function enCompact(n){n=num(n,0);if(n>=1000000)return (Math.round(n/100000)/10)+'M';if(n>=1000)return (Math.round(n/100)/10)+'K';return String(Math.round(n))}function normalMonth(v){return String(v==null?'':v).replace(/\s/g,'')}
+  function digitToEn(s){return String(s==null?'':s).replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)})}function weekNo(v){var m=digitToEn(v).match(/(\d+)/);return m?parseInt(m[1],10):0}
+  function div(a,b){return parseInt(a/b,10)}function g2j(gy,gm,gd){var gdm=[0,31,59,90,120,151,181,212,243,273,304,334],jy,gy2,days,jm,jd;if(gy>1600){jy=979;gy-=1600}else{jy=0;gy-=621}gy2=(gm>2)?gy+1:gy;days=365*gy+div(gy2+3,4)-div(gy2+99,100)+div(gy2+399,400)-80+gd+gdm[gm-1];jy+=33*div(days,12053);days%=12053;jy+=4*div(days,1461);days%=1461;if(days>365){jy+=div(days-1,365);days=(days-1)%365}if(days<186){jm=1+div(days,31);jd=1+days%31}else{jm=7+div(days-186,30);jd=1+(days-186)%30}return[jy,jm,jd]}
+  function jalaliNow(){var d=new Date();return g2j(d.getFullYear(),d.getMonth()+1,d.getDate())}function detectedPersianMonth(){var j=jalaliNow(),m=months[j[1]-1];return targets[m]?m:null}function pad2(n){return n<10?'0'+n:String(n)}function formatTime(){var d=new Date();return pdigits(pad2(d.getHours())+':'+pad2(d.getMinutes())+':'+pad2(d.getSeconds()))}function formatDate(){var d=new Date(),j=jalaliNow(),wd=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'][d.getDay()];return wd+'، '+pdigits(j[2])+' '+months[j[1]-1]+' '+pdigits(j[0])}
+  function load(){var o={};try{o=JSON.parse(localStorage.getItem('pascal_kpi_v2')||localStorage.getItem('pascal_kpi_v1')||'{}')||{}}catch(e){}return merge(defaults,o)}var data=load(),dm=detectedPersianMonth();if(dm)data.month=dm;function save(){try{localStorage.setItem('pascal_kpi_v2',JSON.stringify(data))}catch(e){}}
+  function setText(id,val){var el=by(id);if(el)el.innerHTML=String(val)}function setWidth(id,val){var el=by(id);if(el)el.style.width=clamp(val,0,100)+'%'}function setSyncState(state,label){var b=by('syncBadge'),t=by('syncText');if(!b||!t)return;removeClass(b,'ok');removeClass(b,'error');removeClass(b,'syncing');addClass(b,state);t.innerHTML=label}
+  function applyGooglePayload(payload,fromCache){var i,row,wanted,t,af,wr,idx;if(!payload||!payload.monthly||!payload.monthly.length)throw new Error('Invalid payload');wanted=detectedPersianMonth()||data.month||'مهر';row=null;for(i=0;i<payload.monthly.length;i++){if(normalMonth(payload.monthly[i].month)===normalMonth(wanted)){row=payload.monthly[i];break}}if(!row)throw new Error('Month not found');t=targets[wanted]||targets['مهر'];t.views=num(row.target_reel_views,t.views);t.median=num(row.target_median_7d,t.median);t.nonFollower=num(row.target_non_follower,t.nonFollower);t.leads=num(row.target_leads,t.leads);t.clicks=num(row.target_clicks,t.clicks);t.rank=num(row.target_avg_rank_72,t.rank);if(num(row.followers_outcome_target,0)>0)t.followers=num(row.followers_outcome_target,t.followers);data.month=wanted;data.views=num(row.reel_views,0);data.median=num(row.median_7d,0);data.nonFollower=num(row.non_follower,0);data.nonFollowerReach=num(row.non_follower_reach,0);data.followersGained=num(row.followers_gained,0);data.reels=num(row.reels_published,0);data.sharesPer1k=num(row.shares_per_1k,0);data.savesPer1k=num(row.saves_per_1k,0);data.leads=num(row.leads,0);data.content=num(row.mgmt_content,0);data.projects=num(row.mgmt_projects,0);data.website=num(row.mgmt_website,0);data.design=num(row.mgmt_design,0);data.reporting=num(row.mgmt_reporting,0);af=num(row.actual_followers,0);if(af>0)data.followers=af;for(i=1;i<=5;i++){data['w'+i+'Imp']=0;data['w'+i+'Clicks']=0;data['w'+i+'Rank']=0}if(payload.weekly_seo&&payload.weekly_seo.length){for(i=0;i<payload.weekly_seo.length;i++){wr=payload.weekly_seo[i];if(normalMonth(wr['ماه']!=null?wr['ماه']:wr.month)!==normalMonth(wanted))continue;idx=weekNo(wr['هفته']!=null?wr['هفته']:wr.week);if(idx<1||idx>5)continue;data['w'+idx+'Imp']=num(wr['Impressions']!=null?wr['Impressions']:wr.impressions,0);data['w'+idx+'Clicks']=num(wr['Clicks']!=null?wr['Clicks']:wr.clicks,0);data['w'+idx+'Rank']=num(wr['Average Rank کل 72 کلمه']!=null?wr['Average Rank کل 72 کلمه']:(wr.avg_rank_72!=null?wr.avg_rank_72:wr.rank),0)}}render();if(!fromCache){try{localStorage.setItem(GOOGLE_CACHE_KEY,JSON.stringify(payload))}catch(e){}}}
+  function loadGoogleCache(){try{var c=JSON.parse(localStorage.getItem(GOOGLE_CACHE_KEY)||'null');if(c){applyGooglePayload(c,true);return true}}catch(e){}return false}
+  function syncGoogleSheet(){setSyncState('syncing','Google Sheet · در حال همگام‌سازی');var xhr=new XMLHttpRequest(),sep=GOOGLE_SHEET_API.indexOf('?')>=0?'&':'?';xhr.open('GET',GOOGLE_SHEET_API+sep+'_ts='+(new Date().getTime()),true);xhr.onreadystatechange=function(){if(xhr.readyState!==4)return;if(xhr.status>=200&&xhr.status<300){try{var payload=JSON.parse(xhr.responseText);if(payload.ok!==true)throw new Error('API');applyGooglePayload(payload,false);setSyncState('ok','Google Sheet · بروزرسانی '+pdigits(pad2(new Date().getHours())+':'+pad2(new Date().getMinutes())))}catch(e){setSyncState('error','Google Sheet · خطای داده')}}else setSyncState('error','Google Sheet · اتصال ناموفق')};try{xhr.send(null)}catch(e){setSyncState('error','Google Sheet · اتصال ناموفق')}}
+  function weeklyRows(){var a=[],i,imp,clicks,rank;for(i=1;i<=5;i++){imp=num(data['w'+i+'Imp'],0);clicks=num(data['w'+i+'Clicks'],0);rank=num(data['w'+i+'Rank'],0);if(imp>0||clicks>0||rank>0)a.push({week:i,imp:imp,clicks:clicks,rank:rank})}return a}function monthlySEO(){var rows=weeklyRows(),impressions=0,clicks=0,rankSum=0,rankCount=0,i;for(i=0;i<rows.length;i++){impressions+=rows[i].imp;clicks+=rows[i].clicks;if(rows[i].rank>0){rankSum+=rows[i].rank;rankCount++}}return{rows:rows,impressions:impressions,clicks:clicks,ctr:impressions>0?clicks/impressions*100:0,rank:rankCount?rankSum/rankCount:0}}
+  function calc(){var seo=monthlySEO(),t=targets[data.month]||targets['مهر'],visibility=10*ratio(data.views,t.views)+6*ratio(data.median,t.median)+4*ratio(data.nonFollower,t.nonFollower)+7.5*ratio(seo.clicks,t.clicks)+(seo.rank>0?7.5*(t.rank/seo.rank):0),lead=40*ratio(data.leads,t.leads),mgmt=clamp(data.content,0,100)/100*7+clamp(data.projects,0,100)/100*6+clamp(data.website,0,100)/100*4+clamp(data.design,0,100)/100*4+clamp(data.reporting,0,100)/100*4;return{t:t,seo:seo,visibility:visibility,lead:lead,mgmt:mgmt,total:visibility+lead+mgmt}}
+  function render(){var s=calc(),t=s.t,total=Math.max(0,s.total),seo=s.seo,visPct=Math.min(s.visibility/35*100,100),leadPct=Math.min(s.lead/40*100,100),mgmtPct=Math.min(s.mgmt/25*100,100),totalPct=Math.min(total,100),ahead=total>105,on=total>=95&&total<=105,behind=total<95;setText('totalScore',fa(total)+'%');setText('totalScoreCard',fa(total));setText('visScore',fa(s.visibility));setText('leadScore',fa(s.lead));setText('mgmtScore',fa(s.mgmt));setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);setText('visPct',fa(visPct)+'%');setText('leadPct',fa(leadPct)+'%');setText('mgmtPct',fa(mgmtPct)+'%');setText('totalPct',fa(totalPct)+'%');toggleClass(by('stAhead'),'active',ahead);toggleClass(by('stOn'),'active',on);toggleClass(by('stBehind'),'active',behind);setText('cmpImpr',enCompact(seo.impressions));setText('cmpClicks',fa(t.clicks?Math.min(seo.clicks/t.clicks*100,999):0)+'%');setText('cmpLeads',fa(t.leads?Math.min(data.leads/t.leads*100,999):0)+'%');setText('cmpRank',seo.rank?fa(t.rank/seo.rank*100)+'%':'0%');renderDetail(s)}
+  function renderDetail(s){var t=s.t,seo=s.seo,month=data.month,autumn=month==='مهر'||month==='آبان'||month==='آذر',page=by('detailPage'),leadAtt=ratio(data.leads,t.leads)*100,mg=[['content','mContentText','mContentBar'],['projects','mProjectsText','mProjectsBar'],['website','mWebsiteText','mWebsiteBar'],['design','mDesignText','mDesignBar'],['reporting','mReportingText','mReportingBar']],i,r,tr,ctr,rc,tbody=by('weeklyBody');if(autumn){addClass(page,'autumn');removeClass(page,'winter')}else{addClass(page,'winter');removeClass(page,'autumn')}setText('seasonBadge',autumn?'🍂':'❄');setText('seasonName',autumn?'تم پاییزی':'تم زمستانی');setText('detailMonth',month);setText('detailMonth2',month);setText('weeklyMonth',month);setText('dViews',enCompact(data.views));setText('dViewsTarget','Target '+enCompact(t.views));setText('dMedian',enCompact(data.median));setText('dMedianTarget','Target '+enCompact(t.median));setText('dNonFollower',fa(data.nonFollower)+'%');setText('dNFReach',enCompact(data.nonFollowerReach));setText('dFollowersGained',fa(data.followersGained));setText('dReels',fa(data.reels));setText('dReelsTarget','Target '+fa(t.reels));setText('dShares',fa(data.sharesPer1k));setText('dSaves',fa(data.savesPer1k));setText('dLeads',fa(data.leads));setText('dLeadsTarget','Target '+fa(t.leads));setText('dLeadAtt',fa(leadAtt)+'%');setText('dLeadStatus',leadAtt>=110?'جلوتر از هدف':leadAtt>=90?'روی مسیر':'نیاز به جبران');setText('dImpressions',enCompact(seo.impressions));setText('dClicks',enCompact(seo.clicks));setText('dClicksTarget','Target '+enCompact(t.clicks));setText('dCTR',fa(seo.ctr)+'%');setText('dRank',seo.rank?fa(seo.rank):'--');setText('dRankTarget','Target '+fa(t.rank));for(i=0;i<mg.length;i++){setText(mg[i][1],fa(data[mg[i][0]])+'%');setWidth(mg[i][2],data[mg[i][0]])}setText('dMgmtScore',fa(s.mgmt)+' / 25');if(tbody){tbody.innerHTML='';for(i=0;i<seo.rows.length;i++){r=seo.rows[i];ctr=r.imp>0?r.clicks/r.imp*100:0;rc=r.rank>0&&r.rank<=t.rank?'rank-good':'rank-mid';tr=document.createElement('tr');tr.innerHTML='<td>هفته '+fa(r.week)+'</td><td>'+enCompact(r.imp)+'</td><td>'+enCompact(r.clicks)+'</td><td>'+fa(ctr)+'%</td><td class="'+rc+'">'+(r.rank?fa(r.rank):'--')+'</td>';tbody.appendChild(tr)}}setText('chipClicks',enCompact(seo.clicks));setText('chipCTR',fa(seo.ctr)+'%');setText('chipRank',seo.rank?fa(seo.rank):'--')}
+  function tick(){setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d)}var currentPage=0,ROTATE_MS=600000;function setPage(i){currentPage=i%2;toggleClass(document.body,'show-detail',currentPage===1)}function nextPage(){setPage((currentPage+1)%2)}
+  tick();render();loadGoogleCache();syncGoogleSheet();setInterval(tick,1000);setInterval(syncGoogleSheet,GOOGLE_SYNC_MS);setInterval(nextPage,ROTATE_MS);
+})();
 </script>
 </body>
 </html>
