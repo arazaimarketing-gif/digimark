@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
+<meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet" />
+<title>Pascal Digital Marketing KPI Dashboard</title>
+<style>
+  :root{
+    --brand:#FDC000;
+    --glass:rgba(8,14,24,.38);
+    --glass-2:rgba(8,18,30,.50);
+    --border:rgba(124,255,205,.28);
+    --text:#f7f9fc;
+    --muted:rgba(226,243,255,.78);
+    --green:#69ffb7;
+    --cyan:#35d5ff;
+    --red:#ff7d82;
+    --amber:#ffd66b;
+    --neon-soft:rgba(92,255,189,.22);
+    --neon-cyan-soft:rgba(53,213,255,.18);
+    --shadow:0 24px 80px rgba(0,0,0,.34), 0 0 35px rgba(77,255,187,.10);
+    --font-body: IRANSansX, IRANSans, IranSans, "IRANSansWeb", Vazirmatn, Tahoma, "Segoe UI", Arial, sans-serif;
+    --font-title: "B Titr", BTitr, Titr, "MJ Titr", "IRANSansX", "IranSans", Tahoma, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#09111a;color:var(--text);font-family:var(--font-body)}
+  body{direction:rtl}
+  .scene{position:fixed;inset:0;background:url('assets/background.png') center center/cover no-repeat;overflow:hidden;animation:sceneBreath 24s ease-in-out infinite alternate;will-change:background-size,background-position}
+  .scene::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(3,8,14,.30) 0%,rgba(3,8,14,.10) 43%,rgba(3,8,14,.015) 74%),linear-gradient(0deg,rgba(3,8,14,.20) 0%,transparent 34%);pointer-events:none}
+
+
+  /* CINEMATIC AMBIENT MOTION */
+  @keyframes sceneBreath{
+    0%{background-size:100% auto;background-position:50% 50%}
+    100%{background-size:104% auto;background-position:51.5% 49%}
+  }
+  .ambient-light{position:absolute;z-index:4;inset:-25%;pointer-events:none;overflow:hidden;mix-blend-mode:screen;opacity:.78}
+  .ambient-light::before{content:"";position:absolute;width:22%;height:180%;left:-30%;top:-36%;transform:rotate(17deg);background:linear-gradient(90deg,transparent,rgba(255,244,202,.035),rgba(255,237,169,.20),rgba(255,248,219,.42),rgba(255,237,169,.17),transparent);filter:blur(18px);animation:lightSweep 15s ease-in-out infinite}
+  .ambient-light::after{content:"";position:absolute;width:36vw;height:36vw;border-radius:50%;left:34%;top:-18%;background:radial-gradient(circle,rgba(255,220,116,.16),rgba(255,206,86,.055) 35%,transparent 67%);filter:blur(14px);animation:sunPulse 7s ease-in-out infinite alternate}
+  @keyframes lightSweep{0%,14%{left:-30%;opacity:0}26%{opacity:.65}55%{opacity:.38}73%{left:115%;opacity:0}100%{left:115%;opacity:0}}
+  @keyframes sunPulse{from{transform:scale(.94);opacity:.55}to{transform:scale(1.08);opacity:.9}}
+
+  .mist-layer{position:absolute;z-index:3;inset:0;pointer-events:none;overflow:hidden;opacity:.62;mix-blend-mode:screen}
+  .mist-layer::before,.mist-layer::after{content:"";position:absolute;left:-24%;width:150%;height:24%;border-radius:50%;filter:blur(26px);background:radial-gradient(ellipse at center,rgba(255,255,255,.11),rgba(220,238,255,.045) 42%,transparent 72%)}
+  .mist-layer::before{top:44%;animation:mistFlow 34s linear infinite}
+  .mist-layer::after{top:56%;opacity:.55;animation:mistFlow2 46s linear infinite}
+  @keyframes mistFlow{0%{transform:translateX(-4%) scaleX(1)}50%{transform:translateX(12%) scaleX(1.08)}100%{transform:translateX(-4%) scaleX(1)}}
+  @keyframes mistFlow2{0%{transform:translateX(9%) scaleX(1.05)}50%{transform:translateX(-10%) scaleX(.98)}100%{transform:translateX(9%) scaleX(1.05)}}
+
+  .dust-layer{position:absolute;z-index:5;inset:0;pointer-events:none;overflow:hidden}
+  .dust{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(255,238,190,.72);box-shadow:0 0 9px rgba(255,220,126,.52);filter:blur(.25px);opacity:0;animation:dustDrift var(--dur) linear infinite;animation-delay:var(--delay)}
+  @keyframes dustDrift{0%{transform:translate3d(0,30px,0) scale(.65);opacity:0}12%{opacity:.55}55%{opacity:.34}100%{transform:translate3d(var(--dx),-180px,0) scale(1.15);opacity:0}}
+
+  /* STATUS COLORS */
+  .status-item{padding:7px 10px;border-radius:12px;border:1px solid transparent;transition:background .35s ease,border-color .35s ease,box-shadow .35s ease,color .35s ease,transform .35s ease}
+  .status-item.active{transform:translateX(-3px);font-weight:800}
+  .status-item.ahead.active{color:#f0d8ff;background:rgba(173,91,255,.14);border-color:rgba(203,133,255,.44);box-shadow:0 0 18px rgba(177,78,255,.20),inset 0 0 18px rgba(177,78,255,.055)}
+  .status-item.ahead.active .dot{background:#c67cff;box-shadow:0 0 14px rgba(198,124,255,.95)}
+  .status-item.on.active{color:#d8ffe9;background:rgba(47,212,136,.14);border-color:rgba(86,246,168,.42);box-shadow:0 0 18px rgba(63,230,151,.18),inset 0 0 18px rgba(63,230,151,.05)}
+  .status-item.on.active .dot{background:#65f2a8;box-shadow:0 0 14px rgba(101,242,168,.95)}
+  .status-item.behind.active{color:#ffdfe2;background:rgba(255,77,91,.14);border-color:rgba(255,113,125,.43);box-shadow:0 0 18px rgba(255,73,88,.18),inset 0 0 18px rgba(255,73,88,.05)}
+  .status-item.behind.active .dot{background:#ff6472;box-shadow:0 0 14px rgba(255,100,114,.95)}
+  .status-card.status-ahead{border-color:rgba(199,123,255,.42);box-shadow:0 12px 30px rgba(0,0,0,.16),0 0 26px rgba(183,92,255,.10)}
+  .status-card.status-on{border-color:rgba(104,246,174,.38);box-shadow:0 12px 30px rgba(0,0,0,.16),0 0 24px rgba(75,231,151,.09)}
+  .status-card.status-behind{border-color:rgba(255,112,123,.38);box-shadow:0 12px 30px rgba(0,0,0,.16),0 0 24px rgba(255,79,95,.09)}
+  .progress-ring.ring-ahead{background:conic-gradient(#c978ff 0deg,#c978ff var(--score-angle,0deg),rgba(255,255,255,.12) var(--score-angle,0deg),rgba(255,255,255,.12) 360deg);box-shadow:0 0 24px rgba(197,110,255,.18)}
+  .progress-ring.ring-on{background:conic-gradient(#64efaa 0deg,#64efaa var(--score-angle,0deg),rgba(255,255,255,.12) var(--score-angle,0deg),rgba(255,255,255,.12) 360deg);box-shadow:0 0 24px rgba(100,239,170,.16)}
+  .progress-ring.ring-behind{background:conic-gradient(#ff6977 0deg,#ff6977 var(--score-angle,0deg),rgba(255,255,255,.12) var(--score-angle,0deg),rgba(255,255,255,.12) 360deg);box-shadow:0 0 24px rgba(255,105,119,.16)}
+
+  @media (prefers-reduced-motion:reduce){.scene,.ambient-light::before,.ambient-light::after,.mist-layer::before,.mist-layer::after,.dust{animation:none!important}}
+
+  /* STATIC JOURNEY LAYER */
+  .s1{left:36%;top:70%}.s2{left:51%;top:62%}.s3{left:62.5%;top:54%}.s4{left:73%;top:46%}.s5{left:82%;top:37%}.s6{left:89%;top:25%}
+
+  /* GLASS BOARDS */
+  .glass{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(13,23,35,.105));border:1px solid rgba(255,255,255,.27);box-shadow:0 10px 26px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(255,255,255,.04);backdrop-filter:blur(7px) saturate(118%);-webkit-backdrop-filter:blur(7px) saturate(118%);border-radius:24px}
+  .brand-panel{position:absolute;z-index:10;left:2.2vw;top:3.2vh;width:26vw;max-width:470px;padding:14px 16px;background:transparent}
+  .brand-head{display:flex;align-items:flex-start;gap:14px}
+  .brand-head .araz-wrap{width:165px;height:54px;display:flex;align-items:center;overflow:hidden}
+  .brand-head .araz-wrap img{width:100%;height:auto;filter:invert(1) brightness(1.5)}
+  .brand-copy{border-right:1px solid rgba(255,255,255,.20);padding-right:14px;margin-right:2px}
+  .brand-copy h1{margin:0 0 3px;font-size:18px;font-family:var(--font-title);font-weight:800}
+  .brand-copy p{margin:0;color:rgba(241,246,255,.78);font-size:11px;line-height:1.7}
+  .brand-quote{margin-top:18px;color:#f2f6fb;font-size:12px;line-height:1.95;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+  .glass::before{content:"";position:absolute;inset:1px;border-radius:calc(24px - 1px);background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.018) 30%,transparent 58%,rgba(255,255,255,.035));pointer-events:none}
+
+  .date-card{position:absolute;z-index:11;right:2vw;top:2.6vh;width:13vw;min-width:196px;padding:14px 16px;text-align:right;background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(14,24,37,.085));box-shadow:0 8px 20px rgba(0,0,0,.11),inset 0 1px 0 rgba(255,255,255,.18)}
+  .date-card .sun{font-size:34px;line-height:1}
+  .date-card .date-top{font-size:13px;line-height:1.8;color:#eef4fb;margin-top:4px}
+  .date-card .time{font-size:34px;font-family:var(--font-title);font-weight:800;line-height:1.1;margin-top:2px;text-shadow:0 2px 10px rgba(0,0,0,.28)}
+
+  .status-card{position:absolute;z-index:11;left:2.2vw;top:26.2vh;width:22vw;max-width:385px;padding:18px 18px 16px;background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(11,22,34,.115));}
+  .status-card h3{margin:0 0 12px;font-size:18px;font-weight:700;color:#eff4fb;text-shadow:0 2px 8px rgba(0,0,0,.35)}
+  .status-top{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;direction:ltr}
+  .progress-ring{position:relative;width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#7ac0ff 0deg,#7ac0ff var(--score-angle,0deg),rgba(255,255,255,.12) var(--score-angle,0deg),rgba(255,255,255,.12) 360deg)}
+  .progress-ring::after{content:"";position:absolute;inset:10px;border-radius:50%;background:linear-gradient(180deg,rgba(32,48,69,.62),rgba(18,32,48,.70));border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(4px)}
+  .progress-ring .core{position:relative;z-index:2;text-align:center}
+  .progress-ring strong{font-family:var(--font-title);font-size:33px;line-height:1;color:#fff}
+  .progress-ring small{display:block;font-size:11px;color:rgba(241,246,255,.74);margin-top:4px}
+  .status-list{direction:rtl;display:flex;flex-direction:column;gap:10px}
+  .status-item{display:flex;align-items:center;gap:10px;font-size:14px;color:#f2f7fd}
+  .status-item .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.7);box-shadow:0 0 10px rgba(255,255,255,.18)}
+  .status-item.active .dot{background:#88ffbe;box-shadow:0 0 12px rgba(136,255,190,.55)}
+  .status-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);margin:14px 0}
+  .compare-title{display:flex;align-items:center;gap:8px;color:#f1f6fd;font-size:14px;font-weight:700;margin-bottom:10px}
+  .compare-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .cmini{text-align:center}
+  .cmini b{display:block;font-size:17px;font-family:var(--font-title)}
+  .cmini span{display:block;font-size:12px;color:rgba(241,246,255,.7);margin-top:3px}
+
+  .kpi-row{position:absolute;z-index:11;left:26vw;right:2.2vw;bottom:5.4vh;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .kpi-card{padding:18px 18px 14px;min-height:156px;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(9,19,29,.105));}
+  .kpi-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .kpi-title{font-size:18px;font-weight:700;color:#f7f9fd;text-shadow:0 2px 8px rgba(0,0,0,.28)}
+  .kpi-icon{font-size:30px;line-height:1}
+  .kpi-main{display:flex;align-items:flex-end;gap:8px;direction:ltr}
+  .kpi-main strong{font-size:56px;line-height:1;font-family:var(--font-title);font-weight:800}
+  .kpi-main small{font-size:15px;color:rgba(241,246,255,.72);padding-bottom:7px}
+  .progress-line{height:8px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin-top:14px}
+  .progress-line i{display:block;height:100%;width:0;border-radius:999px;transition:width .55s ease}
+  .kpi-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:14px;color:#f2f6fb}
+  .kpi-foot .percent{font-family:var(--font-title);font-size:17px}
+  .kpi-blue .kpi-icon,.kpi-blue .percent{color:#79caff}.kpi-blue .progress-line i{background:linear-gradient(90deg,#67b9ff,#9ad9ff);box-shadow:0 0 16px rgba(103,185,255,.35)}
+  .kpi-green .kpi-icon,.kpi-green .percent{color:#5df2b1}.kpi-green .progress-line i{background:linear-gradient(90deg,#51e6a8,#85ffd0);box-shadow:0 0 16px rgba(81,230,168,.35)}
+  .kpi-orange .kpi-icon,.kpi-orange .percent{color:#ffbf55}.kpi-orange .progress-line i{background:linear-gradient(90deg,#ffb23c,#ffd06e);box-shadow:0 0 16px rgba(255,178,60,.34)}
+  .kpi-purple .kpi-icon,.kpi-purple .percent{color:#d78fff}.kpi-purple .progress-line i{background:linear-gradient(90deg,#c878ff,#f2a7ff);box-shadow:0 0 16px rgba(200,120,255,.34)}
+
+  
+  .goal-pill{position:absolute;z-index:12;left:57.5%;top:2.8vh;transform:translateX(-50%);padding:10px 24px;border-radius:16px;background:rgba(255,255,255,.88);color:#223250;font-family:var(--font-title);font-size:18px;font-weight:800;box-shadow:0 10px 22px rgba(0,0,0,.12);border:1px solid rgba(255,255,255,.5)}
+  .status-card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(11,22,34,.10));}
+  .kpi-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(9,19,29,.10));}
+  .date-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(14,24,37,.08));}
+
+  .hidden-metrics{display:none}
+  .quote{display:none}
+  .pascal-footer{position:absolute;z-index:9;left:1.8vw;bottom:2.1vh;width:128px;height:25px;overflow:hidden;border-radius:5px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .pascal-footer img{width:100%;height:100%;object-fit:cover}
+
+  .sync-badge{position:fixed;z-index:60;right:2vw;top:17.5vh;display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:rgba(8,16,26,.46);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:10.5px;color:rgba(246,250,255,.84);box-shadow:0 8px 20px rgba(0,0,0,.14);direction:rtl;transition:.25s}
+  .sync-badge .sync-dot{width:7px;height:7px;border-radius:50%;background:#ffd66b;box-shadow:0 0 9px rgba(255,214,107,.55)}
+  .sync-badge.ok{border-color:rgba(95,241,170,.32);color:#d9ffec}.sync-badge.ok .sync-dot{background:#65f2a8;box-shadow:0 0 10px rgba(101,242,168,.75)}
+  .sync-badge.error{border-color:rgba(255,112,123,.32);color:#ffe2e5}.sync-badge.error .sync-dot{background:#ff6977;box-shadow:0 0 10px rgba(255,105,119,.72)}
+  .sync-badge.syncing .sync-dot{animation:syncPulse 1.1s ease-in-out infinite}
+  @keyframes syncPulse{0%,100%{opacity:.35;transform:scale(.8)}50%{opacity:1;transform:scale(1.22)}}
+
+  .edit-btn{position:absolute;z-index:30;left:12px;bottom:12px;width:34px;height:34px;border:1px solid rgba(111,255,194,.24);border-radius:50%;background:rgba(0,0,0,.24);color:rgba(255,255,255,.74);display:grid;place-items:center;cursor:pointer;opacity:.22;transition:.2s;font-size:15px;backdrop-filter:blur(10px);box-shadow:0 0 12px rgba(53,213,255,.15)}
+  .edit-btn:hover{opacity:1;background:rgba(0,0,0,.42)}
+
+
+  /* AUTO-ROTATING CURRENT MONTH DETAIL PAGE */
+  .detail-page{position:fixed;inset:0;z-index:40;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .9s ease,visibility .9s ease;overflow:hidden;background:#172033;color:#fff}
+  body.show-detail .detail-page{opacity:1;visibility:visible;pointer-events:auto}
+  body.show-detail .scene{filter:saturate(.82) brightness(.76)}
+  .detail-bg{position:absolute;inset:0;background:url('assets/background.png') center center/cover no-repeat;transform:scale(1.03);filter:saturate(.9) brightness(.55);overflow:hidden}
+  .detail-page.autumn .detail-bg{background:linear-gradient(180deg,#ffb453 0%,#f59d3c 16%,#d97628 38%,#8a4a21 72%,#3a281f 100%);filter:none}
+  .detail-page.winter .detail-bg{background:linear-gradient(180deg,#9fc6ea 0%,#6e97bf 20%,#4f6d8d 46%,#293f53 74%,#182734 100%);filter:none}
+  .detail-bg::before,.detail-bg::after{content:"";position:absolute;inset:0;pointer-events:none}
+  .detail-page.autumn .detail-bg::before{background:
+    radial-gradient(circle at 14% 22%, rgba(255,231,158,.75), transparent 18%),
+    radial-gradient(circle at 78% 18%, rgba(255,214,127,.35), transparent 20%),
+    linear-gradient(180deg, rgba(255,255,255,.06), transparent 25%),
+    radial-gradient(ellipse at bottom, rgba(52,31,20,.45) 0%, rgba(52,31,20,0) 44%);}
+  .detail-page.autumn .detail-bg::after{background:
+    linear-gradient(0deg, rgba(46,25,17,.72) 0 12%, transparent 12%),
+    radial-gradient(circle at 6% 70%, rgba(63,37,24,.95) 0 5%, transparent 5.3%),
+    radial-gradient(circle at 16% 67%, rgba(70,40,26,.98) 0 7%, transparent 7.3%),
+    radial-gradient(circle at 85% 66%, rgba(61,35,22,.95) 0 6%, transparent 6.3%),
+    radial-gradient(circle at 93% 70%, rgba(61,35,22,.95) 0 4.7%, transparent 5%),
+    linear-gradient(90deg, transparent 0 7%, rgba(59,34,22,.95) 7% 7.5%, transparent 7.5% 15%, rgba(59,34,22,.95) 15% 15.4%, transparent 15.4% 84%, rgba(59,34,22,.95) 84% 84.4%, transparent 84.4% 92%, rgba(59,34,22,.95) 92% 92.5%, transparent 92.5%);opacity:.95}
+  .detail-page.winter .detail-bg::before{background:radial-gradient(circle at 14% 18%, rgba(239,248,255,.72), transparent 18%), linear-gradient(180deg, rgba(255,255,255,.09), transparent 30%);}
+  .detail-page.winter .detail-bg::after{background:linear-gradient(0deg, rgba(233,240,249,.70) 0 10%, transparent 10%), linear-gradient(90deg, transparent 0 8%, rgba(205,219,232,.85) 8% 8.4%, transparent 8.4% 14%, rgba(205,219,232,.85) 14% 14.3%, transparent 14.3% 86%, rgba(205,219,232,.85) 86% 86.3%, transparent 86.3% 92%, rgba(205,219,232,.85) 92% 92.3%, transparent 92.3%);opacity:.75}
+  .detail-page.autumn .detail-card{background:linear-gradient(180deg,rgba(255,248,241,.14),rgba(78,38,19,.18));border-color:rgba(255,228,191,.22)}
+  .detail-page.autumn .month-chip{background:rgba(255,245,230,.13);border-color:rgba(255,222,181,.24)}
+  .detail-page.autumn .detail-card .desc,.detail-page.autumn .detail-sub,.detail-page.autumn .detail-clock .small{color:rgba(255,242,231,.74)}
+
+
+  .detail-page::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none}
+  .detail-page.autumn::before{background:radial-gradient(circle at 72% 12%,rgba(255,184,77,.20),transparent 28%),linear-gradient(135deg,rgba(91,45,12,.12),rgba(15,24,42,.02) 48%,rgba(118,64,17,.10))}
+  .detail-page.winter::before{background:radial-gradient(circle at 72% 10%,rgba(185,224,255,.20),transparent 30%),linear-gradient(135deg,rgba(27,65,105,.28),rgba(8,19,35,.12) 52%,rgba(81,124,170,.18))}
+  .season-particles{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+  .season-particles i{position:absolute;display:block;opacity:.0;animation:seasonFloat var(--dur,16s) linear infinite;animation-delay:var(--delay,0s)}
+  .detail-page.autumn .season-particles i{width:14px;height:9px;border-radius:65% 0 65% 0;background:linear-gradient(135deg,#ffd06e,#f28a24 55%,#a55319);box-shadow:0 0 12px rgba(255,170,60,.26);transform:rotate(24deg)}
+  .detail-page.winter .season-particles i{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.88);box-shadow:0 0 8px rgba(210,235,255,.45)}
+  @keyframes seasonFloat{0%{transform:translate3d(0,-10vh,0) rotate(0) scale(.9);opacity:0}10%{opacity:.8}70%{opacity:.85}100%{transform:translate3d(var(--sx,80px),108vh,0) rotate(360deg) scale(1.08);opacity:0}}
+  .detail-shell{position:relative;z-index:3;width:100%;height:100%;padding:3.2vh 3vw 3vh;display:flex;flex-direction:column;gap:1.6vh}
+  .detail-header{display:flex;align-items:center;justify-content:space-between;gap:18px;direction:rtl}
+  .detail-title-wrap{display:flex;align-items:center;gap:14px}
+  .season-badge{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;font-size:28px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(12px)}
+  .detail-title{margin:0;font-family:var(--font-title);font-size:32px;line-height:1.15;text-shadow:0 3px 18px rgba(0,0,0,.38)}
+  .detail-sub{margin-top:5px;color:rgba(240,246,255,.75);font-size:12px}
+  .detail-clock{text-align:left;direction:rtl}
+  .detail-clock .month-chip{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);font-weight:800;font-size:13px}
+  .detail-clock .small{margin-top:7px;font-size:11px;color:rgba(240,246,255,.65)}
+
+  .detail-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:1.2vw;min-height:0;flex:1}
+  .detail-card{position:relative;min-width:0;padding:18px 18px 16px;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.105),rgba(14,24,38,.18));border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 44px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.10);backdrop-filter:blur(15px) saturate(115%);overflow:hidden}
+  .detail-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.10),transparent 24%,transparent 75%,rgba(255,255,255,.035))}
+  .detail-card h3{position:relative;z-index:1;margin:0 0 5px;font-family:var(--font-title);font-size:21px}
+  .detail-card .desc{position:relative;z-index:1;font-size:10.5px;color:rgba(236,244,255,.65);margin-bottom:13px}
+  .instagram-card{border-top:2px solid #73c7ff}
+  .lead-card{border-top:2px solid #69f2ae}
+  .management-card{border-top:2px solid #ffc05c}
+
+  .ig-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+  .dmetric{padding:10px 11px;border-radius:14px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.075);min-width:0}
+  .dmetric span{display:block;font-size:10px;color:rgba(235,244,255,.66);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dmetric strong{display:block;margin-top:4px;font-size:20px;font-family:var(--font-title);direction:ltr;text-align:right}
+  .dmetric em{display:block;margin-top:3px;font-style:normal;font-size:9px;color:rgba(235,244,255,.47)}
+  .dmetric .ok{color:#78f0b1}.dmetric .warn{color:#ffd16b}.dmetric .bad{color:#ff7e88}
+
+  .lead-hero{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .lead-big{padding:14px;border-radius:17px;background:rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.08)}
+  .lead-big small{display:block;color:rgba(236,244,255,.64);font-size:10px}.lead-big strong{display:block;font-size:32px;font-family:var(--font-title);margin-top:4px;direction:ltr;text-align:right}.lead-big b{display:block;margin-top:3px;font-size:10px;color:#78f0b1}
+  .seo-summary{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .seo-summary .dmetric strong{font-size:18px}
+
+  .mgmt-list{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;margin-top:10px}
+  .mgmt-row{padding:9px 10px;border-radius:13px;background:rgba(0,0,0,.14);border:1px solid rgba(255,255,255,.07)}
+  .mgmt-row .top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:10px;color:rgba(240,246,255,.78)}
+  .mgmt-row .top b{font-size:13px;color:#fff;font-family:var(--font-title)}
+  .mgmt-track{height:5px;background:rgba(255,255,255,.10);border-radius:99px;overflow:hidden;margin-top:7px;direction:ltr}.mgmt-track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffb747,#ffd66f);border-radius:99px;transition:width .5s ease}
+  .mgmt-total{position:relative;z-index:1;margin-top:11px;display:flex;align-items:center;justify-content:space-between;padding:11px 12px;border-radius:14px;background:rgba(255,189,73,.10);border:1px solid rgba(255,196,91,.17)}
+  .mgmt-total strong{font-size:24px;font-family:var(--font-title);color:#ffd46d}
+
+  .weekly-panel{height:25vh;min-height:190px;padding:14px 18px 12px;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(13,23,35,.16));border:1px solid rgba(255,255,255,.16);box-shadow:0 16px 40px rgba(0,0,0,.20);backdrop-filter:blur(15px)}
+  .weekly-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:9px}.weekly-head h3{margin:0;font-family:var(--font-title);font-size:18px}.weekly-head .monthly-seo{display:flex;gap:9px;direction:ltr}.seo-chip{padding:6px 10px;border-radius:11px;background:rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.07);font-size:10px;color:rgba(237,245,255,.7)}.seo-chip b{color:#fff;font-size:12px;margin-left:4px}
+  .weekly-table{width:100%;border-collapse:separate;border-spacing:0 5px;font-size:10.5px;table-layout:fixed}.weekly-table th{color:rgba(237,245,255,.55);font-weight:500;padding:0 7px 2px}.weekly-table td{padding:7px 8px;background:rgba(0,0,0,.15);border-top:1px solid rgba(255,255,255,.055);border-bottom:1px solid rgba(255,255,255,.055);text-align:center}.weekly-table td:first-child{border-radius:0 10px 10px 0}.weekly-table td:last-child{border-radius:10px 0 0 10px}.weekly-table .rank-good{color:#6ff0ad}.weekly-table .rank-mid{color:#ffd46c}
+
+  .page-dots{position:fixed;z-index:70;bottom:1.3vh;left:50%;transform:translateX(-50%);display:flex;gap:7px;opacity:.24;transition:opacity .25s}.page-dots:hover{opacity:.75}.page-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45)}.page-dot.active{width:20px;border-radius:99px;background:#fff}
+  @media(max-width:1100px){.detail-shell{padding:2.3vh 2vw}.detail-title{font-size:25px}.detail-grid{gap:10px}.detail-card{padding:13px}.dmetric{padding:8px}.dmetric strong{font-size:17px}.weekly-panel{height:27vh}.weekly-table{font-size:9.5px}}
+
+  /* Editor */
+  .editor-backdrop{position:fixed;z-index:100;inset:0;display:none;align-items:center;justify-content:center;background:rgba(3,7,12,.72);backdrop-filter:blur(12px)}
+  .editor-backdrop.open{display:flex}
+  .editor{width:min(900px,92vw);max-height:92vh;overflow:auto;padding:20px;border-radius:24px;background:#111c2b;border:1px solid rgba(111,255,194,.16);box-shadow:0 30px 100px rgba(0,0,0,.55),0 0 28px rgba(53,213,255,.12);direction:rtl}
+  .editor h2{margin:0 0 4px;font-size:19px}.editor .hint{font-size:11px;color:#9ba9bd;margin-bottom:15px}.formgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .field{display:flex;flex-direction:column;gap:5px}.field label{font-size:10px;color:#b9c4d4}.field input,.field select{width:100%;border:1px solid #2c3a4e;background:#0b1420;color:#fff;border-radius:10px;padding:9px 10px;font-family:inherit;outline:none}.field input:focus,.field select:focus{border-color:#b48b00;box-shadow:0 0 0 2px rgba(253,192,0,.08)}
+  .section-title{font-size:12px;font-weight:800;color:#ffe18a;margin:17px 0 8px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .actions{display:flex;gap:8px;margin-top:18px}.actions button{border:0;border-radius:11px;padding:10px 16px;font-family:inherit;font-weight:700;cursor:pointer}.save{background:linear-gradient(90deg,var(--green),var(--cyan));color:#06111c}.ghost{background:#243247;color:#fff}.danger{background:#492429;color:#ffd4d7}
+  .kbd{font:10px Consolas,monospace;padding:2px 6px;background:#243247;border-radius:5px;color:#fff}
+
+  @media(max-aspect-ratio:1.45/1){.kpi-row{left:22vw;gap:12px}.status-card{width:24vw}.date-card{min-width:200px}}
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="ambient-light"></div>
+  <div class="mist-layer"></div>
+  <div class="dust-layer" aria-hidden="true">
+    <i class="dust" style="left:7%;top:86%;--dur:15s;--delay:-4s;--dx:90px"></i>
+    <i class="dust" style="left:14%;top:74%;--dur:19s;--delay:-12s;--dx:150px"></i>
+    <i class="dust" style="left:23%;top:91%;--dur:22s;--delay:-8s;--dx:-80px"></i>
+    <i class="dust" style="left:31%;top:78%;--dur:17s;--delay:-2s;--dx:110px"></i>
+    <i class="dust" style="left:39%;top:88%;--dur:24s;--delay:-15s;--dx:180px"></i>
+    <i class="dust" style="left:47%;top:80%;--dur:18s;--delay:-7s;--dx:-120px"></i>
+    <i class="dust" style="left:55%;top:92%;--dur:21s;--delay:-11s;--dx:140px"></i>
+    <i class="dust" style="left:63%;top:77%;--dur:16s;--delay:-5s;--dx:70px"></i>
+    <i class="dust" style="left:70%;top:89%;--dur:23s;--delay:-18s;--dx:-150px"></i>
+    <i class="dust" style="left:78%;top:83%;--dur:20s;--delay:-9s;--dx:120px"></i>
+    <i class="dust" style="left:86%;top:91%;--dur:25s;--delay:-14s;--dx:-90px"></i>
+    <i class="dust" style="left:94%;top:76%;--dur:18s;--delay:-6s;--dx:-130px"></i>
+  </div>
+  <div class="goal-pill">قصد ۱۰۰، راه صفر</div>
+
+  <div class="brand-panel">
+    <div class="brand-head">
+      <div class="araz-wrap"><img src="assets/araz-logo.png" alt="آراز فخر آذر"></div>
+      <div class="brand-copy">
+        <h1>مسیر رشد دیجیتال</h1>
+        <p>با داده، برنامه و تیمی که باور دارد</p>
+      </div>
+    </div>
+    <div class="brand-quote">وقتی قصدت کاملاً شفاف باشه،<br>دنیا تمام امکاناتشو در اختیارت میذاره<br>تا بهش برسی</div>
+  </div>
+
+  <div class="glass date-card">
+    <div class="sun">☀️</div>
+    <div class="date-top" id="date">---</div>
+    <div class="time" id="time">--:--</div>
+  </div>
+
+  <div class="sync-badge syncing" id="syncBadge" title="همگام‌سازی خودکار با Google Sheet">
+    <span class="sync-dot"></span><span id="syncText">Google Sheet · در حال اتصال</span>
+  </div>
+
+  <div class="glass status-card" id="statusCard">
+    <h3>Current Status</h3>
+    <div class="status-top">
+      <div class="progress-ring" id="scoreRing"><div class="core"><strong id="totalScore">۰٪</strong><small>پیشرفت</small></div></div>
+      <div class="status-list">
+        <div class="status-item ahead" id="stAhead"><span class="dot"></span><span>جلوتر از برنامه</span></div>
+        <div class="status-item on" id="stOn"><span class="dot"></span><span>روی برنامه</span></div>
+        <div class="status-item behind" id="stBehind"><span class="dot"></span><span>عقب‌تر از برنامه</span></div>
+      </div>
+    </div>
+    <div class="status-divider"></div>
+    <div class="compare-title">↗ Comparison With Previous Month</div>
+    <div class="compare-grid">
+      <div class="cmini"><b id="cmpImpr">0%</b><span>Impressions</span></div>
+      <div class="cmini"><b id="cmpClicks">0%</b><span>Clicks</span></div>
+      <div class="cmini"><b id="cmpLeads">0%</b><span>Leads</span></div>
+      <div class="cmini"><b id="cmpRank">0%</b><span>Rank</span></div>
+    </div>
+  </div>
+<div class="kpi-row">
+    <div class="glass kpi-card kpi-blue">
+      <div class="kpi-head"><div class="kpi-title">Visibility</div><div class="kpi-icon">👁️</div></div>
+      <div class="kpi-main"><strong id="visScore">۰</strong><small>/ ۳۵</small></div>
+      <div class="progress-line"><i id="visBar"></i></div>
+      <div class="kpi-foot"><span class="percent" id="visPct">0%</span><span>Visibility Score</span></div>
+    </div>
+    <div class="glass kpi-card kpi-green">
+      <div class="kpi-head"><div class="kpi-title">Lead Generation</div><div class="kpi-icon">👥</div></div>
+      <div class="kpi-main"><strong id="leadScore">۰</strong><small>/ ۴۰</small></div>
+      <div class="progress-line"><i id="leadBar"></i></div>
+      <div class="kpi-foot"><span class="percent" id="leadPct">0%</span><span>Lead Score</span></div>
+    </div>
+    <div class="glass kpi-card kpi-orange">
+      <div class="kpi-head"><div class="kpi-title">Management</div><div class="kpi-icon">⚙️</div></div>
+      <div class="kpi-main"><strong id="mgmtScore">۰</strong><small>/ ۲۵</small></div>
+      <div class="progress-line"><i id="mgmtBar"></i></div>
+      <div class="kpi-foot"><span class="percent" id="mgmtPct">0%</span><span>Management Score</span></div>
+    </div>
+    <div class="glass kpi-card kpi-purple">
+      <div class="kpi-head"><div class="kpi-title">Total Score</div><div class="kpi-icon">🏆</div></div>
+      <div class="kpi-main"><strong id="totalScoreCard">۰</strong><small>/ ۱۰۰</small></div>
+      <div class="progress-line"><i id="totalBar"></i></div>
+      <div class="kpi-foot"><span class="percent" id="totalPct">0%</span><span>Total KPI</span></div>
+    </div>
+  </div>
+
+  <div class="hidden-metrics">
+    <span id="currentMonth"></span><span id="followers"></span><span id="reelsCount"></span><span id="scoreDelta"></span><span id="statusText"></span>
+    <span id="views"></span><span id="viewsTarget"></span><span id="median"></span><span id="medianTarget"></span><span id="nonFollower"></span><span id="clicks"></span><span id="clicksTarget"></span><span id="rank"></span><span id="rankTarget"></span><span id="leads"></span><span id="leadsTarget"></span>
+  </div>
+  <div class="quote" style="display:block;right:2.2vw;left:auto;bottom:2.3vh;font-family:ui-rounded,'Segoe Script',cursive;font-size:20px;letter-spacing:.3px">Higher Together —</div>
+  <div class="pascal-footer"><img src="assets/pascal-logo.jpg" alt="Pascal Store"></div>
+  <button class="edit-btn" id="editBtn" title="ویرایش اضطراری محلی — کلید E (در همگام‌سازی بعدی Google Sheet جایگزین می‌شود)">⚙</button>
+</div>
+
+
+<div class="detail-page autumn" id="detailPage">
+  <div class="detail-bg"></div>
+  <div class="season-particles">
+    <i style="left:4%;--dur:17s;--delay:-3s;--sx:70px"></i><i style="left:10%;--dur:21s;--delay:-9s;--sx:-50px"></i><i style="left:16%;--dur:14s;--delay:-4s;--sx:90px"></i><i style="left:22%;--dur:23s;--delay:-12s;--sx:40px"></i><i style="left:28%;--dur:18s;--delay:-6s;--sx:-70px"></i><i style="left:34%;--dur:25s;--delay:-14s;--sx:80px"></i><i style="left:40%;--dur:16s;--delay:-8s;--sx:-40px"></i><i style="left:46%;--dur:22s;--delay:-2s;--sx:65px"></i><i style="left:52%;--dur:19s;--delay:-11s;--sx:-75px"></i><i style="left:58%;--dur:24s;--delay:-5s;--sx:55px"></i><i style="left:64%;--dur:18s;--delay:-13s;--sx:-60px"></i><i style="left:70%;--dur:20s;--delay:-7s;--sx:65px"></i><i style="left:76%;--dur:23s;--delay:-15s;--sx:-85px"></i><i style="left:82%;--dur:17s;--delay:-10s;--sx:55px"></i><i style="left:88%;--dur:26s;--delay:-4s;--sx:-45px"></i><i style="left:94%;--dur:19s;--delay:-12s;--sx:60px"></i>
+  </div>
+  <div class="detail-shell">
+    <header class="detail-header">
+      <div class="detail-title-wrap">
+        <div class="season-badge" id="seasonBadge">🍂</div>
+        <div><h2 class="detail-title">ریز KPI ماه <span id="detailMonth">مهر</span></h2><div class="detail-sub">نمای ماه جاری · اطلاعات هفتگی SEO + خروجی ماهانه Instagram و Management</div></div>
+      </div>
+      <div class="detail-clock"><div class="month-chip"><span id="seasonName">تم پاییزی</span> · <span id="detailMonth2">مهر</span></div><div class="small" id="detailDate">---</div></div>
+    </header>
+
+    <div class="detail-grid">
+      <section class="detail-card instagram-card">
+        <h3>Instagram Visibility</h3><div class="desc">شاخص‌های اصلی دیده‌شدن و کیفیت رشد</div>
+        <div class="ig-grid">
+          <div class="dmetric"><span>Monthly Reel Views</span><strong id="dViews">0</strong><em id="dViewsTarget">Target —</em></div>
+          <div class="dmetric"><span>Median 7-Day Views</span><strong id="dMedian">0</strong><em id="dMedianTarget">Target —</em></div>
+          <div class="dmetric"><span>Non-Follower %</span><strong id="dNonFollower">0%</strong><em>Target 70%+</em></div>
+          <div class="dmetric"><span>Non-Follower Reach</span><strong id="dNFReach">0</strong><em>Reach outside followers</em></div>
+          <div class="dmetric"><span>Followers Gained</span><strong id="dFollowersGained">0</strong><em>Outcome · بدون امتیاز مستقیم</em></div>
+          <div class="dmetric"><span>Reels Published</span><strong id="dReels">0</strong><em id="dReelsTarget">Execution target —</em></div>
+          <div class="dmetric"><span>Shares / 1K Views</span><strong id="dShares">0</strong><em>Diagnostic</em></div>
+          <div class="dmetric"><span>Saves / 1K Views</span><strong id="dSaves">0</strong><em>Diagnostic</em></div>
+        </div>
+      </section>
+
+      <section class="detail-card lead-card">
+        <h3>Lead + SEO</h3><div class="desc">لید ماهانه و خلاصه عملکرد ارگانیک سایت</div>
+        <div class="lead-hero">
+          <div class="lead-big"><small>Valid Leads</small><strong id="dLeads">0</strong><b id="dLeadsTarget">Target —</b></div>
+          <div class="lead-big"><small>Lead Attainment</small><strong id="dLeadAtt">0%</strong><b id="dLeadStatus">در حال محاسبه</b></div>
+        </div>
+        <div class="seo-summary">
+          <div class="dmetric"><span>Monthly Impressions</span><strong id="dImpressions">0</strong><em>جمع هفته‌ها</em></div>
+          <div class="dmetric"><span>Monthly Clicks</span><strong id="dClicks">0</strong><em id="dClicksTarget">Target —</em></div>
+          <div class="dmetric"><span>Monthly CTR</span><strong id="dCTR">0%</strong><em>Clicks ÷ Impressions</em></div>
+          <div class="dmetric"><span>Avg Rank — 72 Keywords</span><strong id="dRank">--</strong><em id="dRankTarget">Target —</em></div>
+        </div>
+      </section>
+
+      <section class="detail-card management-card">
+        <h3>Management & Execution</h3><div class="desc">تحقق فعالیت‌های اجرایی ماه جاری</div>
+        <div class="mgmt-list">
+          <div class="mgmt-row"><div class="top"><span>محتوا و کانال‌ها · /7</span><b id="mContentText">0%</b></div><div class="mgmt-track"><i id="mContentBar"></i></div></div>
+          <div class="mgmt-row"><div class="top"><span>پروژه‌های مارکتینگ · /6</span><b id="mProjectsText">0%</b></div><div class="mgmt-track"><i id="mProjectsBar"></i></div></div>
+          <div class="mgmt-row"><div class="top"><span>سایت و زیرساخت · /4</span><b id="mWebsiteText">0%</b></div><div class="mgmt-track"><i id="mWebsiteBar"></i></div></div>
+          <div class="mgmt-row"><div class="top"><span>طراحی و هویت بصری · /4</span><b id="mDesignText">0%</b></div><div class="mgmt-track"><i id="mDesignBar"></i></div></div>
+          <div class="mgmt-row"><div class="top"><span>مدیریت و گزارش‌دهی · /4</span><b id="mReportingText">0%</b></div><div class="mgmt-track"><i id="mReportingBar"></i></div></div>
+        </div>
+        <div class="mgmt-total"><span>Management Score</span><strong id="dMgmtScore">0 / 25</strong></div>
+      </section>
+    </div>
+
+    <section class="weekly-panel">
+      <div class="weekly-head"><div><h3>SEO Weekly Control — <span id="weeklyMonth">مهر</span></h3></div><div class="monthly-seo"><div class="seo-chip">Clicks <b id="chipClicks">0</b></div><div class="seo-chip">CTR <b id="chipCTR">0%</b></div><div class="seo-chip">Avg Rank <b id="chipRank">--</b></div></div></div>
+      <table class="weekly-table"><thead><tr><th>هفته</th><th>Impressions</th><th>Clicks</th><th>CTR</th><th>Avg Rank 72</th></tr></thead><tbody id="weeklyBody"></tbody></table>
+    </section>
+  </div>
+</div>
+<div class="page-dots"><span class="page-dot active" id="dot0"></span><span class="page-dot" id="dot1"></span></div>
+
+<div class="editor-backdrop" id="editorBackdrop">
+  <div class="editor">
+    <h2>ویرایش داده داشبورد</h2>
+    <div class="hint">اطلاعات فقط روی همین لپ‌تاپ ذخیره می‌شود. میانبر: <span class="kbd">E</span> باز/بسته · <span class="kbd">Esc</span> خروج</div>
+
+    <div class="section-title">ماه جاری و Instagram</div>
+    <div class="hint">ماه و تم به‌صورت خودکار از تاریخ شمسی تنظیم می‌شود. انتخاب ماه زیر فقط برای تست است.</div>
+    <div class="formgrid">
+      <div class="field"><label>ماه تست</label><select id="f_month"><option>مهر</option><option>آبان</option><option>آذر</option><option>دی</option><option>بهمن</option><option>اسفند</option></select></div>
+      <div class="field"><label>Monthly Reel Views</label><input id="f_views" type="number" min="0" step="100"></div>
+      <div class="field"><label>Median 7-Day Views</label><input id="f_median" type="number" min="0" step="100"></div>
+      <div class="field"><label>Non-Follower %</label><input id="f_nonFollower" type="number" min="0" max="100" step="0.1"></div>
+      <div class="field"><label>Non-Follower Reach</label><input id="f_nonFollowerReach" type="number" min="0" step="100"></div>
+      <div class="field"><label>Followers Gained</label><input id="f_followersGained" type="number" min="0" step="1"></div>
+      <div class="field"><label>Followers Total</label><input id="f_followers" type="number" min="0" step="1"></div>
+      <div class="field"><label>Reels This Month</label><input id="f_reels" type="number" min="0" step="1"></div>
+      <div class="field"><label>Shares / 1K Views</label><input id="f_sharesPer1k" type="number" min="0" step="0.1"></div>
+      <div class="field"><label>Saves / 1K Views</label><input id="f_savesPer1k" type="number" min="0" step="0.1"></div>
+      <div class="field"><label>Valid Leads ماهانه</label><input id="f_leads" type="number" min="0" step="1"></div>
+    </div>
+
+    <div class="section-title">SEO هفتگی — فقط Average کل 72 کلمه</div>
+    <div class="formgrid">
+      <div class="field"><label>W1 Impressions</label><input id="f_w1Imp" type="number" min="0" step="100"></div>
+      <div class="field"><label>W1 Clicks</label><input id="f_w1Clicks" type="number" min="0" step="10"></div>
+      <div class="field"><label>W1 Avg Rank 72</label><input id="f_w1Rank" type="number" min="0.1" step="0.1"></div>
+      <div class="field"><label>W2 Impressions</label><input id="f_w2Imp" type="number" min="0" step="100"></div>
+      <div class="field"><label>W2 Clicks</label><input id="f_w2Clicks" type="number" min="0" step="10"></div>
+      <div class="field"><label>W2 Avg Rank 72</label><input id="f_w2Rank" type="number" min="0.1" step="0.1"></div>
+      <div class="field"><label>W3 Impressions</label><input id="f_w3Imp" type="number" min="0" step="100"></div>
+      <div class="field"><label>W3 Clicks</label><input id="f_w3Clicks" type="number" min="0" step="10"></div>
+      <div class="field"><label>W3 Avg Rank 72</label><input id="f_w3Rank" type="number" min="0.1" step="0.1"></div>
+      <div class="field"><label>W4 Impressions</label><input id="f_w4Imp" type="number" min="0" step="100"></div>
+      <div class="field"><label>W4 Clicks</label><input id="f_w4Clicks" type="number" min="0" step="10"></div>
+      <div class="field"><label>W4 Avg Rank 72</label><input id="f_w4Rank" type="number" min="0.1" step="0.1"></div>
+      <div class="field"><label>W5 Impressions (اگر داشت)</label><input id="f_w5Imp" type="number" min="0" step="100"></div>
+      <div class="field"><label>W5 Clicks</label><input id="f_w5Clicks" type="number" min="0" step="10"></div>
+      <div class="field"><label>W5 Avg Rank 72</label><input id="f_w5Rank" type="number" min="0.1" step="0.1"></div>
+    </div>
+
+    <div class="section-title">Management & Execution — درصد تحقق</div>
+    <div class="formgrid">
+      <div class="field"><label>اجرای محتوا و کانال‌ها / 7</label><input id="f_content" type="number" min="0" max="100" step="1"></div>
+      <div class="field"><label>پروژه‌های مارکتینگ / 6</label><input id="f_projects" type="number" min="0" max="100" step="1"></div>
+      <div class="field"><label>سایت و زیرساخت / 4</label><input id="f_website" type="number" min="0" max="100" step="1"></div>
+      <div class="field"><label>طراحی و هویت بصری / 4</label><input id="f_design" type="number" min="0" max="100" step="1"></div>
+      <div class="field"><label>مدیریت و گزارش‌دهی / 4</label><input id="f_reporting" type="number" min="0" max="100" step="1"></div>
+    </div>
+
+    <div class="actions">
+      <button class="save" id="saveBtn">ذخیره و بروزرسانی</button>
+      <button class="ghost" id="demoBtn">دیتای نمونه</button>
+      <button class="danger" id="resetBtn">ریست</button>
+      <button class="ghost" id="closeBtn">بستن</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// ===== LIVE GOOGLE SHEET CONFIG =====
+const GOOGLE_SHEET_API = 'https://script.google.com/macros/s/AKfycbyAyVoKq8PhBVyESqHXnr5uSBl2fZ85OprnQvnNBCcpXS_xxyLLHuubzQQhxPPlWZUr4A/exec?key=PASKAL-TV-1405';
+const GOOGLE_SYNC_MS = 60 * 1000; // every 60 seconds
+const GOOGLE_CACHE_KEY = 'pascal_kpi_google_cache_v1';
+// ====================================
+
+const fa = n => new Intl.NumberFormat('fa-IR',{maximumFractionDigits:1}).format(n);
+const enCompact = n => {
+  if(n==null || !isFinite(n)) return '0';
+  if(n>=1000000) return (n/1000000).toFixed(n%1000000?1:0)+'M';
+  if(n>=1000) return (n/1000).toFixed(n%1000?1:0)+'K';
+  return String(Math.round(n));
+};
+const targets = {
+  'مهر':   {views:140000,median:9000, nonFollower:70, clicks:5600, rank:14.5, leads:45, followers:14000,reels:5},
+  'آبان':  {views:160000,median:12000,nonFollower:70, clicks:6200, rank:14,   leads:50, followers:15000,reels:5},
+  'آذر':   {views:185000,median:15000,nonFollower:70, clicks:6900, rank:13,   leads:55, followers:16000,reels:6},
+  'دی':    {views:210000,median:18000,nonFollower:70, clicks:7600, rank:12,   leads:60, followers:17000,reels:6},
+  'بهمن':  {views:230000,median:21000,nonFollower:70, clicks:8300, rank:11,   leads:68, followers:18000,reels:6},
+  'اسفند': {views:250000,median:24000,nonFollower:70, clicks:9000, rank:10,   leads:75, followers:19500,reels:6}
+};
+const defaults = {
+  month:'مهر',views:120000,median:7000,nonFollower:0,nonFollowerReach:0,followersGained:0,followers:13100,reels:4,sharesPer1k:0,savesPer1k:0,leads:40,
+  content:0,projects:0,website:0,design:0,reporting:0,
+  w1Imp:35000,w1Clicks:1150,w1Rank:15.0,w2Imp:36000,w2Clicks:1220,w2Rank:14.8,w3Imp:37500,w3Clicks:1280,w3Rank:14.6,w4Imp:39000,w4Clicks:1350,w4Rank:14.4,w5Imp:0,w5Clicks:0,w5Rank:0
+};
+function detectedPersianMonth(){
+  try{
+    const m=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{month:'long'}).format(new Date()).replace(/\s/g,'');
+    return targets[m]?m:null;
+  }catch(e){return null}
+}
+let data = load();
+const detectedMonth = detectedPersianMonth();
+if(detectedMonth) data.month = detectedMonth;
+function load(){try{return {...defaults,...JSON.parse(localStorage.getItem('pascal_kpi_v2')||localStorage.getItem('pascal_kpi_v1')||'{}')}}catch(e){return {...defaults}}}
+function save(){localStorage.setItem('pascal_kpi_v2',JSON.stringify(data))}
+function num(v,fallback=0){const x=Number(v);return Number.isFinite(x)?x:fallback}
+function normalMonth(v){return String(v??'').replace(/\s/g,'').trim()}
+function digitToEn(s){return String(s??'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d))}
+function weekNo(v){const m=digitToEn(v).match(/(\d+)/);return m?Number(m[1]):0}
+function setSyncState(state,label){const b=by('syncBadge'),t=by('syncText');if(!b||!t)return;b.classList.remove('ok','error','syncing');b.classList.add(state);t.textContent=label}
+function applyGooglePayload(payload,fromCache=false){
+  if(!payload||!Array.isArray(payload.monthly)) throw new Error('Invalid monthly payload');
+  const autoMonth=detectedPersianMonth();
+  const wanted=autoMonth||data.month||'مهر';
+  const row=payload.monthly.find(r=>normalMonth(r.month)===normalMonth(wanted));
+  if(!row) throw new Error('Current month not found in Dashboard_Data: '+wanted);
+
+  // Remote targets override built-in targets, so changes in the Sheet flow directly to the dashboard.
+  const t=targets[wanted]||targets['مهر'];
+  t.views=num(row.target_reel_views,t.views);
+  t.median=num(row.target_median_7d,t.median);
+  t.nonFollower=num(row.target_non_follower,t.nonFollower);
+  t.leads=num(row.target_leads,t.leads);
+  t.clicks=num(row.target_clicks,t.clicks);
+  t.rank=num(row.target_avg_rank_72,t.rank);
+  if(num(row.followers_outcome_target,0)>0)t.followers=num(row.followers_outcome_target,t.followers);
+
+  data={...data,
+    month:wanted,
+    views:num(row.reel_views,0),
+    median:num(row.median_7d,0),
+    nonFollower:num(row.non_follower,0),
+    nonFollowerReach:num(row.non_follower_reach,0),
+    followersGained:num(row.followers_gained,0),
+    reels:num(row.reels_published,0),
+    sharesPer1k:num(row.shares_per_1k,0),
+    savesPer1k:num(row.saves_per_1k,0),
+    leads:num(row.leads,0),
+    content:num(row.mgmt_content,0),
+    projects:num(row.mgmt_projects,0),
+    website:num(row.mgmt_website,0),
+    design:num(row.mgmt_design,0),
+    reporting:num(row.mgmt_reporting,0)
+  };
+  const af=num(row.actual_followers,0);if(af>0)data.followers=af;
+
+  // Clear and refill current month's 5 weekly SEO slots.
+  for(let i=1;i<=5;i++){data['w'+i+'Imp']=0;data['w'+i+'Clicks']=0;data['w'+i+'Rank']=0}
+  const weekRows=Array.isArray(payload.weekly_seo)?payload.weekly_seo.filter(r=>normalMonth(r['ماه']??r.month)===normalMonth(wanted)):[];
+  weekRows.forEach(r=>{
+    const i=weekNo(r['هفته']??r.week);if(i<1||i>5)return;
+    data['w'+i+'Imp']=num(r['Impressions']??r.impressions,0);
+    data['w'+i+'Clicks']=num(r['Clicks']??r.clicks,0);
+    data['w'+i+'Rank']=num(r['Average Rank کل 72 کلمه']??r.avg_rank_72??r.rank,0);
+  });
+
+  render();
+  if(!fromCache){
+    try{localStorage.setItem(GOOGLE_CACHE_KEY,JSON.stringify(payload))}catch(e){}
+  }
+}
+function loadGoogleCache(){
+  try{const c=JSON.parse(localStorage.getItem(GOOGLE_CACHE_KEY)||'null');if(c)applyGooglePayload(c,true);return !!c}catch(e){return false}
+}
+async function syncGoogleSheet(){
+  setSyncState('syncing','Google Sheet · در حال همگام‌سازی');
+  try{
+    const sep=GOOGLE_SHEET_API.includes('?')?'&':'?';
+    const res=await fetch(GOOGLE_SHEET_API+sep+'_ts='+Date.now(),{cache:'no-store'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const payload=await res.json();
+    if(payload.ok!==true)throw new Error(payload.error||'API response not ok');
+    applyGooglePayload(payload,false);
+    const now=new Date();
+    const tm=new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit',hour12:false}).format(now);
+    setSyncState('ok','Google Sheet · بروزرسانی '+tm);
+  }catch(err){
+    console.error('Google Sheet sync error:',err);
+    setSyncState('error','Google Sheet · اتصال ناموفق');
+  }
+}
+
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+function ratio(a,t){return t>0 ? a/t : 0}
+function weeklyRows(){
+  return [1,2,3,4,5].map(i=>({
+    week:i,imp:Number(data['w'+i+'Imp']||0),clicks:Number(data['w'+i+'Clicks']||0),rank:Number(data['w'+i+'Rank']||0)
+  })).filter(r=>r.imp>0||r.clicks>0||r.rank>0);
+}
+function monthlySEO(){
+  const rows=weeklyRows();
+  const impressions=rows.reduce((s,r)=>s+r.imp,0);
+  const clicks=rows.reduce((s,r)=>s+r.clicks,0);
+  const ctr=impressions>0?clicks/impressions*100:0;
+  const ranks=rows.filter(r=>r.rank>0).map(r=>r.rank);
+  const rank=ranks.length?ranks.reduce((a,b)=>a+b,0)/ranks.length:0;
+  return {rows,impressions,clicks,ctr,rank};
+}
+function calc(){
+  const seo=monthlySEO();
+  const t=targets[data.month]||targets['مهر'];
+  const viewsS = 10*ratio(data.views,t.views);
+  const medianS = 6*ratio(data.median,t.median);
+  const nfS = 4*ratio(data.nonFollower,t.nonFollower);
+  const clickS = 7.5*ratio(seo.clicks,t.clicks);
+  const rankS = seo.rank>0 ? 7.5*(t.rank/seo.rank) : 0;
+  const visibility = viewsS+medianS+nfS+clickS+rankS;
+  const lead = 40*ratio(data.leads,t.leads);
+  const mgmt = clamp(data.content,0,100)/100*7 + clamp(data.projects,0,100)/100*6 + clamp(data.website,0,100)/100*4 + clamp(data.design,0,100)/100*4 + clamp(data.reporting,0,100)/100*4;
+  return {t,seo,visibility,lead,mgmt,total:visibility+lead+mgmt};
+}
+function setText(id,val){const el=by(id);if(el)el.textContent=val}
+function setWidth(id,val){const el=by(id);if(el)el.style.width=clamp(val,0,100)+'%'}
+function render(){
+  const s=calc(),t=s.t,total=s.total,seo=s.seo;
+  const totalClamped=Math.max(0,total); setText('totalScore',fa(totalClamped)+'%'); setText('totalScoreCard',fa(totalClamped));
+  by('scoreRing').style.setProperty('--score-angle',Math.min(totalClamped,100)*3.6+'deg');
+  setText('visScore',fa(s.visibility)); setText('leadScore',fa(s.lead)); setText('mgmtScore',fa(s.mgmt));
+  const visPct=Math.min(s.visibility/35*100,100), leadPct=Math.min(s.lead/40*100,100), mgmtPct=Math.min(s.mgmt/25*100,100), totalPct=Math.min(totalClamped,100);
+  setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);
+  setText('visPct',fa(visPct)+'%'); setText('leadPct',fa(leadPct)+'%'); setText('mgmtPct',fa(mgmtPct)+'%'); setText('totalPct',fa(totalPct)+'%');
+  setText('currentMonth','ماه جاری: '+data.month); setText('scoreDelta',(total>=100?'+':'')+fa(total-100));
+  const ahead=total>105, on=total>=95 && total<=105, behind=total<95;
+  by('stAhead').classList.toggle('active',ahead);by('stOn').classList.toggle('active',on);by('stBehind').classList.toggle('active',behind);
+  const statusCard=by('statusCard');statusCard.classList.toggle('status-ahead',ahead);statusCard.classList.toggle('status-on',on);statusCard.classList.toggle('status-behind',behind);
+  const ring=by('scoreRing');ring.classList.toggle('ring-ahead',ahead);ring.classList.toggle('ring-on',on);ring.classList.toggle('ring-behind',behind);
+  setText('views',enCompact(data.views)); setText('viewsTarget','/ '+enCompact(t.views));
+  setText('median',enCompact(data.median)); setText('medianTarget','/ '+enCompact(t.median));
+  setText('nonFollower',data.nonFollower?fa(data.nonFollower)+'%':'ثبت نشده');
+  setText('clicks',enCompact(seo.clicks));setText('clicksTarget','/ '+enCompact(t.clicks));
+  setText('rank',seo.rank?fa(seo.rank):'--');setText('rankTarget','هدف '+fa(t.rank));
+  setText('leads',fa(data.leads));setText('leadsTarget','/ '+fa(t.leads));
+  setText('followers',enCompact(data.followers)); setText('reelsCount',fa(data.reels));
+  setText('cmpImpr',enCompact(seo.impressions));setText('cmpClicks',fa(Math.min((seo.clicks/t.clicks)*100,999))+'%');setText('cmpLeads',fa(Math.min((data.leads/t.leads)*100,999))+'%');setText('cmpRank',seo.rank?fa((t.rank/seo.rank)*100)+'%':'0%');
+  renderDetail(s);
+}
+function renderDetail(s){
+  const t=s.t,seo=s.seo,month=data.month;
+  const autumn=['مهر','آبان','آذر'].includes(month);
+  const page=by('detailPage');page.classList.toggle('autumn',autumn);page.classList.toggle('winter',!autumn);
+  setText('seasonBadge',autumn?'🍂':'❄️');setText('seasonName',autumn?'تم پاییزی':'تم زمستانی');setText('detailMonth',month);setText('detailMonth2',month);setText('weeklyMonth',month);
+  setText('dViews',enCompact(data.views));setText('dViewsTarget','Target '+enCompact(t.views));
+  setText('dMedian',enCompact(data.median));setText('dMedianTarget','Target '+enCompact(t.median));
+  setText('dNonFollower',fa(data.nonFollower)+'%');setText('dNFReach',enCompact(data.nonFollowerReach));setText('dFollowersGained',fa(data.followersGained));setText('dReels',fa(data.reels));setText('dReelsTarget','Target '+fa(t.reels));setText('dShares',fa(data.sharesPer1k));setText('dSaves',fa(data.savesPer1k));
+  setText('dLeads',fa(data.leads));setText('dLeadsTarget','Target '+fa(t.leads));const leadAtt=ratio(data.leads,t.leads)*100;setText('dLeadAtt',fa(leadAtt)+'%');setText('dLeadStatus',leadAtt>=110?'جلوتر از هدف':leadAtt>=90?'روی مسیر':'نیاز به جبران');
+  setText('dImpressions',enCompact(seo.impressions));setText('dClicks',enCompact(seo.clicks));setText('dClicksTarget','Target '+enCompact(t.clicks));setText('dCTR',fa(seo.ctr)+'%');setText('dRank',seo.rank?fa(seo.rank):'--');setText('dRankTarget','Target '+fa(t.rank));
+  const mg=[['content','mContentText','mContentBar'],['projects','mProjectsText','mProjectsBar'],['website','mWebsiteText','mWebsiteBar'],['design','mDesignText','mDesignBar'],['reporting','mReportingText','mReportingBar']];
+  mg.forEach(([k,txt,bar])=>{setText(txt,fa(data[k])+'%');setWidth(bar,data[k])});setText('dMgmtScore',fa(s.mgmt)+' / 25');
+  const tbody=by('weeklyBody');tbody.innerHTML='';seo.rows.forEach(r=>{const ctr=r.imp>0?r.clicks/r.imp*100:0;const tr=document.createElement('tr');const rc=r.rank>0 && r.rank<=t.rank?'rank-good':'rank-mid';tr.innerHTML=`<td>هفته ${fa(r.week)}</td><td>${enCompact(r.imp)}</td><td>${enCompact(r.clicks)}</td><td>${fa(ctr)}%</td><td class="${rc}">${r.rank?fa(r.rank):'--'}</td>`;tbody.appendChild(tr)});
+  setText('chipClicks',enCompact(seo.clicks));setText('chipCTR',fa(seo.ctr)+'%');setText('chipRank',seo.rank?fa(seo.rank):'--');
+}
+function by(id){return document.getElementById(id)}
+function tick(){const now=new Date();setText('time',new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now));const dateTxt=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).format(now);setText('date',dateTxt);setText('detailDate',dateTxt)}
+setInterval(tick,1000);tick();render();loadGoogleCache();syncGoogleSheet();setInterval(syncGoogleSheet,GOOGLE_SYNC_MS);
+
+const map=['month','views','median','nonFollower','nonFollowerReach','followersGained','followers','reels','sharesPer1k','savesPer1k','leads','content','projects','website','design','reporting','w1Imp','w1Clicks','w1Rank','w2Imp','w2Clicks','w2Rank','w3Imp','w3Clicks','w3Rank','w4Imp','w4Clicks','w4Rank','w5Imp','w5Clicks','w5Rank'];
+function openEditor(){map.forEach(k=>{const el=by('f_'+k);if(el)el.value=data[k]});by('editorBackdrop').classList.add('open')}
+function closeEditor(){by('editorBackdrop').classList.remove('open')}
+by('editBtn').onclick=openEditor;by('closeBtn').onclick=closeEditor;
+by('saveBtn').onclick=()=>{map.forEach(k=>{const el=by('f_'+k);if(!el)return;data[k]=k==='month'?el.value:Number(el.value||0)});const auto=detectedPersianMonth();if(auto)data.month=auto;save();render();closeEditor()};
+by('resetBtn').onclick=()=>{if(confirm('داده‌های ذخیره‌شده ریست شود؟')){data={...defaults};const auto=detectedPersianMonth();if(auto)data.month=auto;save();render();openEditor()}};
+by('demoBtn').onclick=()=>{data={...data,views:152000,median:10500,nonFollower:72,nonFollowerReach:94000,followersGained:620,followers:13720,reels:5,sharesPer1k:8.4,savesPer1k:5.9,leads:47,content:92,projects:84,website:90,design:96,reporting:88,w1Imp:38500,w1Clicks:1330,w1Rank:14.7,w2Imp:40200,w2Clicks:1440,w2Rank:14.4,w3Imp:41700,w3Clicks:1530,w3Rank:14.2,w4Imp:43000,w4Clicks:1620,w4Rank:13.9,w5Imp:0,w5Clicks:0,w5Rank:0};save();render();openEditor()};
+by('editorBackdrop').addEventListener('click',e=>{if(e.target===by('editorBackdrop'))closeEditor()});
+
+let currentPage=0;const ROTATE_MS=10*60*1000;
+function setPage(i){currentPage=i%2;document.body.classList.toggle('show-detail',currentPage===1);by('dot0').classList.toggle('active',currentPage===0);by('dot1').classList.toggle('active',currentPage===1)}
+function nextPage(){setPage((currentPage+1)%2)}
+setInterval(nextPage,ROTATE_MS);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeEditor();if((e.key==='e'||e.key==='E')&&!['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)){by('editorBackdrop').classList.contains('open')?closeEditor():openEditor()}if((e.key==='ArrowRight'||e.key==='ArrowLeft'||e.code==='Space')&&!by('editorBackdrop').classList.contains('open')){e.preventDefault();nextPage()}});
+</script>
+</body>
+</html>
