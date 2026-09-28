@@ -389,6 +389,15 @@
     .v22-weekly .weekly-table{font-size:11px!important}
   }
 
+
+  /* BACKGROUND MUSIC PLAYER */
+  .music-player{position:fixed;z-index:95;right:2vw;bottom:1.6vh;display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;background:rgba(8,16,28,.42);border:1px solid rgba(255,255,255,.12);box-shadow:0 6px 18px rgba(0,0,0,.22);opacity:.52;transition:opacity .2s,background .2s;direction:rtl}
+  .music-player:hover{opacity:.98;background:rgba(8,16,28,.82)}
+  .music-btn{border:0;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;min-width:34px;height:28px;padding:0 10px;font-family:Tahoma,Arial,sans-serif;font-size:12px;cursor:pointer}
+  .music-btn:hover{background:rgba(255,255,255,.22)}
+  .music-label{font-size:11px;color:rgba(255,255,255,.78);white-space:nowrap}
+  .music-player.playing{border-color:rgba(105,255,183,.30);box-shadow:0 6px 18px rgba(0,0,0,.22),0 0 18px rgba(105,255,183,.08)}
+
 </style>
 </head>
 <body>
@@ -567,6 +576,14 @@
     </section>
   </div>
 </div>
+
+<audio id="bgMusic" preload="metadata"></audio>
+<div class="music-player" id="musicPlayer" title="موزیک پس‌زمینه">
+  <button class="music-btn" id="musicToggle" type="button">شروع موزیک</button>
+  <span class="music-label" id="musicLabel">پس‌زمینه</span>
+  <button class="music-btn" id="musicMute" type="button">صدا</button>
+</div>
+
 <div class="page-nav" id="pageNav" title="تغییر اسلاید">
   <button class="page-nav-btn" id="prevSlide" type="button" aria-label="اسلاید قبلی">‹</button>
   <div class="page-dots">
@@ -660,6 +677,25 @@
   function render(){var s=calc(),t=s.t,total=Math.max(0,s.total),seo=s.seo,visPct=Math.min(s.visibility/35*100,100),leadPct=Math.min(s.lead/40*100,100),mgmtPct=Math.min(s.mgmt/25*100,100),totalPct=Math.min(total,100),ahead=total>105,on=total>=95&&total<=105,behind=total<95;setText('totalScore',faPercent(total));setText('totalScoreCard',fa(total));setText('visScore',fa(s.visibility));setText('leadScore',fa(s.lead));setText('mgmtScore',fa(s.mgmt));setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);setText('visPct',faPercent(visPct));setText('leadPct',faPercent(leadPct));setText('mgmtPct',faPercent(mgmtPct));setText('totalPct',faPercent(totalPct));toggleClass(by('stAhead'),'active',ahead);toggleClass(by('stOn'),'active',on);toggleClass(by('stBehind'),'active',behind);setText('cmpImpr',faCompact(seo.impressions));setText('cmpClicks',faPercent(t.clicks?Math.min(seo.clicks/t.clicks*100,999):0));setText('cmpLeads',faPercent(t.leads?Math.min(data.leads/t.leads*100,999):0));setText('cmpRank',seo.rank?faPercent(t.rank/seo.rank*100):'۰٪');renderDetail(s)}
   function renderDetail(s){var t=s.t,seo=s.seo,month=data.month,autumn=month==='مهر'||month==='آبان'||month==='آذر',page=by('detailPage'),leadAtt=ratio(data.leads,t.leads)*100,mg=[['content','mContentText','mContentBar'],['projects','mProjectsText','mProjectsBar'],['website','mWebsiteText','mWebsiteBar'],['design','mDesignText','mDesignBar'],['reporting','mReportingText','mReportingBar']],i,r,tr,ctr,rc,tbody=by('weeklyBody');removeClass(page,'autumn');removeClass(page,'winter');if(autumn){addClass(page,'autumn');setText('seasonBadge','📊');setText('seasonName','گزارش ماهانه')}else{addClass(page,'winter');setText('seasonBadge','📊');setText('seasonName','گزارش ماهانه')}setText('detailMonth',month);setText('detailMonth2',month);setText('weeklyMonth',month);setText('dViews',faCompact(data.views));setText('dViewsTarget','هدف ماه '+month+': '+faCompact(t.views));setText('dNonFollower',faPercent(data.nonFollower));setText('dNonFollowerTarget','هدف ماه '+month+': '+faPercent(t.nonFollower));setText('dLeads',faInt(data.leads));setText('dLeadsTarget','هدف ماه '+month+': '+faInt(t.leads));setText('dLeadAtt',faPercent(leadAtt));setText('dLeadStatus',leadAtt>=110?'جلوتر از هدف':leadAtt>=90?'روی مسیر':'نیاز به جبران');setText('dImpressions',faCompact(seo.impressions));setText('dClicks',faCompact(seo.clicks));setText('dClicksTarget','هدف ماه '+month+': '+faCompact(t.clicks));setText('dCTR',faPercent(seo.ctr));setText('dRank',seo.rank?fa(seo.rank):'--');setText('dRankTarget','هدف ماه '+month+': '+fa(t.rank));for(i=0;i<mg.length;i++){setText(mg[i][1],faPercent(data[mg[i][0]]));setWidth(mg[i][2],data[mg[i][0]])}setText('dMgmtScore',fa(s.mgmt)+' / '+faInt(25));if(tbody){tbody.innerHTML='';for(i=0;i<seo.rows.length;i++){r=seo.rows[i];ctr=r.imp>0?r.clicks/r.imp*100:0;rc=r.rank>0&&r.rank<=t.rank?'rank-good':'rank-mid';tr=document.createElement('tr');tr.innerHTML='<td>هفته '+fa(r.week)+'</td><td>'+faInt(r.imp)+'</td><td>'+faInt(r.clicks)+'</td><td>'+faPercent(ctr)+'</td><td class="'+rc+'">'+(r.rank?fa(r.rank):'--')+'</td>';tbody.appendChild(tr)}}setText('chipClicks',faCompact(seo.clicks));setText('chipClicksTarget','هدف '+month+': '+faCompact(t.clicks));setText('chipCTR',faPercent(seo.ctr));setText('chipRank',seo.rank?fa(seo.rank):'--');setText('chipRankTarget','هدف '+month+': '+fa(t.rank))}
   function tick(){setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%2)+2)%2;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
+
+  /* Persistent background music - stays alive while dashboard slides change */
+  var MUSIC_TRACKS=[
+    'music/background_00.m4a','music/background_01.m4a','music/background_02.m4a','music/background_03.m4a','music/background_04.m4a',
+    'music/background_05.m4a','music/background_06.m4a','music/background_07.m4a','music/background_08.m4a','music/background_09.m4a'
+  ];
+  var MUSIC_STATE_KEY='pascal_bg_music_state_v1',musicIndex=0,musicStarted=false,musicResumeTime=0;
+  var bgMusic=by('bgMusic'),musicToggle=by('musicToggle'),musicMute=by('musicMute'),musicPlayer=by('musicPlayer'),musicLabel=by('musicLabel');
+  function loadMusicState(){try{var s=JSON.parse(localStorage.getItem(MUSIC_STATE_KEY)||'{}');if(s&&isFinite(s.index))musicIndex=Math.max(0,Math.min(MUSIC_TRACKS.length-1,parseInt(s.index,10)||0));if(s&&isFinite(s.time))musicResumeTime=Math.max(0,parseFloat(s.time)||0)}catch(e){}}
+  function saveMusicState(){if(!bgMusic)return;try{localStorage.setItem(MUSIC_STATE_KEY,JSON.stringify({index:musicIndex,time:bgMusic.currentTime||0,muted:!!bgMusic.muted}))}catch(e){}}
+  function setMusicUi(){if(!bgMusic)return;if(bgMusic.paused){musicToggle.innerHTML='شروع موزیک';removeClass(musicPlayer,'playing')}else{musicToggle.innerHTML='توقف موزیک';addClass(musicPlayer,'playing')}musicMute.innerHTML=bgMusic.muted?'بی‌صدا':'صدا';musicLabel.innerHTML='بخش '+pdigits(musicIndex+1)+' از '+pdigits(MUSIC_TRACKS.length)}
+  function loadMusicTrack(index,resume){if(!bgMusic)return;musicIndex=((index%MUSIC_TRACKS.length)+MUSIC_TRACKS.length)%MUSIC_TRACKS.length;musicResumeTime=resume||0;bgMusic.src=MUSIC_TRACKS[musicIndex];bgMusic.load();setMusicUi()}
+  function playMusic(){if(!bgMusic)return;musicStarted=true;var r;try{r=bgMusic.play();if(r&&typeof r.catch==='function')r.catch(function(){setMusicUi()})}catch(e){}setMusicUi()}
+  function toggleMusic(){if(!bgMusic)return;if(bgMusic.paused)playMusic();else{bgMusic.pause();saveMusicState();setMusicUi()}}
+  function nextMusicTrack(){saveMusicState();loadMusicTrack(musicIndex+1,0);playMusic()}
+  if(bgMusic){loadMusicState();bgMusic.volume=.18;loadMusicTrack(musicIndex,musicResumeTime);bgMusic.addEventListener('loadedmetadata',function(){if(musicResumeTime>0&&musicResumeTime<bgMusic.duration-2){try{bgMusic.currentTime=musicResumeTime}catch(e){}}musicResumeTime=0});bgMusic.addEventListener('ended',nextMusicTrack);bgMusic.addEventListener('error',function(){setTimeout(nextMusicTrack,1200)});bgMusic.addEventListener('play',setMusicUi);bgMusic.addEventListener('pause',setMusicUi);setInterval(saveMusicState,10000)}
+  if(musicToggle)musicToggle.onclick=toggleMusic;
+  if(musicMute)musicMute.onclick=function(){if(!bgMusic)return;bgMusic.muted=!bgMusic.muted;saveMusicState();setMusicUi()};
+
   tick();render();loadGoogleCache();syncGoogleSheet();setInterval(tick,1000);setInterval(syncGoogleSheet,GOOGLE_SYNC_MS);var p0=by('dot0'),p1=by('dot1'),pn=by('nextSlide'),pp=by('prevSlide');if(p0)p0.onclick=function(){manualPage(0)};if(p1)p1.onclick=function(){manualPage(1)};if(pn)pn.onclick=function(){manualPage(currentPage+1)};if(pp)pp.onclick=function(){manualPage(currentPage-1)};restartRotation();
 })();
 </script>
