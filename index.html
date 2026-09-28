@@ -680,8 +680,8 @@
 
   /* Persistent background music - stays alive while dashboard slides change */
   var MUSIC_TRACKS=[
-    'music/background_00.m4a','music/background_01.m4a','music/background_02.m4a','music/background_03.m4a','music/background_04.m4a',
-    'music/background_05.m4a','music/background_06.m4a','music/background_07.m4a','music/background_08.m4a','music/background_09.m4a'
+    'background_00.m4a','background_01.m4a','background_02.m4a','background_03.m4a','background_04.m4a',
+    'background_05.m4a','background_06.m4a','background_07.m4a','background_08.m4a','background_09.m4a'
   ];
   var MUSIC_STATE_KEY='pascal_bg_music_state_v1',musicIndex=0,musicStarted=false,musicResumeTime=0;
   var bgMusic=by('bgMusic'),musicToggle=by('musicToggle'),musicMute=by('musicMute'),musicPlayer=by('musicPlayer'),musicLabel=by('musicLabel');
@@ -692,7 +692,7 @@
   function playMusic(){if(!bgMusic)return;musicStarted=true;var r;try{r=bgMusic.play();if(r&&typeof r.catch==='function')r.catch(function(){setMusicUi()})}catch(e){}setMusicUi()}
   function toggleMusic(){if(!bgMusic)return;if(bgMusic.paused)playMusic();else{bgMusic.pause();saveMusicState();setMusicUi()}}
   function nextMusicTrack(){saveMusicState();loadMusicTrack(musicIndex+1,0);playMusic()}
-  if(bgMusic){loadMusicState();bgMusic.volume=.18;loadMusicTrack(musicIndex,musicResumeTime);bgMusic.addEventListener('loadedmetadata',function(){if(musicResumeTime>0&&musicResumeTime<bgMusic.duration-2){try{bgMusic.currentTime=musicResumeTime}catch(e){}}musicResumeTime=0});bgMusic.addEventListener('ended',nextMusicTrack);bgMusic.addEventListener('error',function(){setTimeout(nextMusicTrack,1200)});bgMusic.addEventListener('play',setMusicUi);bgMusic.addEventListener('pause',setMusicUi);setInterval(saveMusicState,10000)}
+  if(bgMusic){loadMusicState();bgMusic.volume=.18;loadMusicTrack(musicIndex,musicResumeTime);bgMusic.addEventListener('loadedmetadata',function(){if(musicResumeTime>0&&musicResumeTime<bgMusic.duration-2){try{bgMusic.currentTime=musicResumeTime}catch(e){}}musicResumeTime=0});bgMusic.addEventListener('ended',nextMusicTrack);bgMusic.addEventListener('error',function(){if(musicLabel)musicLabel.innerHTML='خطای فایل موزیک';setMusicUi()});bgMusic.addEventListener('play',setMusicUi);bgMusic.addEventListener('pause',setMusicUi);setInterval(saveMusicState,10000)}
   if(musicToggle)musicToggle.onclick=toggleMusic;
   if(musicMute)musicMute.onclick=function(){if(!bgMusic)return;bgMusic.muted=!bgMusic.muted;saveMusicState();setMusicUi()};
 
