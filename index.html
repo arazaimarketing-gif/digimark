@@ -91,16 +91,16 @@
   .date-card .date-top{font-size:13px;line-height:1.8;color:#eef4fb;margin-top:4px}
   .date-card .time{font-size:34px;font-family:var(--font-title);font-weight:800;line-height:1.1;margin-top:2px;text-shadow:0 2px 10px rgba(0,0,0,.28)}
 
-  .status-card{position:absolute;z-index:11;left:2.2vw;top:26.2vh;width:22vw;max-width:385px;padding:18px 18px 16px;background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(11,22,34,.115));}
+  .status-card{position:absolute;z-index:11;left:2.2vw;top:26.2vh;width:23.2vw;max-width:410px;padding:18px 18px 16px;background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(11,22,34,.115));}
   .status-card h3{margin:0 0 12px;font-size:18px;font-weight:700;color:#eff4fb;text-shadow:0 2px 8px rgba(0,0,0,.35)}
-  .status-top{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;direction:ltr}
+  .status-top{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:center;direction:ltr}.status-list{min-width:0}.status-item{display:flex;align-items:center;gap:10px;font-size:13px;color:#f2f7fd;padding:7px 10px;border-radius:12px;border:1px solid transparent;transition:background .35s ease,border-color .35s ease,box-shadow .35s ease,color .35s ease,transform .35s ease}.status-item span:last-child{display:block;line-height:1.45;white-space:normal;word-break:keep-all}.status-item.active{transform:none;font-weight:800;padding:6px 9px}
   .progress-ring{position:relative;width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#7ac0ff 0deg,#7ac0ff var(--score-angle,0deg),rgba(255,255,255,.12) var(--score-angle,0deg),rgba(255,255,255,.12) 360deg)}
   .progress-ring::after{content:"";position:absolute;inset:10px;border-radius:50%;background:linear-gradient(180deg,rgba(32,48,69,.62),rgba(18,32,48,.70));border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(4px)}
   .progress-ring .core{position:relative;z-index:2;text-align:center}
   .progress-ring strong{font-family:var(--font-title);font-size:33px;line-height:1;color:#fff}
   .progress-ring small{display:block;font-size:11px;color:rgba(241,246,255,.74);margin-top:4px}
   .status-list{direction:rtl;display:flex;flex-direction:column;gap:10px}
-  .status-item{display:flex;align-items:center;gap:10px;font-size:14px;color:#f2f7fd}
+  /* status-item base moved above for TV layout */
   .status-item .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.7);box-shadow:0 0 10px rgba(255,255,255,.18)}
   .status-item.active .dot{background:#88ffbe;box-shadow:0 0 12px rgba(136,255,190,.55)}
   .status-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);margin:14px 0}
@@ -128,7 +128,7 @@
   .kpi-purple .kpi-icon,.kpi-purple .percent{color:#d78fff}.kpi-purple .progress-line i{background:linear-gradient(90deg,#c878ff,#f2a7ff);box-shadow:0 0 16px rgba(200,120,255,.34)}
 
   
-  .goal-pill{position:absolute;z-index:12;left:50%;top:14.2vh;transform:translateX(-50%);padding:10px 24px;border-radius:16px;background:rgba(255,255,255,.88);color:#223250;font-family:var(--font-title);font-size:18px;font-weight:800;box-shadow:0 10px 22px rgba(0,0,0,.12);border:1px solid rgba(255,255,255,.5)}
+  .goal-pill{position:absolute;z-index:12;left:50%;top:46.5vh;transform:translateX(-50%);padding:8px 22px;border-radius:16px;background:rgba(255,255,255,.17);color:#fff8ee;font-family:var(--font-title);font-size:23px;font-weight:800;box-shadow:0 8px 18px rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);text-shadow:0 2px 12px rgba(0,0,0,.42)}
   .status-card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(11,22,34,.10));}
   .kpi-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(9,19,29,.10));}
   .date-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(14,24,37,.08));}
@@ -300,6 +300,40 @@
   .weekly-panel{height:27%!important;min-height:0!important}.page-dots{display:none!important}
   .editor{width:900px!important;max-width:90%!important}.formgrid{display:flex!important;flex-wrap:wrap!important}.field{width:23%!important;margin:1%!important}
   .season-particles{display:none!important}
+
+  .v22-detail-shell{max-width:1880px!important;margin:0 auto!important;justify-content:center!important}
+  .v22-header{justify-content:center!important;text-align:center!important;gap:26px!important}
+  .v22-header .detail-title-wrap{display:flex!important;align-items:center!important;justify-content:center!important;gap:16px!important;flex:1!important}
+  .detail-clock{text-align:center!important}
+  .v22-grid{align-items:stretch!important;justify-content:center!important}
+  .v22-panel-title{display:flex!important;align-items:flex-start!important;gap:14px!important;margin-bottom:14px!important}
+  .v22-panel-title > div{flex:1!important;min-width:0!important}
+  .v22-panel-title h3{margin:0 0 4px!important;font-size:25px!important;line-height:1.35!important}
+  .v22-panel-title .desc{margin:0!important;font-size:13px!important;line-height:1.7!important}
+  .v22-icon{margin-top:2px!important;flex:0 0 46px!important}
+  .v22-weekly{height:27%!important;padding:14px 18px 12px!important}
+  .v22-weekly .weekly-head h3{font-size:22px!important}
+  .v22-weekly .seo-chip{font-size:12px!important;padding:7px 12px!important}
+  .v22-weekly .seo-chip b{font-size:15px!important}
+  .v22-weekly .seo-chip small{font-size:10px!important}
+  .v22-weekly .weekly-table{font-size:16px!important;border-spacing:0 6px!important}
+  .v22-weekly .weekly-table th{font-size:15px!important;padding-bottom:4px!important}
+  .v22-weekly .weekly-table td{padding:10px 9px!important}
+  .detail-page .season-particles i{opacity:.72!important;animation-name:seasonFallSimple!important;animation-timing-function:linear!important}
+  .detail-page .season-particles i:nth-child(1){left:5%!important;animation-duration:16s!important;animation-delay:-2s!important}
+  .detail-page .season-particles i:nth-child(2){left:12%!important;animation-duration:20s!important;animation-delay:-9s!important}
+  .detail-page .season-particles i:nth-child(3){left:20%!important;animation-duration:14s!important;animation-delay:-5s!important}
+  .detail-page .season-particles i:nth-child(4){left:28%!important;animation-duration:18s!important;animation-delay:-12s!important}
+  .detail-page .season-particles i:nth-child(5){left:36%!important;animation-duration:15s!important;animation-delay:-7s!important}
+  .detail-page .season-particles i:nth-child(6){left:44%!important;animation-duration:22s!important;animation-delay:-15s!important}
+  .detail-page .season-particles i:nth-child(7){left:53%!important;animation-duration:17s!important;animation-delay:-4s!important}
+  .detail-page .season-particles i:nth-child(8){left:62%!important;animation-duration:19s!important;animation-delay:-11s!important}
+  .detail-page .season-particles i:nth-child(9){left:71%!important;animation-duration:16s!important;animation-delay:-6s!important}
+  .detail-page .season-particles i:nth-child(10){left:80%!important;animation-duration:21s!important;animation-delay:-14s!important}
+  .detail-page .season-particles i:nth-child(11){left:89%!important;animation-duration:15s!important;animation-delay:-8s!important}
+  .detail-page .season-particles i:nth-child(12){left:96%!important;animation-duration:18s!important;animation-delay:-3s!important}
+  @keyframes seasonFallSimple{0%{transform:translate(0,-10vh) rotate(0deg);opacity:0}10%{opacity:.72}100%{transform:translate(40px,110vh) rotate(300deg);opacity:0}}
+
   @media screen and (max-width:1280px){.brand-panel{width:28%!important}.status-card{max-width:25%!important;width:320px!important}.kpi-row{left:27%!important}.kpi-card{padding:12px!important}.kpi-title{font-size:14px!important}.kpi-main strong{font-size:28px!important}}
 
   /* ===== FINAL BRAND ALIGNMENT ===== */
@@ -308,11 +342,45 @@
   .brand-head .araz-wrap{margin-left:auto!important;margin-right:auto!important;margin-bottom:8px!important}
   .brand-copy{text-align:center!important;border-right:0!important;padding-right:0!important;margin-right:0!important}
   .brand-quote{text-align:center!important}
+
+  .v22-detail-shell{max-width:1880px!important;margin:0 auto!important;justify-content:center!important}
+  .v22-header{justify-content:center!important;text-align:center!important;gap:26px!important}
+  .v22-header .detail-title-wrap{display:flex!important;align-items:center!important;justify-content:center!important;gap:16px!important;flex:1!important}
+  .detail-clock{text-align:center!important}
+  .v22-grid{align-items:stretch!important;justify-content:center!important}
+  .v22-panel-title{display:flex!important;align-items:flex-start!important;gap:14px!important;margin-bottom:14px!important}
+  .v22-panel-title > div{flex:1!important;min-width:0!important}
+  .v22-panel-title h3{margin:0 0 4px!important;font-size:25px!important;line-height:1.35!important}
+  .v22-panel-title .desc{margin:0!important;font-size:13px!important;line-height:1.7!important}
+  .v22-icon{margin-top:2px!important;flex:0 0 46px!important}
+  .v22-weekly{height:27%!important;padding:14px 18px 12px!important}
+  .v22-weekly .weekly-head h3{font-size:22px!important}
+  .v22-weekly .seo-chip{font-size:12px!important;padding:7px 12px!important}
+  .v22-weekly .seo-chip b{font-size:15px!important}
+  .v22-weekly .seo-chip small{font-size:10px!important}
+  .v22-weekly .weekly-table{font-size:16px!important;border-spacing:0 6px!important}
+  .v22-weekly .weekly-table th{font-size:15px!important;padding-bottom:4px!important}
+  .v22-weekly .weekly-table td{padding:10px 9px!important}
+  .detail-page .season-particles i{opacity:.72!important;animation-name:seasonFallSimple!important;animation-timing-function:linear!important}
+  .detail-page .season-particles i:nth-child(1){left:5%!important;animation-duration:16s!important;animation-delay:-2s!important}
+  .detail-page .season-particles i:nth-child(2){left:12%!important;animation-duration:20s!important;animation-delay:-9s!important}
+  .detail-page .season-particles i:nth-child(3){left:20%!important;animation-duration:14s!important;animation-delay:-5s!important}
+  .detail-page .season-particles i:nth-child(4){left:28%!important;animation-duration:18s!important;animation-delay:-12s!important}
+  .detail-page .season-particles i:nth-child(5){left:36%!important;animation-duration:15s!important;animation-delay:-7s!important}
+  .detail-page .season-particles i:nth-child(6){left:44%!important;animation-duration:22s!important;animation-delay:-15s!important}
+  .detail-page .season-particles i:nth-child(7){left:53%!important;animation-duration:17s!important;animation-delay:-4s!important}
+  .detail-page .season-particles i:nth-child(8){left:62%!important;animation-duration:19s!important;animation-delay:-11s!important}
+  .detail-page .season-particles i:nth-child(9){left:71%!important;animation-duration:16s!important;animation-delay:-6s!important}
+  .detail-page .season-particles i:nth-child(10){left:80%!important;animation-duration:21s!important;animation-delay:-14s!important}
+  .detail-page .season-particles i:nth-child(11){left:89%!important;animation-duration:15s!important;animation-delay:-8s!important}
+  .detail-page .season-particles i:nth-child(12){left:96%!important;animation-duration:18s!important;animation-delay:-3s!important}
+  @keyframes seasonFallSimple{0%{transform:translate(0,-10vh) rotate(0deg);opacity:0}10%{opacity:.72}100%{transform:translate(40px,110vh) rotate(300deg);opacity:0}}
+
   @media screen and (max-width:1280px){.brand-panel{width:320px!important;max-width:25%!important}}
 
 
   /* ===== V22 AUTUMN MONTHLY DETAIL ===== */
-  .goal-pill{left:50%!important;top:14.2vh!important;transform:translateX(-50%)!important;padding:10px 26px!important}
+  .goal-pill{left:50%!important;top:46.5vh!important;transform:translateX(-50%)!important;padding:10px 26px!important}
   .detail-page{background:#6f361b!important}
   .detail-page .detail-bg{background-image:url('assets/background.png')!important;background-position:center center!important;background-repeat:no-repeat!important;background-size:cover!important;filter:sepia(.30) saturate(1.55) hue-rotate(-10deg) brightness(.68)!important;transform:scale(1.02)!important}
   .detail-page .detail-bg:before{content:""!important;position:absolute!important;top:0!important;right:0!important;bottom:0!important;left:0!important;background:linear-gradient(180deg,rgba(255,163,61,.19),rgba(116,48,15,.17) 35%,rgba(52,22,13,.38) 100%)!important}
@@ -376,6 +444,40 @@
   .v22-weekly .weekly-table{font-size:12px!important;border-spacing:0 4px!important}
   .v22-weekly .weekly-table th{font-size:11px!important;color:#ffdfbc!important;padding-bottom:2px!important}
   .v22-weekly .weekly-table td{padding:6px 7px!important;background:rgba(45,17,7,.24)!important;border-color:rgba(255,232,206,.08)!important;color:#fff9f2!important}
+
+
+  .v22-detail-shell{max-width:1880px!important;margin:0 auto!important;justify-content:center!important}
+  .v22-header{justify-content:center!important;text-align:center!important;gap:26px!important}
+  .v22-header .detail-title-wrap{display:flex!important;align-items:center!important;justify-content:center!important;gap:16px!important;flex:1!important}
+  .detail-clock{text-align:center!important}
+  .v22-grid{align-items:stretch!important;justify-content:center!important}
+  .v22-panel-title{display:flex!important;align-items:flex-start!important;gap:14px!important;margin-bottom:14px!important}
+  .v22-panel-title > div{flex:1!important;min-width:0!important}
+  .v22-panel-title h3{margin:0 0 4px!important;font-size:25px!important;line-height:1.35!important}
+  .v22-panel-title .desc{margin:0!important;font-size:13px!important;line-height:1.7!important}
+  .v22-icon{margin-top:2px!important;flex:0 0 46px!important}
+  .v22-weekly{height:27%!important;padding:14px 18px 12px!important}
+  .v22-weekly .weekly-head h3{font-size:22px!important}
+  .v22-weekly .seo-chip{font-size:12px!important;padding:7px 12px!important}
+  .v22-weekly .seo-chip b{font-size:15px!important}
+  .v22-weekly .seo-chip small{font-size:10px!important}
+  .v22-weekly .weekly-table{font-size:16px!important;border-spacing:0 6px!important}
+  .v22-weekly .weekly-table th{font-size:15px!important;padding-bottom:4px!important}
+  .v22-weekly .weekly-table td{padding:10px 9px!important}
+  .detail-page .season-particles i{opacity:.72!important;animation-name:seasonFallSimple!important;animation-timing-function:linear!important}
+  .detail-page .season-particles i:nth-child(1){left:5%!important;animation-duration:16s!important;animation-delay:-2s!important}
+  .detail-page .season-particles i:nth-child(2){left:12%!important;animation-duration:20s!important;animation-delay:-9s!important}
+  .detail-page .season-particles i:nth-child(3){left:20%!important;animation-duration:14s!important;animation-delay:-5s!important}
+  .detail-page .season-particles i:nth-child(4){left:28%!important;animation-duration:18s!important;animation-delay:-12s!important}
+  .detail-page .season-particles i:nth-child(5){left:36%!important;animation-duration:15s!important;animation-delay:-7s!important}
+  .detail-page .season-particles i:nth-child(6){left:44%!important;animation-duration:22s!important;animation-delay:-15s!important}
+  .detail-page .season-particles i:nth-child(7){left:53%!important;animation-duration:17s!important;animation-delay:-4s!important}
+  .detail-page .season-particles i:nth-child(8){left:62%!important;animation-duration:19s!important;animation-delay:-11s!important}
+  .detail-page .season-particles i:nth-child(9){left:71%!important;animation-duration:16s!important;animation-delay:-6s!important}
+  .detail-page .season-particles i:nth-child(10){left:80%!important;animation-duration:21s!important;animation-delay:-14s!important}
+  .detail-page .season-particles i:nth-child(11){left:89%!important;animation-duration:15s!important;animation-delay:-8s!important}
+  .detail-page .season-particles i:nth-child(12){left:96%!important;animation-duration:18s!important;animation-delay:-3s!important}
+  @keyframes seasonFallSimple{0%{transform:translate(0,-10vh) rotate(0deg);opacity:0}10%{opacity:.72}100%{transform:translate(40px,110vh) rotate(300deg);opacity:0}}
 
   @media screen and (max-width:1280px){
     .v22-detail-shell{padding:1.8vh 1.8vw 1.6vh!important}
@@ -692,7 +794,7 @@
   function playMusic(){if(!bgMusic)return;musicStarted=true;var r;try{r=bgMusic.play();if(r&&typeof r.catch==='function')r.catch(function(){setMusicUi()})}catch(e){}setMusicUi()}
   function toggleMusic(){if(!bgMusic)return;if(bgMusic.paused)playMusic();else{bgMusic.pause();saveMusicState();setMusicUi()}}
   function nextMusicTrack(){saveMusicState();loadMusicTrack(musicIndex+1,0);playMusic()}
-  if(bgMusic){loadMusicState();bgMusic.volume=.18;loadMusicTrack(musicIndex,musicResumeTime);bgMusic.addEventListener('loadedmetadata',function(){if(musicResumeTime>0&&musicResumeTime<bgMusic.duration-2){try{bgMusic.currentTime=musicResumeTime}catch(e){}}musicResumeTime=0});bgMusic.addEventListener('ended',nextMusicTrack);bgMusic.addEventListener('error',function(){if(musicLabel)musicLabel.innerHTML='خطای فایل موزیک';setMusicUi()});bgMusic.addEventListener('play',setMusicUi);bgMusic.addEventListener('pause',setMusicUi);setInterval(saveMusicState,10000)}
+  if(bgMusic){loadMusicState();bgMusic.volume=1;loadMusicTrack(musicIndex,musicResumeTime);bgMusic.addEventListener('loadedmetadata',function(){if(musicResumeTime>0&&musicResumeTime<bgMusic.duration-2){try{bgMusic.currentTime=musicResumeTime}catch(e){}}musicResumeTime=0});bgMusic.addEventListener('ended',nextMusicTrack);bgMusic.addEventListener('error',function(){if(musicLabel)musicLabel.innerHTML='خطای فایل موزیک';setMusicUi()});bgMusic.addEventListener('play',setMusicUi);bgMusic.addEventListener('pause',setMusicUi);setInterval(saveMusicState,10000)}
   if(musicToggle)musicToggle.onclick=toggleMusic;
   if(musicMute)musicMute.onclick=function(){if(!bgMusic)return;bgMusic.muted=!bgMusic.muted;saveMusicState();setMusicUi()};
 
