@@ -678,6 +678,51 @@
     .detail-page .v22-weekly .weekly-table td{font-size:15px!important;padding:9px 8px!important}
   }
 
+
+  /* ===== V30: final goals + page-1 status readability ===== */
+  .final-target{
+    display:block!important;
+    margin-top:5px!important;
+    padding-top:5px!important;
+    border-top:1px dashed rgba(255,223,184,.20)!important;
+    color:#ffd28f!important;
+    font-size:11px!important;
+    line-height:1.5!important;
+    font-weight:800!important;
+    text-align:center!important;
+  }
+  .final-target-mgmt{width:100%!important;margin-top:6px!important}
+
+  .status-card .status-list{
+    align-items:flex-start!important;
+    min-width:0!important;
+  }
+  .status-card .status-item{
+    display:inline-flex!important;
+    width:auto!important;
+    max-width:100%!important;
+    align-self:flex-start!important;
+    font-size:15px!important;
+    line-height:1.5!important;
+    padding:7px 11px!important;
+    white-space:nowrap!important;
+  }
+  .status-card .status-item.active{
+    transform:none!important;
+    padding:7px 11px!important;
+  }
+  .status-card .status-item span:last-child{
+    white-space:nowrap!important;
+    font-size:15px!important;
+    line-height:1.5!important;
+  }
+  @media screen and (max-width:1280px){
+    .status-card .status-item,
+    .status-card .status-item span:last-child{font-size:14px!important}
+    .status-card .status-item{padding:7px 9px!important}
+    .final-target{font-size:10px!important}
+  }
+
 </style>
 </head>
 <body>
@@ -805,34 +850,34 @@
         <div class="v22-panel-title"><span class="v22-icon ig">◎</span><div><h3>دیده‌شدن در اینستاگرام</h3><div class="desc">دو شاخص اصلی برای سنجش دیده‌شدن واقعی محتوا</div></div></div>
         <div class="v22-metric-stack">
           <div class="v22-metric hero">
-            <span>بازدید ماهانه ریلز</span>
+            <span>بازدید ماهانه</span>
             <strong id="dViews">۰</strong>
-            <em class="target-line" id="dViewsTarget">هدف ماه: —</em>
+            <em class="target-line" id="dViewsTarget">هدف ماه: —</em><small class="final-target" id="dViewsFinal">هدف نهایی: —</small>
           </div>
           <div class="v22-metric hero">
             <span>درصد مخاطبان غیرفالوئر</span>
             <strong id="dNonFollower">۰٪</strong>
-            <em class="target-line" id="dNonFollowerTarget">هدف ماه: —</em>
+            <em class="target-line" id="dNonFollowerTarget">هدف ماه: —</em><small class="final-target" id="dNonFollowerFinal">هدف نهایی: —</small>
           </div>
         </div>
-        <div class="v22-note">تمرکز: افزایش دیده‌شدن ریلز و رسیدن محتوا به مخاطب جدید.</div>
+        <div class="v22-note">تمرکز: افزایش دیده‌شدن محتوا و رسیدن آن به مخاطب جدید.</div>
       </section>
 
       <section class="detail-card v22-panel lead-card">
         <div class="v22-panel-title"><span class="v22-icon seo">↗</span><div><h3>لیدها + سئو</h3><div class="desc">خروجی واقعی سایت و عملکرد ارگانیک ماه جاری</div></div></div>
         <div class="v22-seo-grid">
-          <div class="v22-metric"><span>لید معتبر ماهانه</span><strong id="dLeads">۰</strong><em class="target-line" id="dLeadsTarget">هدف ماه: —</em></div>
+          <div class="v22-metric"><span>لید معتبر ماهانه</span><strong id="dLeads">۰</strong><em class="target-line" id="dLeadsTarget">هدف ماه: —</em><small class="final-target" id="dLeadsFinal">هدف نهایی: —</small></div>
           <div class="v22-metric"><span>تحقق لید</span><strong id="dLeadAtt">۰٪</strong><em id="dLeadStatus">در حال محاسبه</em><small class="target-line">هدف ماه: ۱۰۰٪</small></div>
-          <div class="v22-metric"><span>کلیک ارگانیک</span><strong id="dClicks">۰</strong><em class="target-line" id="dClicksTarget">هدف ماه: —</em></div>
+          <div class="v22-metric"><span>کلیک ارگانیک</span><strong id="dClicks">۰</strong><em class="target-line" id="dClicksTarget">هدف ماه: —</em><small class="final-target" id="dClicksFinal">هدف نهایی: —</small></div>
           <div class="v22-metric"><span>ایمپرشن</span><strong id="dImpressions">۰</strong><em class="target-line">هدف ماه: تعیین نشده</em></div>
           <div class="v22-metric"><span>CTR ماهانه</span><strong id="dCTR">۰٪</strong><em class="target-line">هدف ماه: تعیین نشده</em></div>
-          <div class="v22-metric"><span>میانگین رتبه ۷۲ کلمه</span><strong id="dRank">--</strong><em class="target-line" id="dRankTarget">هدف ماه: —</em></div>
+          <div class="v22-metric"><span>میانگین رتبه ۷۲ کلمه</span><strong id="dRank">--</strong><em class="target-line" id="dRankTarget">هدف ماه: —</em><small class="final-target" id="dRankFinal">هدف نهایی: —</small></div>
         </div>
       </section>
 
       <section class="detail-card v22-panel management-card">
         <div class="v22-panel-title"><span class="v22-icon mg">⚙</span><div><h3>مدیریت و اجرا</h3><div class="desc">وضعیت اجرای برنامه‌ها و وظایف ماه جاری</div></div></div>
-        <div class="v22-management-total"><span>امتیاز مدیریت این ماه</span><strong id="dMgmtScore">۰ / ۲۵</strong><small>هدف ماه: ۲۵ از ۲۵</small></div>
+        <div class="v22-management-total"><span>امتیاز مدیریت این ماه</span><strong id="dMgmtScore">۰ / ۲۵</strong><small>هدف ماه: ۲۵ از ۲۵</small><small class="final-target final-target-mgmt">هدف نهایی: ۲۵ از ۲۵</small></div>
         <div class="mgmt-list v22-mgmt-list">
           <div class="mgmt-row"><div class="top"><span>محتوا و کانال‌ها · /۷</span><b id="mContentText">۰٪</b></div><div class="mgmt-track"><i id="mContentBar"></i></div><span class="mgmt-target">هدف ماه: ۱۰۰٪</span></div>
           <div class="mgmt-row"><div class="top"><span>پروژه‌های مارکتینگ · /۶</span><b id="mProjectsText">۰٪</b></div><div class="mgmt-track"><i id="mProjectsBar"></i></div><span class="mgmt-target">هدف ماه: ۱۰۰٪</span></div>
@@ -955,7 +1000,7 @@
   function weeklyRows(){var a=[],i,imp,clicks,rank;for(i=1;i<=5;i++){imp=num(data['w'+i+'Imp'],0);clicks=num(data['w'+i+'Clicks'],0);rank=num(data['w'+i+'Rank'],0);if(imp>0||clicks>0||rank>0)a.push({week:i,imp:imp,clicks:clicks,rank:rank})}return a}function monthlySEO(){var rows=weeklyRows(),impressions=0,clicks=0,rankSum=0,rankCount=0,i;for(i=0;i<rows.length;i++){impressions+=rows[i].imp;clicks+=rows[i].clicks;if(rows[i].rank>0){rankSum+=rows[i].rank;rankCount++}}return{rows:rows,impressions:impressions,clicks:clicks,ctr:impressions>0?clicks/impressions*100:0,rank:rankCount?rankSum/rankCount:0}}
   function calc(){var seo=monthlySEO(),t=targets[data.month]||targets['مهر'],visibility=15*ratio(data.views,t.views)+5*ratio(data.nonFollower,t.nonFollower)+7.5*ratio(seo.clicks,t.clicks)+(seo.rank>0?7.5*(t.rank/seo.rank):0),lead=40*ratio(data.leads,t.leads),mgmt=clamp(data.content,0,100)/100*7+clamp(data.projects,0,100)/100*6+clamp(data.website,0,100)/100*4+clamp(data.design,0,100)/100*4+clamp(data.reporting,0,100)/100*4;return{t:t,seo:seo,visibility:visibility,lead:lead,mgmt:mgmt,total:visibility+lead+mgmt}}
   function render(){var s=calc(),t=s.t,total=Math.max(0,s.total),seo=s.seo,visPct=Math.min(s.visibility/35*100,100),leadPct=Math.min(s.lead/40*100,100),mgmtPct=Math.min(s.mgmt/25*100,100),totalPct=Math.min(total,100),ahead=total>105,on=total>=95&&total<=105,behind=total<95;setText('totalScore',faPercent(total));setText('totalScoreCard',fa(total));setText('visScore',fa(s.visibility));setText('leadScore',fa(s.lead));setText('mgmtScore',fa(s.mgmt));setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);setText('visPct',faPercent(visPct));setText('leadPct',faPercent(leadPct));setText('mgmtPct',faPercent(mgmtPct));setText('totalPct',faPercent(totalPct));toggleClass(by('stAhead'),'active',ahead);toggleClass(by('stOn'),'active',on);toggleClass(by('stBehind'),'active',behind);setText('cmpImpr',faCompact(seo.impressions));setText('cmpClicks',faPercent(t.clicks?Math.min(seo.clicks/t.clicks*100,999):0));setText('cmpLeads',faPercent(t.leads?Math.min(data.leads/t.leads*100,999):0));setText('cmpRank',seo.rank?faPercent(t.rank/seo.rank*100):'۰٪');renderDetail(s)}
-  function renderDetail(s){var t=s.t,seo=s.seo,month=data.month,autumn=month==='مهر'||month==='آبان'||month==='آذر',page=by('detailPage'),leadAtt=ratio(data.leads,t.leads)*100,mg=[['content','mContentText','mContentBar'],['projects','mProjectsText','mProjectsBar'],['website','mWebsiteText','mWebsiteBar'],['design','mDesignText','mDesignBar'],['reporting','mReportingText','mReportingBar']],i,r,tr,ctr,rc,tbody=by('weeklyBody');removeClass(page,'autumn');removeClass(page,'winter');if(autumn){addClass(page,'autumn');setText('seasonBadge','📊');setText('seasonName','گزارش ماهانه')}else{addClass(page,'winter');setText('seasonBadge','📊');setText('seasonName','گزارش ماهانه')}setText('detailMonth',month);setText('detailMonth2',month);setText('weeklyMonth',month);setText('dViews',faCompact(data.views));setText('dViewsTarget','هدف ماه '+month+': '+faCompact(t.views));setText('dNonFollower',faPercent(data.nonFollower));setText('dNonFollowerTarget','هدف ماه '+month+': '+faPercent(t.nonFollower));setText('dLeads',faInt(data.leads));setText('dLeadsTarget','هدف ماه '+month+': '+faInt(t.leads));setText('dLeadAtt',faPercent(leadAtt));setText('dLeadStatus',leadAtt>=110?'جلوتر از هدف':leadAtt>=90?'روی مسیر':'نیاز به جبران');setText('dImpressions',faCompact(seo.impressions));setText('dClicks',faCompact(seo.clicks));setText('dClicksTarget','هدف ماه '+month+': '+faCompact(t.clicks));setText('dCTR',faPercent(seo.ctr));setText('dRank',seo.rank?fa(seo.rank):'--');setText('dRankTarget','هدف ماه '+month+': '+fa(t.rank));for(i=0;i<mg.length;i++){setText(mg[i][1],faPercent(data[mg[i][0]]));setWidth(mg[i][2],data[mg[i][0]])}setText('dMgmtScore',fa(s.mgmt)+' / '+faInt(25));if(tbody){tbody.innerHTML='';for(i=0;i<seo.rows.length;i++){r=seo.rows[i];ctr=r.imp>0?r.clicks/r.imp*100:0;rc=r.rank>0&&r.rank<=t.rank?'rank-good':'rank-mid';tr=document.createElement('tr');tr.innerHTML='<td>هفته '+fa(r.week)+'</td><td>'+faInt(r.imp)+'</td><td>'+faInt(r.clicks)+'</td><td>'+faPercent(ctr)+'</td><td class="'+rc+'">'+(r.rank?fa(r.rank):'--')+'</td>';tbody.appendChild(tr)}}setText('chipClicks',faCompact(seo.clicks));setText('chipClicksTarget','هدف '+month+': '+faCompact(t.clicks));setText('chipCTR',faPercent(seo.ctr));setText('chipRank',seo.rank?fa(seo.rank):'--');setText('chipRankTarget','هدف '+month+': '+fa(t.rank))}
+  function renderDetail(s){var t=s.t,finalT=targets['اسفند'],seo=s.seo,month=data.month,autumn=month==='مهر'||month==='آبان'||month==='آذر',page=by('detailPage'),leadAtt=ratio(data.leads,t.leads)*100,mg=[['content','mContentText','mContentBar'],['projects','mProjectsText','mProjectsBar'],['website','mWebsiteText','mWebsiteBar'],['design','mDesignText','mDesignBar'],['reporting','mReportingText','mReportingBar']],i,r,tr,ctr,rc,tbody=by('weeklyBody');removeClass(page,'autumn');removeClass(page,'winter');if(autumn){addClass(page,'autumn');setText('seasonBadge','📊');setText('seasonName','گزارش ماهانه')}else{addClass(page,'winter');setText('seasonBadge','📊');setText('seasonName','گزارش ماهانه')}setText('detailMonth',month);setText('detailMonth2',month);setText('weeklyMonth',month);setText('dViews',faCompact(data.views));setText('dViewsTarget','هدف ماه '+month+': '+faCompact(t.views));setText('dViewsFinal','هدف نهایی اسفند: '+faCompact(finalT.views));setText('dNonFollower',faPercent(data.nonFollower));setText('dNonFollowerTarget','هدف ماه '+month+': '+faPercent(t.nonFollower));setText('dNonFollowerFinal','هدف نهایی اسفند: '+faPercent(finalT.nonFollower));setText('dLeads',faInt(data.leads));setText('dLeadsTarget','هدف ماه '+month+': '+faInt(t.leads));setText('dLeadsFinal','هدف نهایی اسفند: '+faInt(finalT.leads));setText('dLeadAtt',faPercent(leadAtt));setText('dLeadStatus',leadAtt>=110?'جلوتر از هدف':leadAtt>=90?'روی مسیر':'نیاز به جبران');setText('dImpressions',faCompact(seo.impressions));setText('dClicks',faCompact(seo.clicks));setText('dClicksTarget','هدف ماه '+month+': '+faCompact(t.clicks));setText('dClicksFinal','هدف نهایی اسفند: '+faCompact(finalT.clicks));setText('dCTR',faPercent(seo.ctr));setText('dRank',seo.rank?fa(seo.rank):'--');setText('dRankTarget','هدف ماه '+month+': '+fa(t.rank));setText('dRankFinal','هدف نهایی اسفند: '+fa(finalT.rank));for(i=0;i<mg.length;i++){setText(mg[i][1],faPercent(data[mg[i][0]]));setWidth(mg[i][2],data[mg[i][0]])}setText('dMgmtScore',fa(s.mgmt)+' / '+faInt(25));if(tbody){tbody.innerHTML='';for(i=0;i<seo.rows.length;i++){r=seo.rows[i];ctr=r.imp>0?r.clicks/r.imp*100:0;rc=r.rank>0&&r.rank<=t.rank?'rank-good':'rank-mid';tr=document.createElement('tr');tr.innerHTML='<td>هفته '+fa(r.week)+'</td><td>'+faInt(r.imp)+'</td><td>'+faInt(r.clicks)+'</td><td>'+faPercent(ctr)+'</td><td class="'+rc+'">'+(r.rank?fa(r.rank):'--')+'</td>';tbody.appendChild(tr)}}setText('chipClicks',faCompact(seo.clicks));setText('chipClicksTarget','هدف '+month+': '+faCompact(t.clicks));setText('chipCTR',faPercent(seo.ctr));setText('chipRank',seo.rank?fa(seo.rank):'--');setText('chipRankTarget','هدف '+month+': '+fa(t.rank))}
   function tick(){setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%2)+2)%2;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
 
   /* Persistent background music - stays alive while dashboard slides change */
