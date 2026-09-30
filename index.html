@@ -128,7 +128,7 @@
   .kpi-purple .kpi-icon,.kpi-purple .percent{color:#d78fff}.kpi-purple .progress-line i{background:linear-gradient(90deg,#c878ff,#f2a7ff);box-shadow:0 0 16px rgba(200,120,255,.34)}
 
   
-  .goal-pill{position:absolute;z-index:12;left:50%;top:46.5vh;transform:translateX(-50%);padding:8px 22px;border-radius:16px;background:rgba(255,255,255,.17);color:#fff8ee;font-family:var(--font-title);font-size:23px;font-weight:800;box-shadow:0 8px 18px rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);text-shadow:0 2px 12px rgba(0,0,0,.42)}
+  .goal-pill{position:absolute;z-index:12;left:50%;top:14.2vh;transform:translateX(-50%);padding:8px 22px;border-radius:16px;background:rgba(255,255,255,.17);color:#fff8ee;font-family:var(--font-title);font-size:23px;font-weight:800;box-shadow:0 8px 18px rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);text-shadow:0 2px 12px rgba(0,0,0,.42)}
   .status-card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(11,22,34,.10));}
   .kpi-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(9,19,29,.10));}
   .date-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(14,24,37,.08));}
@@ -380,7 +380,7 @@
 
 
   /* ===== V22 AUTUMN MONTHLY DETAIL ===== */
-  .goal-pill{left:50%!important;top:46.5vh!important;transform:translateX(-50%)!important;padding:10px 26px!important}
+  .goal-pill{left:50%!important;top:14.2vh!important;transform:translateX(-50%)!important;padding:10px 26px!important}
   .detail-page{background:#6f361b!important}
   .detail-page .detail-bg{background-image:url('assets/background.png')!important;background-position:center center!important;background-repeat:no-repeat!important;background-size:cover!important;filter:sepia(.30) saturate(1.55) hue-rotate(-10deg) brightness(.68)!important;transform:scale(1.02)!important}
   .detail-page .detail-bg:before{content:""!important;position:absolute!important;top:0!important;right:0!important;bottom:0!important;left:0!important;background:linear-gradient(180deg,rgba(255,163,61,.19),rgba(116,48,15,.17) 35%,rgba(52,22,13,.38) 100%)!important}
@@ -499,6 +499,184 @@
   .music-btn:hover{background:rgba(255,255,255,.22)}
   .music-label{font-size:11px;color:rgba(255,255,255,.78);white-space:nowrap}
   .music-player.playing{border-color:rgba(105,255,183,.30);box-shadow:0 6px 18px rgba(0,0,0,.22),0 0 18px rgba(105,255,183,.08)}
+
+
+  /* ===== V29 FINAL TV PAGE-2 FIXES - MUST STAY LAST ===== */
+  .detail-page .detail-shell.v22-detail-shell{
+    width:94%!important;
+    max-width:1760px!important;
+    height:100%!important;
+    margin:0 auto!important;
+    padding:2.1vh 0 1.7vh!important;
+    gap:1.35vh!important;
+    align-items:center!important;
+  }
+  .detail-page .v22-header{
+    width:100%!important;
+    min-height:8.5vh!important;
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    text-align:center!important;
+    direction:rtl!important;
+    gap:34px!important;
+    padding:0 1vw!important;
+  }
+  .detail-page .v22-header .detail-title-wrap{
+    flex:0 1 auto!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+    gap:16px!important;
+  }
+  .detail-page .v22-header .detail-clock{
+    position:absolute!important;
+    left:3vw!important;
+    top:2.1vh!important;
+    text-align:center!important;
+  }
+  .detail-page .v22-grid{
+    width:100%!important;
+    height:55.5%!important;
+    display:flex!important;
+    justify-content:center!important;
+    align-items:stretch!important;
+    gap:1.35%!important;
+    direction:ltr!important;
+  }
+  .detail-page .v22-panel{
+    width:32.42%!important;
+    margin:0!important;
+    padding:15px 16px 13px!important;
+    direction:rtl!important;
+  }
+  .detail-page .v22-panel-title{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:18px!important;
+    margin:0 0 15px!important;
+    text-align:center!important;
+  }
+  .detail-page .v22-panel-title > div{
+    flex:0 1 auto!important;
+    min-width:0!important;
+    text-align:center!important;
+  }
+  .detail-page .v22-panel-title h3{
+    margin:0 0 5px!important;
+    font-size:25px!important;
+    line-height:1.4!important;
+    text-align:center!important;
+  }
+  .detail-page .v22-panel-title .desc{
+    margin:0!important;
+    font-size:13px!important;
+    line-height:1.7!important;
+    text-align:center!important;
+  }
+  .detail-page .v22-icon{
+    width:46px!important;
+    height:46px!important;
+    flex:0 0 46px!important;
+    margin:0!important;
+  }
+  .detail-page .v22-metric,
+  .detail-page .v22-note,
+  .detail-page .v22-management-total{
+    text-align:center!important;
+  }
+  .detail-page .v22-metric strong{
+    text-align:center!important;
+  }
+  .detail-page .v22-management-total{
+    justify-content:center!important;
+  }
+  .detail-page .v22-management-total span{
+    flex:0 1 auto!important;
+  }
+
+  .detail-page .v22-weekly{
+    width:100%!important;
+    height:29.5%!important;
+    min-height:0!important;
+    padding:15px 18px 13px!important;
+    margin:0 auto!important;
+  }
+  .detail-page .v22-weekly .weekly-head{
+    margin-bottom:9px!important;
+    align-items:center!important;
+  }
+  .detail-page .v22-weekly .weekly-head h3{
+    font-size:23px!important;
+    line-height:1.4!important;
+  }
+  .detail-page .v22-weekly .monthly-seo{
+    gap:10px!important;
+  }
+  .detail-page .v22-weekly .seo-chip{
+    font-size:13px!important;
+    padding:8px 12px!important;
+    border-radius:12px!important;
+  }
+  .detail-page .v22-weekly .seo-chip b{
+    font-size:16px!important;
+  }
+  .detail-page .v22-weekly .seo-chip small{
+    font-size:10px!important;
+    margin-top:4px!important;
+  }
+  .detail-page .v22-weekly .weekly-table{
+    font-size:17px!important;
+    border-spacing:0 7px!important;
+  }
+  .detail-page .v22-weekly .weekly-table th{
+    font-size:15px!important;
+    padding:0 8px 5px!important;
+  }
+  .detail-page .v22-weekly .weekly-table td{
+    font-size:16px!important;
+    padding:10px 9px!important;
+  }
+
+  /* TV-safe falling leaves: CSS animation disabled; JS moves them using top/left. */
+  .detail-page .season-particles{
+    display:block!important;
+    position:absolute!important;
+    top:0!important;right:0!important;bottom:0!important;left:0!important;
+    z-index:2!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+  }
+  .detail-page .season-particles i{
+    display:block!important;
+    position:absolute!important;
+    width:15px!important;
+    height:10px!important;
+    border-radius:75% 0 75% 0!important;
+    background:#ef8a2a!important;
+    box-shadow:0 0 7px rgba(255,189,91,.34)!important;
+    opacity:.82!important;
+    animation:none!important;
+    -webkit-animation:none!important;
+  }
+
+  /* Samsung often reports a 1280px CSS viewport: keep these sizes instead of shrinking again. */
+  @media screen and (max-width:1280px){
+    .detail-page .v22-header .detail-title{font-size:34px!important}
+    .detail-page .v22-panel{padding:14px 14px 12px!important}
+    .detail-page .v22-panel-title h3{font-size:23px!important}
+    .detail-page .v22-panel-title .desc{font-size:12px!important}
+    .detail-page .v22-icon{width:44px!important;height:44px!important;flex-basis:44px!important}
+    .detail-page .v22-metric.hero strong{font-size:42px!important}
+    .detail-page .v22-metric strong{font-size:29px!important}
+    .detail-page .v22-metric span{font-size:12px!important}
+    .detail-page .v22-weekly .weekly-head h3{font-size:22px!important}
+    .detail-page .v22-weekly .weekly-table{font-size:16px!important}
+    .detail-page .v22-weekly .weekly-table th{font-size:14px!important}
+    .detail-page .v22-weekly .weekly-table td{font-size:15px!important;padding:9px 8px!important}
+  }
 
 </style>
 </head>
@@ -798,6 +976,53 @@
   if(musicToggle)musicToggle.onclick=toggleMusic;
   if(musicMute)musicMute.onclick=function(){if(!bgMusic)return;bgMusic.muted=!bgMusic.muted;saveMusicState();setMusicUi()};
 
+
+  /* V29: TV-safe leaf motion (no CSS variables / no requestAnimationFrame) */
+  var tvLeafTimer=null,tvLeafStates=[];
+  function initTvLeaves(){
+    var box=by('detailPage');
+    if(!box)return;
+    var holder=box.getElementsByClassName('season-particles')[0];
+    if(!holder)return;
+    try{holder.style.cssText+=';display:block!important;position:absolute!important;overflow:hidden!important;';}catch(e){}
+    var leaves=holder.getElementsByTagName('i'),i;
+    tvLeafStates=[];
+    for(i=0;i<leaves.length;i++){
+      var el=leaves[i];
+      var x=3+((i*8.1)%94);
+      var y=-8-((i*13)%95);
+      var speed=.20+((i%5)*.035);
+      var sway=(i%2===0?1:-1)*(.020+((i%4)*.006));
+      tvLeafStates.push({el:el,x:x,y:y,speed:speed,sway:sway,phase:i*17});
+      try{
+        el.style.cssText+=';display:block!important;position:absolute!important;opacity:.82!important;animation:none!important;-webkit-animation:none!important;';
+        el.style.left=x+'%'; el.style.top=y+'%';
+      }catch(e){}
+    }
+    if(tvLeafTimer)clearInterval(tvLeafTimer);
+    tvLeafTimer=setInterval(moveTvLeaves,80);
+  }
+  function moveTvLeaves(){
+    var page=by('detailPage');
+    if(!page||!hasClass(page,'autumn'))return;
+    var i,s;
+    for(i=0;i<tvLeafStates.length;i++){
+      s=tvLeafStates[i];
+      s.y+=s.speed;
+      s.phase+=1;
+      s.x+=s.sway;
+      if(s.y>103){s.y=-8-(i%6)*4;s.x=3+((i*8.1)%94)}
+      if(s.x<1)s.x=98;if(s.x>99)s.x=2;
+      try{
+        s.el.style.top=s.y+'%';
+        s.el.style.left=s.x+'%';
+        s.el.style.webkitTransform='rotate('+(s.phase*7%360)+'deg)';
+        s.el.style.transform='rotate('+(s.phase*7%360)+'deg)';
+      }catch(e){}
+    }
+  }
+
+  initTvLeaves();
   tick();render();loadGoogleCache();syncGoogleSheet();setInterval(tick,1000);setInterval(syncGoogleSheet,GOOGLE_SYNC_MS);var p0=by('dot0'),p1=by('dot1'),pn=by('nextSlide'),pp=by('prevSlide');if(p0)p0.onclick=function(){manualPage(0)};if(p1)p1.onclick=function(){manualPage(1)};if(pn)pn.onclick=function(){manualPage(currentPage+1)};if(pp)pp.onclick=function(){manualPage(currentPage-1)};restartRotation();
 })();
 </script>
