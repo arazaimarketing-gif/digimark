@@ -500,6 +500,22 @@
   .music-label{font-size:11px;color:rgba(255,255,255,.78);white-space:nowrap}
   .music-player.playing{border-color:rgba(105,255,183,.30);box-shadow:0 6px 18px rgba(0,0,0,.22),0 0 18px rgba(105,255,183,.08)}
 
+  .music-player .music-btn{white-space:nowrap}
+  .music-list-panel{display:none;position:fixed;z-index:120;right:2vw;bottom:7.4vh;width:430px;max-width:92vw;padding:16px;border-radius:18px;background:rgba(8,16,28,.96);border:1px solid rgba(255,255,255,.18);box-shadow:0 16px 44px rgba(0,0,0,.48);direction:rtl;color:#fff;font-family:Tahoma,Arial,sans-serif}
+  .music-list-panel.open{display:block}
+  .music-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .music-list-title{font-size:18px;font-weight:800}
+  .music-close{border:0;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;width:36px;height:32px;font-size:18px;cursor:pointer}
+  .music-list-note{font-size:11px;line-height:1.8;color:rgba(255,255,255,.62);margin-bottom:10px}
+  .music-list-items{display:flex;flex-direction:column;gap:8px;max-height:48vh;overflow:auto}
+  .music-list-item{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:9px 12px;border-radius:13px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.07);color:#fff;cursor:pointer;text-align:right;font-family:Tahoma,Arial,sans-serif}
+  .music-list-item:hover{background:rgba(255,255,255,.14)}
+  .music-list-item.active{border-color:rgba(105,255,183,.55);background:rgba(55,197,139,.16);box-shadow:0 0 18px rgba(105,255,183,.10)}
+  .music-list-item .mname{font-size:15px;font-weight:700}
+  .music-list-item .mmeta{font-size:11px;color:rgba(255,255,255,.58);white-space:nowrap}
+  @media screen and (max-width:1100px){.music-list-panel{right:1.5vw;bottom:8vh;width:390px}.music-list-item{min-height:48px}.music-list-item .mname{font-size:14px}}
+
+
 
   /* ===== V29 FINAL TV PAGE-2 FIXES - MUST STAY LAST ===== */
   .detail-page .detail-shell.v22-detail-shell{
@@ -904,9 +920,17 @@
 
 <audio id="bgMusic" preload="metadata"></audio>
 <div class="music-player" id="musicPlayer" title="موزیک پس‌زمینه">
+  <button class="music-btn" id="musicPrev" type="button">قبلی</button>
   <button class="music-btn" id="musicToggle" type="button">شروع موزیک</button>
+  <button class="music-btn" id="musicNext" type="button">بعدی</button>
+  <button class="music-btn" id="musicListBtn" type="button">لیست موزیک</button>
   <span class="music-label" id="musicLabel">پس‌زمینه</span>
   <button class="music-btn" id="musicMute" type="button">صدا</button>
+</div>
+<div class="music-list-panel" id="musicListPanel">
+  <div class="music-list-head"><div class="music-list-title">انتخاب موزیک</div><button class="music-close" id="musicListClose" type="button">×</button></div>
+  <div class="music-list-note">روی هر موزیک بزن؛ از ابتدای همان موزیک پخش می‌شود و بخش‌هایش خودکار ادامه پیدا می‌کند.</div>
+  <div class="music-list-items" id="musicListItems"></div>
 </div>
 
 <div class="page-nav" id="pageNav" title="تغییر اسلاید">
@@ -1006,19 +1030,35 @@
   /* Persistent background music - stays alive while dashboard slides change */
   var MUSIC_TRACKS=[
     'background_00.m4a','background_01.m4a','background_02.m4a','background_03.m4a','background_04.m4a',
-    'background_05.m4a','background_06.m4a','background_07.m4a','background_08.m4a','background_09.m4a'
+    'background_05.m4a','background_06.m4a','background_07.m4a','background_08.m4a','background_09.m4a',
+    'deep_house_00.mp3','deep_house_01.mp3','deep_house_02.mp3','deep_house_03.mp3',
+    'deep_house_04.mp3','deep_house_05.mp3','deep_house_06.mp3','deep_house_07.mp3'
+  ];
+  var MUSIC_GROUPS=[
+    {name:'موزیک بک‌گراند اصلی',start:0,end:9},
+    {name:'دیپ هاوس',start:10,end:17}
   ];
   var MUSIC_STATE_KEY='pascal_bg_music_state_v1',musicIndex=0,musicStarted=false,musicResumeTime=0;
-  var bgMusic=by('bgMusic'),musicToggle=by('musicToggle'),musicMute=by('musicMute'),musicPlayer=by('musicPlayer'),musicLabel=by('musicLabel');
+  var bgMusic=by('bgMusic'),musicToggle=by('musicToggle'),musicMute=by('musicMute'),musicPlayer=by('musicPlayer'),musicLabel=by('musicLabel'),musicPrev=by('musicPrev'),musicNext=by('musicNext'),musicListBtn=by('musicListBtn'),musicListPanel=by('musicListPanel'),musicListClose=by('musicListClose'),musicListItems=by('musicListItems');
   function loadMusicState(){try{var s=JSON.parse(localStorage.getItem(MUSIC_STATE_KEY)||'{}');if(s&&isFinite(s.index))musicIndex=Math.max(0,Math.min(MUSIC_TRACKS.length-1,parseInt(s.index,10)||0));if(s&&isFinite(s.time))musicResumeTime=Math.max(0,parseFloat(s.time)||0)}catch(e){}}
   function saveMusicState(){if(!bgMusic)return;try{localStorage.setItem(MUSIC_STATE_KEY,JSON.stringify({index:musicIndex,time:bgMusic.currentTime||0,muted:!!bgMusic.muted}))}catch(e){}}
-  function setMusicUi(){if(!bgMusic)return;if(bgMusic.paused){musicToggle.innerHTML='شروع موزیک';removeClass(musicPlayer,'playing')}else{musicToggle.innerHTML='توقف موزیک';addClass(musicPlayer,'playing')}musicMute.innerHTML=bgMusic.muted?'بی‌صدا':'صدا';musicLabel.innerHTML='بخش '+pdigits(musicIndex+1)+' از '+pdigits(MUSIC_TRACKS.length)}
+  function musicGroupIndexForTrack(idx){var i,g;for(i=0;i<MUSIC_GROUPS.length;i++){g=MUSIC_GROUPS[i];if(idx>=g.start&&idx<=g.end)return i}return 0}
+  function renderMusicList(){if(!musicListItems)return;var i,g,b,cur=musicGroupIndexForTrack(musicIndex);musicListItems.innerHTML='';for(i=0;i<MUSIC_GROUPS.length;i++){g=MUSIC_GROUPS[i];b=document.createElement('button');b.type='button';b.className='music-list-item'+(i===cur?' active':'');b.setAttribute('data-group',i);b.innerHTML='<span class="mname">'+g.name+'</span><span class="mmeta">'+pdigits(g.end-g.start+1)+' بخش</span>';b.onclick=(function(gi){return function(){selectMusicGroup(gi)}})(i);musicListItems.appendChild(b)}}
+  function setMusicUi(){if(!bgMusic)return;var gi=musicGroupIndexForTrack(musicIndex),g=MUSIC_GROUPS[gi],part=(musicIndex-g.start)+1,total=(g.end-g.start)+1;if(bgMusic.paused){musicToggle.innerHTML='شروع موزیک';removeClass(musicPlayer,'playing')}else{musicToggle.innerHTML='توقف موزیک';addClass(musicPlayer,'playing')}musicMute.innerHTML=bgMusic.muted?'بی‌صدا':'صدا';musicLabel.innerHTML=g.name+' · '+pdigits(part)+'/'+pdigits(total);renderMusicList()}
+  function selectMusicGroup(gi){if(gi<0||gi>=MUSIC_GROUPS.length)return;loadMusicTrack(MUSIC_GROUPS[gi].start,0);playMusic();if(musicListPanel)removeClass(musicListPanel,'open')}
+  function nextMusicGroup(){var gi=musicGroupIndexForTrack(musicIndex);selectMusicGroup((gi+1)%MUSIC_GROUPS.length)}
+  function prevMusicGroup(){var gi=musicGroupIndexForTrack(musicIndex);selectMusicGroup((gi-1+MUSIC_GROUPS.length)%MUSIC_GROUPS.length)}
+  function toggleMusicList(){if(!musicListPanel)return;if(musicListPanel.className.indexOf('open')>=0)removeClass(musicListPanel,'open');else{addClass(musicListPanel,'open');renderMusicList()}}
   function loadMusicTrack(index,resume){if(!bgMusic)return;musicIndex=((index%MUSIC_TRACKS.length)+MUSIC_TRACKS.length)%MUSIC_TRACKS.length;musicResumeTime=resume||0;bgMusic.src=MUSIC_TRACKS[musicIndex];bgMusic.load();setMusicUi()}
   function playMusic(){if(!bgMusic)return;musicStarted=true;var r;try{r=bgMusic.play();if(r&&typeof r.catch==='function')r.catch(function(){setMusicUi()})}catch(e){}setMusicUi()}
   function toggleMusic(){if(!bgMusic)return;if(bgMusic.paused)playMusic();else{bgMusic.pause();saveMusicState();setMusicUi()}}
   function nextMusicTrack(){saveMusicState();loadMusicTrack(musicIndex+1,0);playMusic()}
   if(bgMusic){loadMusicState();bgMusic.volume=1;loadMusicTrack(musicIndex,musicResumeTime);bgMusic.addEventListener('loadedmetadata',function(){if(musicResumeTime>0&&musicResumeTime<bgMusic.duration-2){try{bgMusic.currentTime=musicResumeTime}catch(e){}}musicResumeTime=0});bgMusic.addEventListener('ended',nextMusicTrack);bgMusic.addEventListener('error',function(){if(musicLabel)musicLabel.innerHTML='خطای فایل موزیک';setMusicUi()});bgMusic.addEventListener('play',setMusicUi);bgMusic.addEventListener('pause',setMusicUi);setInterval(saveMusicState,10000)}
   if(musicToggle)musicToggle.onclick=toggleMusic;
+  if(musicPrev)musicPrev.onclick=prevMusicGroup;
+  if(musicNext)musicNext.onclick=nextMusicGroup;
+  if(musicListBtn)musicListBtn.onclick=toggleMusicList;
+  if(musicListClose)musicListClose.onclick=function(){if(musicListPanel)removeClass(musicListPanel,'open')};
   if(musicMute)musicMute.onclick=function(){if(!bgMusic)return;bgMusic.muted=!bgMusic.muted;saveMusicState();setMusicUi()};
 
 
