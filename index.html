@@ -739,6 +739,21 @@
     .final-target{font-size:10px!important}
   }
 
+
+  /* V35: on-TV internet radio test; isolated from Google/KPI render and local music */
+  .radio-test-launch{border:1px solid rgba(253,192,0,.65);background:rgba(253,192,0,.19);color:#fff;font-weight:700}
+  .radio-test-launch.online{border-color:rgba(107,248,177,.7);background:rgba(12,127,86,.45)}
+  .radio-test-panel{display:none;position:fixed;z-index:125;right:2vw;bottom:7.4vh;width:390px;max-width:91vw;box-sizing:border-box;padding:15px 16px;border-radius:17px;background:rgba(8,16,28,.97);border:1px solid rgba(253,192,0,.46);box-shadow:0 16px 44px rgba(0,0,0,.50);direction:rtl;color:#fff;font-family:Tahoma,Arial,sans-serif}
+  .radio-test-panel.open{display:block}
+  .radio-test-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .radio-test-title{font-size:18px;font-weight:700;color:#FDC000}
+  .radio-test-help{font-size:12px;line-height:1.8;color:#d0d8e1;margin:0 0 12px}
+  .radio-test-actions{display:flex;gap:9px;flex-wrap:wrap;margin:4px 0 10px}
+  .radio-station-btn{border:1px solid rgba(253,192,0,.38);border-radius:10px;background:rgba(255,255,255,.1);color:#fff;min-height:42px;padding:6px 14px;font-size:14px;font-family:Tahoma,Arial,sans-serif;cursor:pointer;flex:1}
+  .radio-station-btn.active{background:rgba(253,192,0,.24);border-color:#FDC000}
+  .radio-local-btn{width:100%;margin-top:8px;font-size:13px}
+  .radio-test-status{min-height:41px;padding:9px 11px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-size:12px;line-height:1.8;display:block}
+  @media screen and (max-width:1100px){.radio-test-panel{right:1.5vw;bottom:8vh;width:365px}.radio-test-title{font-size:16px}.radio-station-btn{font-size:13px}}
 </style>
 </head>
 <body>
@@ -924,6 +939,7 @@
   <button class="music-btn" id="musicToggle" type="button">شروع موزیک</button>
   <button class="music-btn" id="musicNext" type="button">بعدی</button>
   <button class="music-btn" id="musicListBtn" type="button">لیست موزیک</button>
+  <button class="music-btn radio-test-launch" id="radioTestLaunch" type="button">تست رادیو آنلاین</button>
   <span class="music-label" id="musicLabel">پس‌زمینه</span>
   <button class="music-btn" id="musicMute" type="button">صدا</button>
 </div>
@@ -931,6 +947,20 @@
   <div class="music-list-head"><div class="music-list-title">انتخاب موزیک</div><button class="music-close" id="musicListClose" type="button">×</button></div>
   <div class="music-list-note">روی هر موزیک بزن؛ از ابتدای همان موزیک پخش می‌شود و بخش‌هایش خودکار ادامه پیدا می‌کند.</div>
   <div class="music-list-items" id="musicListItems"></div>
+</div>
+<audio id="radioTestAudio" preload="none"></audio>
+<div class="radio-test-panel" id="radioTestPanel" aria-label="تست رادیو اینترنتی">
+  <div class="radio-test-header">
+    <span class="radio-test-title">تست رادیو آنلاین</span>
+    <button class="music-close" id="radioTestClose" type="button" aria-label="بستن">×</button>
+  </div>
+  <p class="radio-test-help">یک کانال را بزن و چند ثانیه صبر کن. پخش روی تلویزیون باید با همین کلیک آغاز شود؛ اگر صدا آمد یعنی تست موفق است.</p>
+  <div class="radio-test-actions">
+    <button class="radio-station-btn" id="testDeepNova" type="button">▶ DeepNova</button>
+    <button class="radio-station-btn" id="testVanilla" type="button">▶ Vanilla</button>
+  </div>
+  <span class="radio-test-status" id="radioTestStatus" role="status" aria-live="polite">آماده تست — یکی از دو کانال را انتخاب کن.</span>
+  <button class="radio-station-btn radio-local-btn" id="radioBackToLocal" type="button">■ قطع رادیو و برگشت به موزیک قبلی</button>
 </div>
 
 <div class="page-nav" id="pageNav" title="تغییر اسلاید">
@@ -1050,16 +1080,83 @@
   function prevMusicGroup(){var gi=musicGroupIndexForTrack(musicIndex);selectMusicGroup((gi-1+MUSIC_GROUPS.length)%MUSIC_GROUPS.length)}
   function toggleMusicList(){if(!musicListPanel)return;if(musicListPanel.className.indexOf('open')>=0)removeClass(musicListPanel,'open');else{addClass(musicListPanel,'open');renderMusicList()}}
   function loadMusicTrack(index,resume){if(!bgMusic)return;musicIndex=((index%MUSIC_TRACKS.length)+MUSIC_TRACKS.length)%MUSIC_TRACKS.length;musicResumeTime=resume||0;bgMusic.src=MUSIC_TRACKS[musicIndex];bgMusic.load();setMusicUi()}
-  function playMusic(){if(!bgMusic)return;musicStarted=true;var r;try{r=bgMusic.play();if(r&&typeof r.catch==='function')r.catch(function(){setMusicUi()})}catch(e){}setMusicUi()}
+  function playMusic(){if(radioActive)stopRadio(false);if(!bgMusic)return;musicStarted=true;var r;try{r=bgMusic.play();if(r&&typeof r.catch==='function')r.catch(function(){setMusicUi()})}catch(e){}setMusicUi()}
   function toggleMusic(){if(!bgMusic)return;if(bgMusic.paused)playMusic();else{bgMusic.pause();saveMusicState();setMusicUi()}}
   function nextMusicTrack(){saveMusicState();loadMusicTrack(musicIndex+1,0);playMusic()}
   if(bgMusic){loadMusicState();bgMusic.volume=1;loadMusicTrack(musicIndex,musicResumeTime);bgMusic.addEventListener('loadedmetadata',function(){if(musicResumeTime>0&&musicResumeTime<bgMusic.duration-2){try{bgMusic.currentTime=musicResumeTime}catch(e){}}musicResumeTime=0});bgMusic.addEventListener('ended',nextMusicTrack);bgMusic.addEventListener('error',function(){if(musicLabel)musicLabel.innerHTML='خطای فایل موزیک';setMusicUi()});bgMusic.addEventListener('play',setMusicUi);bgMusic.addEventListener('pause',setMusicUi);setInterval(saveMusicState,10000)}
   if(musicToggle)musicToggle.onclick=toggleMusic;
   if(musicPrev)musicPrev.onclick=prevMusicGroup;
   if(musicNext)musicNext.onclick=nextMusicGroup;
-  if(musicListBtn)musicListBtn.onclick=toggleMusicList;
+  if(musicListBtn)musicListBtn.onclick=function(){closeRadioPanel();toggleMusicList()};
   if(musicListClose)musicListClose.onclick=function(){if(musicListPanel)removeClass(musicListPanel,'open')};
   if(musicMute)musicMute.onclick=function(){if(!bgMusic)return;bgMusic.muted=!bgMusic.muted;saveMusicState();setMusicUi()};
+
+  /* V35 Internet radio trial. Direct HTTPS MP3, no iframe, scripts or account needed.
+     HTMLMediaElement works without CORS for ordinary playback on Samsung TV. */
+  var RADIO_CHANNELS={
+    deepnova:{name:'DeepNova',url:'https://a8.asurahosting.com:8820/radio.mp3'},
+    vanilla:{name:'Vanilla',url:'https://stream.vanillaradio.com:8016/stream/stream'}
+  };
+  var radioAudio=by('radioTestAudio'),radioLaunch=by('radioTestLaunch'),radioPanel=by('radioTestPanel');
+  var radioStatus=by('radioTestStatus'),radioActive='',radioLocalWasPlaying=false,radioReady=false,radioTimeout=null;
+  function radioMessage(msg){if(radioStatus)radioStatus.textContent=msg}
+  function radioUi(){
+    var a=by('testDeepNova'),b=by('testVanilla');
+    toggleClass(a,'active',radioActive==='deepnova');toggleClass(b,'active',radioActive==='vanilla');
+    toggleClass(radioLaunch,'online',!!radioActive&&radioReady);
+    if(radioLaunch)radioLaunch.textContent=radioActive&&radioReady?'رادیو: '+RADIO_CHANNELS[radioActive].name:'تست رادیو آنلاین';
+  }
+  function closeRadioPanel(){removeClass(radioPanel,'open')}
+  function stopRadio(restore){
+    var shouldResume=restore;
+    if(radioTimeout){clearTimeout(radioTimeout);radioTimeout=null}
+    radioActive='';radioReady=false;
+    if(radioAudio){try{radioAudio.pause();radioAudio.removeAttribute('src');radioAudio.load()}catch(e){}}
+    radioUi();
+    if(shouldResume){radioMessage('رادیو قطع شد. موزیک‌های قبلی در حال پخش هستند.');playMusic()}
+  }
+  function radioFail(msg){
+    if(!radioActive)return;
+    var wasPlaying=radioLocalWasPlaying;
+    stopRadio(false);
+    radioMessage(msg+(wasPlaying?' — تلاش برای بازگشت به موزیک قبلی.':' — کانال دوم را هم امتحان کن.'));
+    if(wasPlaying)playMusic();
+  }
+  function startRadio(id){
+    var channel=RADIO_CHANNELS[id],r;
+    if(!channel||!radioAudio)return;
+    // Keep the current local soundtrack paused (not discarded) while we test.
+    if(!radioActive){radioLocalWasPlaying=!!(bgMusic&&!bgMusic.paused);if(bgMusic){saveMusicState();bgMusic.pause()}}
+    if(radioTimeout){clearTimeout(radioTimeout);radioTimeout=null}
+    radioActive=id;radioReady=false;
+    radioMessage('در حال اتصال به '+channel.name+' ... چند ثانیه صبر کن.');
+    try{
+      radioAudio.pause();radioAudio.src=channel.url;radioAudio.load();radioUi();
+      r=radioAudio.play();
+      if(r&&typeof r.catch==='function')r.catch(function(){if(radioActive===id)radioFail('مرورگر اجازه پخش نداد یا اتصال برقرار نشد')});
+    }catch(e){radioFail('مرورگر تلویزیون امکان پخش این استریم را نداشت');return}
+    radioTimeout=setTimeout(function(){if(radioActive===id&&!radioReady)radioFail('اتصال بعد از ۱۵ ثانیه برقرار نشد')},15000);
+  }
+  if(radioAudio){
+    radioAudio.addEventListener('playing',function(){
+      if(!radioActive)return;
+      radioReady=true;if(radioTimeout){clearTimeout(radioTimeout);radioTimeout=null}
+      radioMessage('سیگنال پخش '+RADIO_CHANNELS[radioActive].name+' برقرار شد. اگر صدا را می‌شنوی، تست موفق است.');radioUi();
+    });
+    radioAudio.addEventListener('waiting',function(){if(radioActive)radioMessage('بافرینگ رادیو ... اتصال اینترنت را بررسی کن.')});
+    radioAudio.addEventListener('stalled',function(){if(radioActive)radioMessage('استریم لحظه‌ای متوقف شده؛ می‌توانی کانال دیگر را تست کنی.')});
+    radioAudio.addEventListener('error',function(){if(radioActive)radioFail('خطا در دریافت صدای رادیو')});
+  }
+  if(radioLaunch)radioLaunch.onclick=function(){
+    if(hasClass(radioPanel,'open'))closeRadioPanel();
+    else{removeClass(musicListPanel,'open');addClass(radioPanel,'open');radioUi()}
+  };
+  if(by('radioTestClose'))by('radioTestClose').onclick=closeRadioPanel;
+  if(by('testDeepNova'))by('testDeepNova').onclick=function(){startRadio('deepnova')};
+  if(by('testVanilla'))by('testVanilla').onclick=function(){startRadio('vanilla')};
+  if(by('radioBackToLocal'))by('radioBackToLocal').onclick=function(){stopRadio(true)};
+  radioUi();
+
 
 
   /* V29: TV-safe leaf motion (no CSS variables / no requestAnimationFrame) */
