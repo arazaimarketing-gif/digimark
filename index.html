@@ -957,7 +957,7 @@
   <p class="radio-test-help">یک کانال را بزن و چند ثانیه صبر کن. پخش روی تلویزیون باید با همین کلیک آغاز شود؛ اگر صدا آمد یعنی تست موفق است.</p>
   <div class="radio-test-actions">
     <button class="radio-station-btn" id="testDeepNova" type="button">▶ DeepNova</button>
-    <button class="radio-station-btn" id="testVanilla" type="button">▶ Vanilla</button>
+    <button class="radio-station-btn" id="testFaaz" type="button">▶ فارسی | رادیو فاز</button>
   </div>
   <span class="radio-test-status" id="radioTestStatus" role="status" aria-live="polite">آماده تست — یکی از دو کانال را انتخاب کن.</span>
   <button class="radio-station-btn radio-local-btn" id="radioBackToLocal" type="button">■ قطع رادیو و برگشت به موزیک قبلی</button>
@@ -1091,18 +1091,18 @@
   if(musicListClose)musicListClose.onclick=function(){if(musicListPanel)removeClass(musicListPanel,'open')};
   if(musicMute)musicMute.onclick=function(){if(!bgMusic)return;bgMusic.muted=!bgMusic.muted;saveMusicState();setMusicUi()};
 
-  /* V35 Internet radio trial. Direct HTTPS MP3, no iframe, scripts or account needed.
+  /* V36: Persian Radio Faaz replaces Vanilla; V35 Internet radio trial. Direct HTTPS MP3, no iframe, scripts or account needed.
      HTMLMediaElement works without CORS for ordinary playback on Samsung TV. */
   var RADIO_CHANNELS={
     deepnova:{name:'DeepNova',url:'https://a8.asurahosting.com:8820/radio.mp3'},
-    vanilla:{name:'Vanilla',url:'https://stream.vanillaradio.com:8016/stream/stream'}
+    faaz:{name:'رادیو فاز',url:'https://free.rcast.net/230792'}
   };
   var radioAudio=by('radioTestAudio'),radioLaunch=by('radioTestLaunch'),radioPanel=by('radioTestPanel');
   var radioStatus=by('radioTestStatus'),radioActive='',radioLocalWasPlaying=false,radioReady=false,radioTimeout=null;
   function radioMessage(msg){if(radioStatus)radioStatus.textContent=msg}
   function radioUi(){
-    var a=by('testDeepNova'),b=by('testVanilla');
-    toggleClass(a,'active',radioActive==='deepnova');toggleClass(b,'active',radioActive==='vanilla');
+    var a=by('testDeepNova'),b=by('testFaaz');
+    toggleClass(a,'active',radioActive==='deepnova');toggleClass(b,'active',radioActive==='faaz');
     toggleClass(radioLaunch,'online',!!radioActive&&radioReady);
     if(radioLaunch)radioLaunch.textContent=radioActive&&radioReady?'رادیو: '+RADIO_CHANNELS[radioActive].name:'تست رادیو آنلاین';
   }
@@ -1153,7 +1153,7 @@
   };
   if(by('radioTestClose'))by('radioTestClose').onclick=closeRadioPanel;
   if(by('testDeepNova'))by('testDeepNova').onclick=function(){startRadio('deepnova')};
-  if(by('testVanilla'))by('testVanilla').onclick=function(){startRadio('vanilla')};
+  if(by('testFaaz'))by('testFaaz').onclick=function(){startRadio('faaz')};
   if(by('radioBackToLocal'))by('radioBackToLocal').onclick=function(){stopRadio(true)};
   radioUi();
 
