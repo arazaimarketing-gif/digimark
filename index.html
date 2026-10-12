@@ -756,32 +756,116 @@
   @media screen and (max-width:1100px){.radio-test-panel{right:1.5vw;bottom:8vh;width:365px}.radio-test-title{font-size:16px}.radio-station-btn{font-size:13px}}
 .v36-followers{margin-top:10px!important;padding:9px 12px!important;display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:6px 12px!important}.v36-followers span{flex:1!important;min-width:165px}.v36-followers strong{font-size:26px!important;margin:0!important}.v36-followers em{width:100%}
 
-/* V37 - actual TV dashboard layout fixes, no KPI or data model change */
-.detail-page .instagram-card .v37-ig-tiles{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;flex:0 0 auto!important;align-items:stretch!important}
-.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero{width:100%!important;min-width:0!important;min-height:0!important;box-sizing:border-box!important;aspect-ratio:1 / 1!important;padding:11px 8px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important}
-.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero span{font-size:clamp(10px,1vw,15px)!important;line-height:1.35!important}
-.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero strong{font-size:clamp(24px,3vw,43px)!important;line-height:1.05!important;margin:6px 0!important}
-.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero em,.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero small{font-size:clamp(8px,.75vw,11px)!important;line-height:1.3!important;padding:3px 4px!important;margin-top:3px!important;width:100%!important;box-sizing:border-box!important}
-.detail-page .instagram-card .v36-followers{box-sizing:border-box!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;flex:1 1 auto!important;margin-top:10px!important;min-height:0!important;padding:10px!important;gap:5px!important}
-.detail-page .instagram-card .v36-followers span{flex:0 0 auto!important;min-width:0!important}
-.detail-page .instagram-card .v36-followers strong{font-size:clamp(26px,3vw,42px)!important;line-height:1.1!important}
-.detail-page .instagram-card .v36-followers em{width:100%!important;box-sizing:border-box!important;font-size:11px!important}
-.detail-page .v22-weekly{overflow:hidden!important;display:flex!important;flex-direction:column!important;min-height:0!important}
-.detail-page .v22-weekly .weekly-head{flex:0 0 auto!important;margin-bottom:9px!important}
-.detail-page .v37-week-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;flex:1 1 auto!important;min-height:0!important;width:100%!important;direction:rtl!important}
-.detail-page .v37-week-card{box-sizing:border-box!important;min-width:0!important;min-height:0!important;overflow:hidden!important;padding:9px 12px!important;background:rgba(45,17,7,.27)!important;border:1px solid rgba(255,231,200,.23)!important;border-radius:13px!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important}
-.detail-page .v37-week-title{font-size:clamp(13px,1.2vw,18px)!important;font-weight:800!important;text-align:center!important;color:#fff5dd!important;padding-bottom:5px!important}
-.detail-page .v37-week-stat{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:6px!important;direction:ltr!important;color:#f8e5d1!important;font-size:clamp(10px,.86vw,13px)!important;line-height:1.25!important}
-.detail-page .v37-week-stat b{color:#fff!important;font-size:clamp(11px,1vw,16px)!important;font-weight:800!important}
+/* V38 Samsung TV compatibility. Use the same flexbox supported by older Tizen browsers.
+   Avoid CSS Grid, aspect-ratio, clamp(), and flex gap, which break on the TV. */
+.detail-page .instagram-card .v37-ig-tiles{
+  display:-webkit-flex!important;display:flex!important;
+  -webkit-flex-direction:row!important;flex-direction:row!important;
+  -webkit-justify-content:space-between!important;justify-content:space-between!important;
+  -webkit-align-items:stretch!important;align-items:stretch!important;
+  width:100%!important;flex:0 0 auto!important;height:14vw!important;
+  min-height:0!important;max-height:none!important;
+  padding:0!important;margin:0!important;
+}
+.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero{
+  display:-webkit-flex!important;display:flex!important;
+  -webkit-flex-direction:column!important;flex-direction:column!important;
+  -webkit-justify-content:center!important;justify-content:center!important;
+  -webkit-align-items:center!important;align-items:center!important;
+  width:49%!important;min-width:0!important;max-width:49%!important;
+  height:100%!important;min-height:0!important;box-sizing:border-box!important;
+  padding:8px 6px!important;margin:0!important;overflow:hidden!important;
+  border-radius:15px!important;
+}
+.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero span{
+  font-size:13px!important;line-height:1.3!important;
+  max-width:100%!important;text-align:center!important;
+}
+.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero strong{
+  font-size:37px!important;line-height:1.05!important;margin:5px 0!important;
+  text-align:center!important;
+}
+.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero em,
+.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero small{
+  font-size:10px!important;line-height:1.25!important;padding:3px 2px!important;
+  margin-top:3px!important;width:100%!important;box-sizing:border-box!important;
+  text-align:center!important;white-space:normal!important;
+}
+.detail-page .instagram-card .v36-followers{
+  display:-webkit-flex!important;display:flex!important;
+  -webkit-flex-direction:column!important;flex-direction:column!important;
+  -webkit-justify-content:center!important;justify-content:center!important;
+  -webkit-align-items:center!important;align-items:center!important;
+  width:100%!important;min-width:0!important;box-sizing:border-box!important;
+  flex:1 1 auto!important;min-height:0!important;
+  margin-top:10px!important;padding:10px!important;
+}
+.detail-page .instagram-card .v36-followers span{
+  -webkit-flex:none!important;flex:none!important;min-width:0!important;
+}
+.detail-page .instagram-card .v36-followers strong{
+  font-size:38px!important;line-height:1.1!important;margin:5px 0!important;
+}
+.detail-page .instagram-card .v36-followers em{
+  width:100%!important;box-sizing:border-box!important;font-size:11px!important;
+}
+.detail-page .v22-weekly{
+  overflow:hidden!important;display:-webkit-flex!important;display:flex!important;
+  -webkit-flex-direction:column!important;flex-direction:column!important;
+  min-height:0!important;box-sizing:border-box!important;
+}
+.detail-page .v22-weekly .weekly-head{
+  flex:0 0 auto!important;margin-bottom:8px!important;
+}
+.detail-page .v37-week-grid{
+  display:-webkit-flex!important;display:flex!important;
+  -webkit-flex-direction:row!important;flex-direction:row!important;
+  -webkit-flex-wrap:nowrap!important;flex-wrap:nowrap!important;
+  -webkit-justify-content:space-between!important;justify-content:space-between!important;
+  -webkit-align-items:stretch!important;align-items:stretch!important;
+  width:100%!important;min-width:0!important;min-height:0!important;
+  flex:1 1 auto!important;direction:rtl!important;overflow:hidden!important;
+}
+.detail-page .v37-week-card{
+  display:-webkit-flex!important;display:flex!important;
+  -webkit-flex-direction:column!important;flex-direction:column!important;
+  -webkit-justify-content:space-between!important;justify-content:space-between!important;
+  width:24.1%!important;min-width:0!important;max-width:24.1%!important;
+  height:100%!important;min-height:0!important;flex:0 0 24.1%!important;
+  box-sizing:border-box!important;overflow:hidden!important;padding:8px 11px!important;
+  background:rgba(45,17,7,.27)!important;
+  border:1px solid rgba(255,231,200,.23)!important;border-radius:13px!important;
+}
+.detail-page .v37-week-title{
+  font-size:16px!important;line-height:1.25!important;font-weight:800!important;
+  text-align:center!important;color:#fff5dd!important;padding-bottom:4px!important;
+}
+.detail-page .v37-week-stat{
+  display:-webkit-flex!important;display:flex!important;
+  -webkit-flex-direction:row!important;flex-direction:row!important;
+  -webkit-align-items:center!important;align-items:center!important;
+  -webkit-justify-content:space-between!important;justify-content:space-between!important;
+  direction:ltr!important;color:#f8e5d1!important;font-size:12px!important;
+  line-height:1.2!important;white-space:nowrap!important;min-width:0!important;
+}
+.detail-page .v37-week-stat span{font-size:12px!important;white-space:nowrap!important}
+.detail-page .v37-week-stat b{
+  color:#fff!important;font-size:14px!important;font-weight:800!important;
+}
 .detail-page .v37-week-stat .rank-good{color:#72ffc1!important}
 .detail-page .v37-week-stat .rank-mid{color:#ffd46c!important}
 @media screen and (max-width:1280px){
-.detail-page .instagram-card .v37-ig-tiles{gap:7px!important}
-.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero{padding:6px 4px!important}
-.detail-page .instagram-card .v37-ig-tiles .v22-metric.hero strong{font-size:27px!important}
-.detail-page .v37-week-grid{gap:7px!important}
-.detail-page .v37-week-card{padding:6px 8px!important}
-.detail-page .v37-week-stat{font-size:10px!important}
+  .detail-page .instagram-card .v37-ig-tiles{height:13.8vw!important}
+  .detail-page .instagram-card .v37-ig-tiles .v22-metric.hero{padding:5px 3px!important}
+  .detail-page .instagram-card .v37-ig-tiles .v22-metric.hero span{font-size:11px!important}
+  .detail-page .instagram-card .v37-ig-tiles .v22-metric.hero strong{font-size:28px!important}
+  .detail-page .instagram-card .v37-ig-tiles .v22-metric.hero em,
+  .detail-page .instagram-card .v37-ig-tiles .v22-metric.hero small{font-size:9px!important;padding:2px!important}
+  .detail-page .instagram-card .v36-followers strong{font-size:31px!important}
+  .detail-page .v37-week-card{padding:6px 7px!important}
+  .detail-page .v37-week-title{font-size:13px!important}
+  .detail-page .v37-week-stat,.detail-page .v37-week-stat span{font-size:10px!important}
+  .detail-page .v37-week-stat b{font-size:12px!important}
 }
 </style>
 </head>
