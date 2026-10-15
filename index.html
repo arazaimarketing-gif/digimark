@@ -897,7 +897,61 @@
  .detail-page .seo-tv-micro>.v22-metric strong{font-size:19px!important}
  .detail-page .seo-tv-micro>.v22-metric span{font-size:9px!important}
  .detail-page .seo-tv-weekly-sub{font-size:10px!important}
-}</style>
+}
+/* Third TV slide: old Samsung/Tizen flexbox layout, IG physically left, management right */
+.social-tv-page{position:fixed;top:0;bottom:0;left:0;right:0;z-index:42;overflow:hidden;color:#fff;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .7s ease,visibility .7s ease;background:#10202c;}
+body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:auto;}
+.social-tv-bg{position:absolute;inset:0;background:linear-gradient(110deg,rgba(9,23,35,.92),rgba(25,29,32,.89)),url('assets/background.png') center center/cover no-repeat;}
+.social-tv-content{position:relative;z-index:1;box-sizing:border-box;margin:0 auto;width:94%;max-width:1790px;height:100%;padding:2vh 0 3.5vh;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;}
+.social-tv-head{height:11%;-webkit-flex:0 0 11%;flex:0 0 11%;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;direction:rtl;padding:0 1vw;box-sizing:border-box;}
+.social-tv-head h2{font-size:37px;margin:0;line-height:1.25;color:#fff;font-weight:900;}
+.social-tv-head p{font-size:15px;margin:5px 0;color:#c4d4e0;}
+.social-tv-head-date{font-size:19px;text-align:center;direction:rtl;border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:8px 18px;background:rgba(255,255,255,.07);}
+.social-tv-head-date b{color:#FDC000}.social-tv-head-date small{display:block;font-size:12px;margin-top:5px;color:#c9d3dd;}
+.social-tv-cols{height:86%;min-height:0;-webkit-flex:1 1 0;flex:1 1 0;display:-webkit-flex;display:flex;-webkit-flex-direction:row;flex-direction:row;direction:ltr;-webkit-justify-content:space-between;justify-content:space-between;}
+.social-tv-card{box-sizing:border-box;direction:rtl;width:49.2%;-webkit-flex:0 0 49.2%;flex:0 0 49.2%;height:100%;min-height:0;padding:18px 24px 12px;overflow:hidden;border-radius:22px;border:1px solid rgba(255,255,255,.19);background:linear-gradient(170deg,rgba(27,49,66,.96),rgba(9,24,35,.95));display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;}
+.social-tv-mgmt{background:linear-gradient(170deg,rgba(56,48,35,.96),rgba(26,31,36,.94));}
+.social-tv-card-head{height:15%;-webkit-flex:0 0 15%;flex:0 0 15%;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;min-height:0;border-bottom:1px solid rgba(255,255,255,.14);box-sizing:border-box;}
+.social-tv-kicker{font-size:12px;letter-spacing:1px;color:#FDC000;direction:ltr;display:block;text-align:right;}
+.social-tv-card-head h3{font-size:31px;line-height:1.15;margin:3px 0;font-weight:900;}
+.social-tv-card-head p{font-size:13px;margin:3px 0;color:#bac9d4;}
+.social-tv-score{border:1px solid rgba(253,192,0,.4);background:rgba(253,192,0,.10);border-radius:13px;text-align:center;padding:6px 13px;min-width:102px;}
+.social-tv-score strong{display:block;color:#FDC000;font-size:39px;font-weight:900;line-height:1.15;}
+.social-tv-score small{color:#e9d8ba;font-size:11px;white-space:nowrap;}
+.social-tv-method{height:7%;-webkit-flex:0 0 7%;flex:0 0 7%;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;font-size:16px;color:#cadbe8;}
+.social-tv-method strong{color:#FDC000;margin-right:8px;font-size:17px;}
+.social-tv-ig-stats{height:57%;-webkit-flex:0 0 57%;flex:0 0 57%;min-height:0;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:space-around;justify-content:space-around;}
+.social-tv-stat{height:31%;min-height:0;border-radius:12px;box-sizing:border-box;padding:10px 16px;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:space-between;justify-content:space-between;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);}
+.social-tv-stat-main{display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;min-width:0;}
+.social-tv-stat-main span{font-size:18px;font-weight:800;color:#eff4fa;}
+.social-tv-stat-main b{font-size:28px;font-weight:900;color:#fff;direction:ltr;white-space:nowrap;}
+.social-tv-stat-hint{font-size:13px;color:#acc6d6;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;}
+.social-tv-stat-hint strong{color:#FDC000;font-size:14px;}
+.social-tv-bar{height:7px;width:100%;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.20);}
+.social-tv-bar i{height:100%;width:0;display:block;border-radius:99px;background:#FDC000;transition:width .65s ease;}
+.social-tv-ig-extras{height:15%;-webkit-flex:0 0 15%;flex:0 0 15%;min-height:0;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;padding-top:8px;box-sizing:border-box;}
+.social-tv-ig-extras>div{width:32%;-webkit-flex:0 0 32%;flex:0 0 32%;box-sizing:border-box;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.19);border-radius:12px;text-align:center;padding:6px;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:center;justify-content:center;}
+.social-tv-ig-extras span{font-size:12px;color:#b9cbd8;line-height:1.4;}
+.social-tv-ig-extras b{font-size:26px;color:#FDC000;margin-top:3px;}
+.social-tv-note{height:6%;-webkit-flex:0 0 6%;flex:0 0 6%;padding:9px 0 0;margin:0;text-align:center;font-size:12px;color:#abc0cd;box-sizing:border-box;}
+.social-tv-mgmt-stats{height:71%;-webkit-flex:0 0 71%;flex:0 0 71%;min-height:0;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:space-around;justify-content:space-around;}
+.social-tv-mgmt-stat{height:18.6%;padding:7px 13px;}
+.social-tv-mgmt-stat .social-tv-stat-main span{font-size:17px;}
+.social-tv-mgmt-stat .social-tv-stat-main small{font-size:11px;color:#d6b874;margin-right:8px;font-weight:500;}
+.social-tv-mgmt-stat .social-tv-stat-main b{font-size:20px;color:#FDC000;}
+.social-tv-mgmt-stat .social-tv-stat-hint{font-size:12px;}
+.social-tv-foot{height:3%;-webkit-flex:0 0 3%;flex:0 0 3%;font-size:12px;color:#a9bbc7;text-align:center;padding-top:5px;box-sizing:border-box;}
+@media screen and (max-width:1280px){
+.social-tv-head h2{font-size:27px}.social-tv-head p{font-size:11px}.social-tv-card{padding:12px 15px 9px}.social-tv-card-head h3{font-size:22px}
+.social-tv-card-head p{font-size:10px}.social-tv-score{min-width:76px;padding:4px 7px}.social-tv-score strong{font-size:30px}.social-tv-score small{font-size:9px}
+.social-tv-stat{padding:7px 10px}.social-tv-stat-main span{font-size:13px}.social-tv-stat-main b{font-size:20px}
+.social-tv-stat-hint{font-size:10px}.social-tv-stat-hint strong{font-size:11px}
+.social-tv-mgmt-stat .social-tv-stat-main span{font-size:12px}.social-tv-mgmt-stat .social-tv-stat-main b{font-size:15px}
+.social-tv-ig-extras span{font-size:9px}.social-tv-ig-extras b{font-size:19px}.social-tv-note{font-size:9px}.social-tv-method{font-size:12px}
+.social-tv-method strong{font-size:13px}
+}
+
+</style>
 </head>
 <body>
 <div class="scene">
@@ -1062,6 +1116,66 @@
 </div>
 </div>
 
+
+<div id="socialTvPage" class="social-tv-page">
+  <div class="social-tv-bg"></div>
+  <div class="social-tv-content">
+    <div class="social-tv-head">
+      <div><h2>عملکرد اینستاگرام و مدیریت</h2><p>داشبورد شاخص‌های ماهانه پاسکال</p></div>
+      <div class="social-tv-head-date">ماه <b id="svMonth">مهر</b><small id="svDate">—</small></div>
+    </div>
+    <div class="social-tv-cols">
+      <section class="social-tv-card social-tv-ig">
+        <div class="social-tv-card-head">
+          <div><span class="social-tv-kicker">INSTAGRAM</span><h3>اینستاگرام</h3><p>رشد پیج، دیده‌شدن و کیفیت بازدید</p></div>
+          <div class="social-tv-score"><strong id="svIgScore">—</strong><small>از ۲۰ امتیاز</small></div>
+        </div>
+        <div class="social-tv-method">مسیر برنده: <strong id="svIgRoute">—</strong></div>
+        <div class="social-tv-ig-stats">
+          <div class="social-tv-stat"><div class="social-tv-stat-main"><span>ویو ماهانه ریلز</span><b id="svViews">—</b></div>
+            <div class="social-tv-stat-hint"><span id="svViewsTarget">هدف ماه: —</span><strong id="svViewsPct">—</strong></div>
+            <div class="social-tv-bar"><i id="svViewsBar"></i></div>
+          </div>
+          <div class="social-tv-stat"><div class="social-tv-stat-main"><span>کل فالوورها</span><b id="svFollowers">—</b></div>
+            <div class="social-tv-stat-hint"><span id="svFollowersTarget">هدف ماه: —</span><strong id="svFollowersPct">—</strong></div>
+            <div class="social-tv-bar"><i id="svFollowersBar"></i></div>
+          </div>
+          <div class="social-tv-stat"><div class="social-tv-stat-main"><span>درصد مخاطبان غیرفالوور</span><b id="svNonFollower">—</b></div>
+            <div class="social-tv-stat-hint"><span id="svNonFollowerTarget">هدف ماه: —</span><strong id="svNonFollowerPct">—</strong></div>
+            <div class="social-tv-bar"><i id="svNonFollowerBar"></i></div>
+          </div>
+        </div>
+        <div class="social-tv-ig-extras">
+          <div><span>تعداد ریلز منتشرشده</span><b id="svReels">—</b></div>
+          <div><span>امتیاز مسیر ویو + نان‌فالوور</span><b id="svViewPath">—</b></div>
+          <div><span>امتیاز مسیر فالوور</span><b id="svFollowPath">—</b></div>
+        </div>
+        <p class="social-tv-note">بالاترین امتیاز یکی از دو مسیر اینستاگرام محاسبه می‌شود.</p>
+      </section>
+      <section class="social-tv-card social-tv-mgmt">
+        <div class="social-tv-card-head">
+          <div><span class="social-tv-kicker">MANAGEMENT</span><h3>مدیریت دپارتمان</h3><p>ارزیابی پنج بخش با وزن‌های جدید</p></div>
+          <div class="social-tv-score"><strong id="svMgmtScore">—</strong><small>از ۲۰ امتیاز</small></div>
+        </div>
+        <div class="social-tv-method">تحقق مدیریت: <strong id="svMgmtPct">—</strong></div>
+        <div class="social-tv-mgmt-stats">
+          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>محتوا و کانال‌ها <small>۶ امتیاز</small></span><b id="svContentScore">—</b></div>
+            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svContentPct">—</strong></div><div class="social-tv-bar"><i id="svContentBar"></i></div></div>
+          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>پروژه‌های مارکتینگ <small>۵ امتیاز</small></span><b id="svProjectsScore">—</b></div>
+            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svProjectsPct">—</strong></div><div class="social-tv-bar"><i id="svProjectsBar"></i></div></div>
+          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>سایت و زیرساخت <small>۳ امتیاز</small></span><b id="svWebsiteScore">—</b></div>
+            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svWebsitePct">—</strong></div><div class="social-tv-bar"><i id="svWebsiteBar"></i></div></div>
+          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>طراحی و هویت بصری <small>۳ امتیاز</small></span><b id="svDesignScore">—</b></div>
+            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svDesignPct">—</strong></div><div class="social-tv-bar"><i id="svDesignBar"></i></div></div>
+          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>مدیریت و گزارش‌دهی <small>۳ امتیاز</small></span><b id="svReportingScore">—</b></div>
+            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svReportingPct">—</strong></div><div class="social-tv-bar"><i id="svReportingBar"></i></div></div>
+        </div>
+        <p class="social-tv-note">هر زیرشاخص حداکثر به اندازه وزن خودش امتیاز می‌گیرد.</p>
+      </section>
+    </div>
+    <div class="social-tv-foot" id="svSource">نمایش آنلاین داده‌های Google Sheets</div>
+  </div>
+</div>
 <audio id="bgMusic" preload="metadata"></audio>
 <div class="music-player" id="musicPlayer" title="موزیک پس‌زمینه">
   <button class="music-btn" id="musicPrev" type="button">قبلی</button>
@@ -1096,7 +1210,8 @@
   <button class="page-nav-btn" id="prevSlide" type="button" aria-label="اسلاید قبلی">‹</button>
   <div class="page-dots">
     <button class="page-dot active" id="dot0" type="button" aria-label="صفحه اصلی"></button>
-    <button class="page-dot" id="dot1" type="button" aria-label="ریز KPI ماه جاری"></button>
+    <button class="page-dot" id="dot1" type="button" aria-label="داشبورد سئو"></button>
+    <button class="page-dot" id="dot2" type="button" aria-label="اینستاگرام و مدیریت"></button>
   </div>
   <button class="page-nav-btn" id="nextSlide" type="button" aria-label="اسلاید بعدی">›</button>
 </div>
@@ -1193,7 +1308,7 @@
   function syncGoogleSheet(){setSyncState('syncing','Google Sheet · در حال همگام‌سازی');var xhr=new XMLHttpRequest(),sep=GOOGLE_SHEET_API.indexOf('?')>=0?'&':'?';xhr.open('GET',GOOGLE_SHEET_API+sep+'_ts='+(new Date().getTime()),true);xhr.onreadystatechange=function(){if(xhr.readyState!==4)return;if(xhr.status>=200&&xhr.status<300){try{var payload=JSON.parse(xhr.responseText);if(payload.ok!==true)throw new Error('API');if(payload.updated_at)setServerTime(payload.updated_at);applyGooglePayload(payload,false);tick();setSyncState('ok','Google Sheet · بروزرسانی '+formatTime())}catch(e){setSyncState('error','Google Sheet · خطای داده')}}else setSyncState('error','Google Sheet · اتصال ناموفق')};try{xhr.send(null)}catch(e){setSyncState('error','Google Sheet · اتصال ناموفق')}}
   function weeklyRows(){var a=[],i;for(i=1;i<=5;i++)a.push({week:i,imp:num(data['w'+i+'Imp'],0),clicks:num(data['w'+i+'Clicks'],0),rank:num(data['w'+i+'Rank'],0)});return a}function monthlySEO(){return{rows:weeklyRows(),impressions:num(data.monthlyImpressions,0),clicks:num(data.monthlyClicks,0),ctr:num(data.monthlyCTR,0),rank:num(data.monthlyRank,0)}}
   function calc(){var seo=monthlySEO(),t=targets[data.month]||targets['مهر'],vr=ratio(data.views,t.views),fallbackVisibility=Math.max((data.views<=t.views?15*vr:15+(vr-1)*15*0.5)+Math.min(5,5*ratio(data.nonFollower,t.nonFollower)),20*ratio(data.followers,t.followers))+(seo.rank>0?Math.min(40,20*(t.rank/seo.rank)):0),fallbackLead=40*ratio(data.leads,t.leads),fallbackMgmt=Math.min(6,clamp(data.content,0,100)/100*6)+Math.min(5,clamp(data.projects,0,100)/100*5)+Math.min(3,clamp(data.website,0,100)/100*3)+Math.min(3,clamp(data.design,0,100)/100*3)+Math.min(3,clamp(data.reporting,0,100)/100*3),visibility=data.visibilityScore>=0?data.visibilityScore:fallbackVisibility,lead=data.leadScoreDirect>=0?data.leadScoreDirect:fallbackLead,mgmt=data.mgmtScoreDirect>=0?data.mgmtScoreDirect:fallbackMgmt,total=data.totalScoreDirect>=0?data.totalScoreDirect:(visibility+lead+mgmt);return{t:t,seo:seo,visibility:visibility,lead:lead,mgmt:mgmt,total:total}}
-  function render(){var s=calc(),t=s.t,total=Math.max(0,s.total),seo=s.seo,visPct=Math.min(s.visibility/40*100,100),leadPct=Math.min(s.lead/40*100,100),mgmtPct=Math.min(s.mgmt/20*100,100),totalPct=Math.min(total,100),ahead=total>105,on=total>=95&&total<=105,behind=total<95;setText('totalScore',faPercent(total));setText('totalScoreCard',fa(total));setText('visScore',fa(s.visibility));setText('leadScore',fa(s.lead));setText('mgmtScore',fa(s.mgmt));setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);setText('visPct',faPercent(visPct));setText('leadPct',faPercent(leadPct));setText('mgmtPct',faPercent(mgmtPct));setText('totalPct',faPercent(totalPct));toggleClass(by('stAhead'),'active',ahead);toggleClass(by('stOn'),'active',on);toggleClass(by('stBehind'),'active',behind);setText('cmpImpr',faCompact(seo.impressions));setText('cmpClicks',faPercent(t.clicks?Math.min(seo.clicks/t.clicks*100,999):0));setText('cmpLeads',faPercent(t.leads?Math.min(data.leads/t.leads*100,999):0));setText('cmpRank',seo.rank?faPercent(t.rank/seo.rank*100):'۰٪');renderDetail(s)}
+  function render(){var s=calc(),t=s.t,total=Math.max(0,s.total),seo=s.seo,visPct=Math.min(s.visibility/40*100,100),leadPct=Math.min(s.lead/40*100,100),mgmtPct=Math.min(s.mgmt/20*100,100),totalPct=Math.min(total,100),ahead=total>105,on=total>=95&&total<=105,behind=total<95;setText('totalScore',faPercent(total));setText('totalScoreCard',fa(total));setText('visScore',fa(s.visibility));setText('leadScore',fa(s.lead));setText('mgmtScore',fa(s.mgmt));setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);setText('visPct',faPercent(visPct));setText('leadPct',faPercent(leadPct));setText('mgmtPct',faPercent(mgmtPct));setText('totalPct',faPercent(totalPct));toggleClass(by('stAhead'),'active',ahead);toggleClass(by('stOn'),'active',on);toggleClass(by('stBehind'),'active',behind);setText('cmpImpr',faCompact(seo.impressions));setText('cmpClicks',faPercent(t.clicks?Math.min(seo.clicks/t.clicks*100,999):0));setText('cmpLeads',faPercent(t.leads?Math.min(data.leads/t.leads*100,999):0));setText('cmpRank',seo.rank?faPercent(t.rank/seo.rank*100):'۰٪');renderDetail(s);renderSocial(s)}
   function renderDetail(s){
   var t=s.t,seo=s.seo,finalT=targets['اسفند'],m=data.month,page=by('detailPage'),tbody=by('weeklyBody'),i,r,tr,ctr,rc;
   removeClass(page,'autumn');removeClass(page,'winter');
@@ -1224,7 +1339,28 @@
     tbody.appendChild(tr);
   }}
 }
-function tick(){setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%2)+2)%2;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
+
+function renderSocial(s){
+  var t=s.t,vr=ratio(data.views,t.views),fr=ratio(data.followers,t.followers),nr=ratio(data.nonFollower,t.nonFollower);
+  var vscore=(data.views<=t.views?15*vr:15+(vr-1)*15*.5)+Math.min(5,5*nr),fscore=20*fr;
+  var keys=['Content','Projects','Website','Design','Reporting'],vals=[data.content,data.projects,data.website,data.design,data.reporting],weights=[6,5,3,3,3],i,earned;
+  setText('svMonth',data.month);setText('svIgScore',fa(Math.max(vscore,fscore)));
+  setText('svIgRoute',fscore>=vscore?'فالوورها':'ویو + نان‌فالوور');
+  setText('svViews',faInt(data.views));setText('svViewsTarget','هدف ماه: '+faInt(t.views));setText('svViewsPct',faPercent(vr*100));setWidth('svViewsBar',vr*100);
+  setText('svFollowers',faInt(data.followers));setText('svFollowersTarget','هدف ماه: '+faInt(t.followers));setText('svFollowersPct',faPercent(fr*100));setWidth('svFollowersBar',fr*100);
+  setText('svNonFollower',faPercent(data.nonFollower));setText('svNonFollowerTarget','هدف ماه: '+faPercent(t.nonFollower));setText('svNonFollowerPct',faPercent(nr*100));setWidth('svNonFollowerBar',nr*100);
+  setText('svReels',faInt(data.reels));setText('svViewPath',fa(vscore));setText('svFollowPath',fa(fscore));
+  setText('svMgmtScore',fa(s.mgmt));setText('svMgmtPct',faPercent(s.mgmt/20*100));
+  for(i=0;i<keys.length;i++){
+    earned=clamp(num(vals[i],0),0,100)/100*weights[i];
+    setText('sv'+keys[i]+'Score',fa(earned)+' / '+faInt(weights[i]));
+    setText('sv'+keys[i]+'Pct',faPercent(num(vals[i],0)));
+    setWidth('sv'+keys[i]+'Bar',num(vals[i],0));
+  }
+  setText('svSource',data.totalScoreDirect>=0?'همگام با اطلاعات گوگل‌شیت':'داده اولیه؛ در انتظار همگام‌سازی گوگل‌شیت');
+}
+
+function tick(){setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d);setText('svDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%3)+3)%3;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(document.body,'show-social',currentPage===2);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1);toggleClass(by('dot2'),'active',currentPage===2)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
 
   /* Persistent background music - stays alive while dashboard slides change */
   var MUSIC_TRACKS=[
@@ -1374,7 +1510,7 @@ function tick(){setText('time',formatTime());var d=formatDate();setText('date',d
   }
 
   initTvLeaves();
-  tick();render();loadGoogleCache();syncGoogleSheet();setInterval(tick,1000);setInterval(syncGoogleSheet,GOOGLE_SYNC_MS);var p0=by('dot0'),p1=by('dot1'),pn=by('nextSlide'),pp=by('prevSlide');if(p0)p0.onclick=function(){manualPage(0)};if(p1)p1.onclick=function(){manualPage(1)};if(pn)pn.onclick=function(){manualPage(currentPage+1)};if(pp)pp.onclick=function(){manualPage(currentPage-1)};restartRotation();
+  tick();render();loadGoogleCache();syncGoogleSheet();setInterval(tick,1000);setInterval(syncGoogleSheet,GOOGLE_SYNC_MS);var p0=by('dot0'),p1=by('dot1'),p2=by('dot2'),pn=by('nextSlide'),pp=by('prevSlide');if(p0)p0.onclick=function(){manualPage(0)};if(p1)p1.onclick=function(){manualPage(1)};if(p2)p2.onclick=function(){manualPage(2)};if(pn)pn.onclick=function(){manualPage(currentPage+1)};if(pp)pp.onclick=function(){manualPage(currentPage-1)};restartRotation();
 })();
 </script>
 </body>
