@@ -929,6 +929,42 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
 .social-tv-stat-hint strong{color:#FDC000;font-size:14px;}
 .social-tv-bar{height:7px;width:100%;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.20);}
 .social-tv-bar i{height:100%;width:0;display:block;border-radius:99px;background:#FDC000;transition:width .65s ease;}
+
+/* V39 Instagram TV: Views + Non-Followers share one row, Followers get a separate full-width row. */
+.social-tv-ig-pair{
+  height:51%;width:100%;min-height:0;box-sizing:border-box;
+  display:-webkit-flex;display:flex;
+  -webkit-flex-direction:row;flex-direction:row;
+  -webkit-justify-content:space-between;justify-content:space-between;
+  -webkit-align-items:stretch;align-items:stretch;
+}
+.social-tv-ig-pair>.social-tv-stat{
+  width:49%;-webkit-flex:0 0 49%;flex:0 0 49%;height:100%;
+  min-width:0;padding:9px 12px;
+}
+.social-tv-ig-pair .social-tv-stat-main{
+  display:-webkit-flex;display:flex;
+  -webkit-flex-direction:column;flex-direction:column;
+  -webkit-align-items:center;align-items:center;
+}
+.social-tv-ig-pair .social-tv-stat-main span{
+  font-size:16px;line-height:1.4;text-align:center;white-space:normal;
+}
+.social-tv-ig-pair .social-tv-stat-main b{
+  font-size:37px;line-height:1.2;margin-top:6px;text-align:center;
+}
+.social-tv-ig-pair .social-tv-stat-hint{font-size:12px;}
+.social-tv-ig-pair .social-tv-stat-hint strong{font-size:13px;}
+.social-tv-ig-stats>.social-tv-stat-followers{
+  height:44%;min-height:0;box-sizing:border-box;
+}
+@media screen and (max-width:1280px){
+  .social-tv-ig-pair>.social-tv-stat{padding:7px 8px;}
+  .social-tv-ig-pair .social-tv-stat-main span{font-size:12px;}
+  .social-tv-ig-pair .social-tv-stat-main b{font-size:27px;}
+  .social-tv-ig-pair .social-tv-stat-hint{font-size:10px;}
+  .social-tv-ig-pair .social-tv-stat-hint strong{font-size:11px;}
+}
 .social-tv-ig-extras{height:15%;-webkit-flex:0 0 15%;flex:0 0 15%;min-height:0;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;padding-top:8px;box-sizing:border-box;}
 .social-tv-ig-extras>div{width:32%;-webkit-flex:0 0 32%;flex:0 0 32%;box-sizing:border-box;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.19);border-radius:12px;text-align:center;padding:6px;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:center;justify-content:center;}
 .social-tv-ig-extras span{font-size:12px;color:#b9cbd8;line-height:1.4;}
@@ -1149,17 +1185,22 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
         </div>
         <div class="social-tv-method">مسیر برنده: <strong id="svIgRoute">—</strong></div>
         <div class="social-tv-ig-stats">
-          <div class="social-tv-stat"><div class="social-tv-stat-main"><span>ویو ماهانه ریلز</span><b id="svViews">—</b></div>
-            <div class="social-tv-stat-hint"><span id="svViewsTarget">هدف ماه: —</span><strong id="svViewsPct">—</strong></div>
-            <div class="social-tv-bar"><i id="svViewsBar"></i></div>
+          <div class="social-tv-ig-pair">
+            <div class="social-tv-stat social-tv-stat-views">
+              <div class="social-tv-stat-main"><span>ویو ماهانه ریلز</span><b id="svViews">—</b></div>
+              <div class="social-tv-stat-hint"><span id="svViewsTarget">هدف ماه: —</span><strong id="svViewsPct">—</strong></div>
+              <div class="social-tv-bar"><i id="svViewsBar"></i></div>
+            </div>
+            <div class="social-tv-stat social-tv-stat-nonfollowers">
+              <div class="social-tv-stat-main"><span>درصد مخاطبان غیرفالوور</span><b id="svNonFollower">—</b></div>
+              <div class="social-tv-stat-hint"><span id="svNonFollowerTarget">هدف ماه: —</span><strong id="svNonFollowerPct">—</strong></div>
+              <div class="social-tv-bar"><i id="svNonFollowerBar"></i></div>
+            </div>
           </div>
-          <div class="social-tv-stat"><div class="social-tv-stat-main"><span>کل فالوورها</span><b id="svFollowers">—</b></div>
+          <div class="social-tv-stat social-tv-stat-followers">
+            <div class="social-tv-stat-main"><span>کل فالوورها</span><b id="svFollowers">—</b></div>
             <div class="social-tv-stat-hint"><span id="svFollowersTarget">هدف ماه: —</span><strong id="svFollowersPct">—</strong></div>
             <div class="social-tv-bar"><i id="svFollowersBar"></i></div>
-          </div>
-          <div class="social-tv-stat"><div class="social-tv-stat-main"><span>درصد مخاطبان غیرفالوور</span><b id="svNonFollower">—</b></div>
-            <div class="social-tv-stat-hint"><span id="svNonFollowerTarget">هدف ماه: —</span><strong id="svNonFollowerPct">—</strong></div>
-            <div class="social-tv-bar"><i id="svNonFollowerBar"></i></div>
           </div>
         </div>
         <div class="social-tv-ig-extras">
@@ -1294,7 +1335,7 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
   var targets={'مهر':{views:150000,median:9000,nonFollower:70,clicks:5600,rank:17,leads:50,followers:15000,reels:5},'آبان':{views:180000,median:12000,nonFollower:70,clicks:6200,rank:15,leads:60,followers:17000,reels:5},'آذر':{views:210000,median:15000,nonFollower:70,clicks:6900,rank:12,leads:70,followers:19000,reels:6},'دی':{views:240000,median:18000,nonFollower:70,clicks:7600,rank:10,leads:80,followers:21000,reels:6},'بهمن':{views:270000,median:21000,nonFollower:70,clicks:8300,rank:7,leads:90,followers:23000,reels:6},'اسفند':{views:300000,median:24000,nonFollower:70,clicks:9000,rank:5,leads:100,followers:25000,reels:6}};
   var defaults={month:'مهر',views:120000,median:7000,nonFollower:0,nonFollowerReach:0,followersGained:0,followers:13100,reels:4,sharesPer1k:0,savesPer1k:0,leads:40,content:0,projects:0,website:0,design:0,reporting:0,w1Imp:35000,w1Clicks:1150,w1Rank:15,w2Imp:36000,w2Clicks:1220,w2Rank:14.8,w3Imp:37500,w3Clicks:1280,w3Rank:14.6,w4Imp:39000,w4Clicks:1350,w4Rank:14.4,w5Imp:0,w5Clicks:0,w5Rank:0};
   function by(id){return document.getElementById(id)}function hasClass(el,c){return el&&(' '+el.className+' ').indexOf(' '+c+' ')>-1}function addClass(el,c){if(el&&!hasClass(el,c))el.className+=(el.className?' ':'')+c}function removeClass(el,c){if(el)el.className=(' '+el.className+' ').replace(' '+c+' ',' ').replace(/^\s+|\s+$/g,'')}function toggleClass(el,c,on){if(on)addClass(el,c);else removeClass(el,c)}
-  function cloneObj(o){var r={},k;for(k in o)if(o.hasOwnProperty(k))r[k]=o[k];return r}function merge(a,b){var r=cloneObj(a),k;if(b)for(k in b)if(b.hasOwnProperty(k))r[k]=b[k];return r}function num(v,f){var x=parseFloat(v);return isFinite(x)?x:(f||0)}function clamp(x,a,b){return Math.max(a,Math.min(b,x))}function ratio(a,t){return t>0?a/t:0}
+  function cloneObj(o){var r={},k;for(k in o)if(o.hasOwnProperty(k))r[k]=o[k];return r}function merge(a,b){var r=cloneObj(a),k;if(b)for(k in b)if(b.hasOwnProperty(k))r[k]=b[k];return r}function num(v,f){var x=parseFloat(v);return isFinite(x)?x:(f||0)}function clamp(x,a,b){return Math.max(a,Math.min(b,x))}function ratio(a,t){return t>0?a/t:0}function percentPoints(v){var x=num(v,0);return x>0&&x<=1?x*100:x}
   function pdigits(s){return String(s).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.charAt(parseInt(d,10))})}function fa(n){if(!isFinite(n))n=0;var s=(Math.round(n*10)/10).toFixed(1).replace(/\.0$/,'');return pdigits(s)}function faInt(n){n=num(n,0);return pdigits(String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'٬'))}function faCompact(n){n=num(n,0);if(n>=1000000){var m=Math.round(n/100000)/10;var ms=String(m).replace(/\.0$/,'');return pdigits(ms)+'M'}if(n>=1000){var k=Math.round(n/100)/10;var ks=String(k).replace(/\.0$/,'');return pdigits(ks)+'K'}return faInt(n)}function faPercent(n){return fa(n)+'٪'}function normalMonth(v){return String(v==null?'':v).replace(/\s/g,'')}
   function digitToEn(s){return String(s==null?'':s).replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)})}function weekNo(v){var m=digitToEn(v).match(/(\d+)/);return m?parseInt(m[1],10):0}
   function div(a,b){return parseInt(a/b,10)}function g2j(gy,gm,gd){var gdm=[0,31,59,90,120,151,181,212,243,273,304,334],jy,gy2,days,jm,jd;if(gy>1600){jy=979;gy-=1600}else{jy=0;gy-=621}gy2=(gm>2)?gy+1:gy;days=365*gy+div(gy2+3,4)-div(gy2+99,100)+div(gy2+399,400)-80+gd+gdm[gm-1];jy+=33*div(days,12053);days%=12053;jy+=4*div(days,1461);days%=1461;if(days>365){jy+=div(days-1,365);days=(days-1)%365}if(days<186){jm=1+div(days,31);jd=1+days%31}else{jm=7+div(days-186,30);jd=1+(days-186)%30}return[jy,jm,jd]}
@@ -1309,7 +1350,7 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
   function formatDate(){var d=tehranDate(),j=jalaliNow(),wd=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'][d.getUTCDay()];return wd+'، '+pdigits(j[2])+' '+months[j[1]-1]+' '+pdigits(j[0])}
   function load(){var o={};try{o=JSON.parse(localStorage.getItem('pascal_kpi_v2')||localStorage.getItem('pascal_kpi_v1')||'{}')||{}}catch(e){}return merge(defaults,o)}var data=load(),dm=detectedPersianMonth();if(dm)data.month=dm;function save(){try{localStorage.setItem('pascal_kpi_v2',JSON.stringify(data))}catch(e){}}
   function setText(id,val){var el=by(id);if(el)el.innerHTML=String(val)}function setWidth(id,val){var el=by(id);if(el)el.style.width=clamp(val,0,100)+'%'}function setSyncState(state,label){var b=by('syncBadge'),t=by('syncText');if(!b||!t)return;removeClass(b,'ok');removeClass(b,'error');removeClass(b,'syncing');addClass(b,state);t.innerHTML=label}
-  function applyGooglePayload(payload,fromCache){var i,row,wanted,t,af,wr,idx;if(!payload||!payload.monthly||!payload.monthly.length)throw new Error('Invalid payload');wanted=detectedPersianMonth()||data.month||'مهر';row=null;for(i=0;i<payload.monthly.length;i++){if(normalMonth(payload.monthly[i].month)===normalMonth(wanted)){row=payload.monthly[i];break}}if(!row)throw new Error('Month not found');t=targets[wanted]||targets['مهر'];t.views=num(row.target_reel_views,t.views);t.median=num(row.target_median_7d,t.median);t.nonFollower=num(row.target_non_follower,t.nonFollower);t.leads=num(row.target_leads,t.leads);t.clicks=num(row.target_clicks,t.clicks);t.rank=num(row.target_avg_rank_72,t.rank);if(num(row.followers_outcome_target,0)>0)t.followers=num(row.followers_outcome_target,t.followers);data.month=wanted;data.views=num(row.reel_views,0);data.median=num(row.median_7d,0);data.nonFollower=num(row.non_follower,0);data.nonFollowerReach=num(row.non_follower_reach,0);data.followersGained=num(row.followers_gained,0);data.reels=num(row.reels_published,0);data.sharesPer1k=num(row.shares_per_1k,0);data.savesPer1k=num(row.saves_per_1k,0);data.leads=num(row.leads,0);data.monthlyImpressions=num(row.impressions,0);data.monthlyClicks=num(row.clicks,0);data.monthlyCTR=num(row.ctr,0);if(data.monthlyCTR>0&&data.monthlyCTR<1)data.monthlyCTR=data.monthlyCTR*100;data.monthlyRank=num(row.avg_rank_72,0);data.content=num(row.mgmt_content,0);data.projects=num(row.mgmt_projects,0);data.website=num(row.mgmt_website,0);data.design=num(row.mgmt_design,0);data.reporting=num(row.mgmt_reporting,0);data.visibilityScore=num(row.visibility_score_40!=null?row.visibility_score_40:row.visibility_score_35,-1);data.leadScoreDirect=num(row.lead_score_40,-1);data.mgmtScoreDirect=num(row.mgmt_score_20!=null?row.mgmt_score_20:row.mgmt_score_25,-1);data.totalScoreDirect=num(row.total_score_100,-1);
+  function applyGooglePayload(payload,fromCache){var i,row,wanted,t,af,wr,idx;if(!payload||!payload.monthly||!payload.monthly.length)throw new Error('Invalid payload');wanted=detectedPersianMonth()||data.month||'مهر';row=null;for(i=0;i<payload.monthly.length;i++){if(normalMonth(payload.monthly[i].month)===normalMonth(wanted)){row=payload.monthly[i];break}}if(!row)throw new Error('Month not found');t=targets[wanted]||targets['مهر'];t.views=num(row.target_reel_views,t.views);t.median=num(row.target_median_7d,t.median);t.nonFollower=percentPoints(row.target_non_follower!=null?row.target_non_follower:t.nonFollower);t.leads=num(row.target_leads,t.leads);t.clicks=num(row.target_clicks,t.clicks);t.rank=num(row.target_avg_rank_72,t.rank);if(num(row.followers_outcome_target,0)>0)t.followers=num(row.followers_outcome_target,t.followers);data.month=wanted;data.views=num(row.reel_views,0);data.median=num(row.median_7d,0);data.nonFollower=percentPoints(row.non_follower);data.nonFollowerReach=num(row.non_follower_reach,0);data.followersGained=num(row.followers_gained,0);data.reels=num(row.reels_published,0);data.sharesPer1k=num(row.shares_per_1k,0);data.savesPer1k=num(row.saves_per_1k,0);data.leads=num(row.leads,0);data.monthlyImpressions=num(row.impressions,0);data.monthlyClicks=num(row.clicks,0);data.monthlyCTR=num(row.ctr,0);if(data.monthlyCTR>0&&data.monthlyCTR<1)data.monthlyCTR=data.monthlyCTR*100;data.monthlyRank=num(row.avg_rank_72,0);data.content=num(row.mgmt_content,0);data.projects=num(row.mgmt_projects,0);data.website=num(row.mgmt_website,0);data.design=num(row.mgmt_design,0);data.reporting=num(row.mgmt_reporting,0);data.visibilityScore=num(row.visibility_score_40!=null?row.visibility_score_40:row.visibility_score_35,-1);data.leadScoreDirect=num(row.lead_score_40,-1);data.mgmtScoreDirect=num(row.mgmt_score_20!=null?row.mgmt_score_20:row.mgmt_score_25,-1);data.totalScoreDirect=num(row.total_score_100,-1);
  data.seoWebTarget=num(row.seo_web_target,0);
  data.seoWebSales=row.seo_web_sales==null||row.seo_web_sales===''?-1:num(row.seo_web_sales,-1);
  data.seoWebRelated=row.seo_web_related==null||row.seo_web_related===''?-1:num(row.seo_web_related,-1);
@@ -1324,7 +1365,7 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
   function loadGoogleCache(){try{var c=JSON.parse(localStorage.getItem(GOOGLE_CACHE_KEY)||'null');if(c){applyGooglePayload(c,true);return true}}catch(e){}return false}
   function syncGoogleSheet(){setSyncState('syncing','Google Sheet · در حال همگام‌سازی');var xhr=new XMLHttpRequest(),sep=GOOGLE_SHEET_API.indexOf('?')>=0?'&':'?';xhr.open('GET',GOOGLE_SHEET_API+sep+'_ts='+(new Date().getTime()),true);xhr.onreadystatechange=function(){if(xhr.readyState!==4)return;if(xhr.status>=200&&xhr.status<300){try{var payload=JSON.parse(xhr.responseText);if(payload.ok!==true)throw new Error('API');if(payload.updated_at)setServerTime(payload.updated_at);applyGooglePayload(payload,false);tick();setSyncState('ok','Google Sheet · بروزرسانی '+formatTime())}catch(e){setSyncState('error','Google Sheet · خطای داده')}}else setSyncState('error','Google Sheet · اتصال ناموفق')};try{xhr.send(null)}catch(e){setSyncState('error','Google Sheet · اتصال ناموفق')}}
   function weeklyRows(){var a=[],i;for(i=1;i<=5;i++)a.push({week:i,imp:num(data['w'+i+'Imp'],0),clicks:num(data['w'+i+'Clicks'],0),rank:num(data['w'+i+'Rank'],0)});return a}function monthlySEO(){return{rows:weeklyRows(),impressions:num(data.monthlyImpressions,0),clicks:num(data.monthlyClicks,0),ctr:num(data.monthlyCTR,0),rank:num(data.monthlyRank,0)}}
-  function calc(){var seo=monthlySEO(),t=targets[data.month]||targets['مهر'],vr=ratio(data.views,t.views),fallbackVisibility=Math.max((data.views<=t.views?15*vr:15+(vr-1)*15*0.5)+Math.min(5,5*ratio(data.nonFollower,t.nonFollower)),20*ratio(data.followers,t.followers))+(seo.rank>0?Math.min(40,20*(t.rank/seo.rank)):0),fallbackLead=40*ratio(data.leads,t.leads),fallbackMgmt=Math.min(6,clamp(data.content,0,100)/100*6)+Math.min(5,clamp(data.projects,0,100)/100*5)+Math.min(3,clamp(data.website,0,100)/100*3)+Math.min(3,clamp(data.design,0,100)/100*3)+Math.min(3,clamp(data.reporting,0,100)/100*3),visibility=data.visibilityScore>=0?data.visibilityScore:fallbackVisibility,lead=data.leadScoreDirect>=0?data.leadScoreDirect:fallbackLead,mgmt=data.mgmtScoreDirect>=0?data.mgmtScoreDirect:fallbackMgmt,total=data.totalScoreDirect>=0?data.totalScoreDirect:(visibility+lead+mgmt);return{t:t,seo:seo,visibility:visibility,lead:lead,mgmt:mgmt,total:total}}
+  function calc(){var seo=monthlySEO(),t=targets[data.month]||targets['مهر'],vr=ratio(data.views,t.views),fallbackVisibility=Math.max((data.views<=t.views?15*vr:15+(vr-1)*15*0.5)+Math.min(5,5*ratio(percentPoints(data.nonFollower),percentPoints(t.nonFollower))),20*ratio(data.followers,t.followers))+(seo.rank>0?Math.min(40,20*(t.rank/seo.rank)):0),fallbackLead=40*ratio(data.leads,t.leads),fallbackMgmt=Math.min(6,clamp(data.content,0,100)/100*6)+Math.min(5,clamp(data.projects,0,100)/100*5)+Math.min(3,clamp(data.website,0,100)/100*3)+Math.min(3,clamp(data.design,0,100)/100*3)+Math.min(3,clamp(data.reporting,0,100)/100*3),visibility=data.visibilityScore>=0?data.visibilityScore:fallbackVisibility,lead=data.leadScoreDirect>=0?data.leadScoreDirect:fallbackLead,mgmt=data.mgmtScoreDirect>=0?data.mgmtScoreDirect:fallbackMgmt,total=data.totalScoreDirect>=0?data.totalScoreDirect:(visibility+lead+mgmt);return{t:t,seo:seo,visibility:visibility,lead:lead,mgmt:mgmt,total:total}}
   function render(){var s=calc(),t=s.t,total=Math.max(0,s.total),seo=s.seo,visPct=Math.min(s.visibility/40*100,100),leadPct=Math.min(s.lead/40*100,100),mgmtPct=Math.min(s.mgmt/20*100,100),totalPct=Math.min(total,100),ahead=total>105,on=total>=95&&total<=105,behind=total<95;setText('totalScore',faPercent(total));setText('totalScoreCard',fa(total));setText('visScore',fa(s.visibility));setText('leadScore',fa(s.lead));setText('leadTotalCount',faInt(data.leads));setText('leadMonthTarget',faInt(t.leads));setText('leadFinalTarget',faInt(targets['اسفند'].leads));setText('mgmtScore',fa(s.mgmt));setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);setText('visPct',faPercent(visPct));setText('leadPct',faPercent(leadPct));setText('mgmtPct',faPercent(mgmtPct));setText('totalPct',faPercent(totalPct));toggleClass(by('stAhead'),'active',ahead);toggleClass(by('stOn'),'active',on);toggleClass(by('stBehind'),'active',behind);setText('cmpImpr',faCompact(seo.impressions));setText('cmpClicks',faPercent(t.clicks?Math.min(seo.clicks/t.clicks*100,999):0));setText('cmpLeads',faPercent(t.leads?Math.min(data.leads/t.leads*100,999):0));setText('cmpRank',seo.rank?faPercent(t.rank/seo.rank*100):'۰٪');renderDetail(s);renderSocial(s)}
   function renderDetail(s){
   var t=s.t,seo=s.seo,finalT=targets['اسفند'],m=data.month,page=by('detailPage'),tbody=by('weeklyBody'),i,r,tr,ctr,rc;
@@ -1358,14 +1399,14 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
 }
 
 function renderSocial(s){
-  var t=s.t,vr=ratio(data.views,t.views),fr=ratio(data.followers,t.followers),nr=ratio(data.nonFollower,t.nonFollower);
+  var t=s.t,vr=ratio(data.views,t.views),fr=ratio(data.followers,t.followers),nr=ratio(percentPoints(data.nonFollower),percentPoints(t.nonFollower));
   var vscore=(data.views<=t.views?15*vr:15+(vr-1)*15*.5)+Math.min(5,5*nr),fscore=20*fr;
   var keys=['Content','Projects','Website','Design','Reporting'],vals=[data.content,data.projects,data.website,data.design,data.reporting],weights=[6,5,3,3,3],i,earned;
   setText('svMonth',data.month);setText('svIgScore',fa(Math.max(vscore,fscore)));
   setText('svIgRoute',fscore>=vscore?'فالوورها':'ویو + نان‌فالوور');
   setText('svViews',faInt(data.views));setText('svViewsTarget','هدف ماه: '+faInt(t.views));setText('svViewsPct',faPercent(vr*100));setWidth('svViewsBar',vr*100);
   setText('svFollowers',faInt(data.followers));setText('svFollowersTarget','هدف ماه: '+faInt(t.followers));setText('svFollowersPct',faPercent(fr*100));setWidth('svFollowersBar',fr*100);
-  setText('svNonFollower',faPercent(data.nonFollower));setText('svNonFollowerTarget','هدف ماه: '+faPercent(t.nonFollower));setText('svNonFollowerPct',faPercent(nr*100));setWidth('svNonFollowerBar',nr*100);
+  setText('svNonFollower',faPercent(percentPoints(data.nonFollower)));setText('svNonFollowerTarget','هدف ماه: '+faPercent(percentPoints(t.nonFollower)));setText('svNonFollowerPct',faPercent(nr*100));setWidth('svNonFollowerBar',nr*100);
   setText('svReels',faInt(data.reels));setText('svViewPath',fa(vscore));setText('svFollowPath',fa(fscore));
   setText('svMgmtScore',fa(s.mgmt));setText('svMgmtPct',faPercent(s.mgmt/20*100));
   for(i=0;i<keys.length;i++){
