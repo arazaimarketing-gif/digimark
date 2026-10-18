@@ -1183,7 +1183,7 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
           <div><span class="social-tv-kicker">INSTAGRAM</span><h3>اینستاگرام</h3><p>رشد پیج، دیده‌شدن و کیفیت بازدید</p></div>
           <div class="social-tv-score"><strong id="svIgScore">—</strong><small>از ۲۰ امتیاز</small></div>
         </div>
-        <div class="social-tv-method">مسیر برنده: <strong id="svIgRoute">—</strong></div>
+        <div class="social-tv-method">روش امتیازدهی: <strong id="svIgRoute">—</strong></div>
         <div class="social-tv-ig-stats">
           <div class="social-tv-ig-pair">
             <div class="social-tv-stat social-tv-stat-views">
@@ -1205,10 +1205,10 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
         </div>
         <div class="social-tv-ig-extras">
           <div><span>تعداد ریلز منتشرشده</span><b id="svReels">—</b></div>
-          <div><span>امتیاز مسیر ویو + نان‌فالوور</span><b id="svViewPath">—</b></div>
-          <div><span>امتیاز مسیر فالوور</span><b id="svFollowPath">—</b></div>
+          <div><span>امتیاز ویو + نان‌فالوور (پایه ۱۰)</span><b id="svViewPath">—</b></div>
+          <div><span>امتیاز فالوورها (پایه ۱۰)</span><b id="svFollowPath">—</b></div>
         </div>
-        <p class="social-tv-note">بالاترین امتیاز یکی از دو مسیر اینستاگرام محاسبه می‌شود.</p>
+        <p class="social-tv-note">۷٫۵ امتیاز ویو + ۲٫۵ امتیاز نان‌فالوور + ۱۰ امتیاز فالوور؛ هر سه با هم جمع می‌شوند.</p>
       </section>
       <section class="social-tv-card social-tv-mgmt">
         <div class="social-tv-card-head">
@@ -1365,7 +1365,7 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
   function loadGoogleCache(){try{var c=JSON.parse(localStorage.getItem(GOOGLE_CACHE_KEY)||'null');if(c){applyGooglePayload(c,true);return true}}catch(e){}return false}
   function syncGoogleSheet(){setSyncState('syncing','Google Sheet · در حال همگام‌سازی');var xhr=new XMLHttpRequest(),sep=GOOGLE_SHEET_API.indexOf('?')>=0?'&':'?';xhr.open('GET',GOOGLE_SHEET_API+sep+'_ts='+(new Date().getTime()),true);xhr.onreadystatechange=function(){if(xhr.readyState!==4)return;if(xhr.status>=200&&xhr.status<300){try{var payload=JSON.parse(xhr.responseText);if(payload.ok!==true)throw new Error('API');if(payload.updated_at)setServerTime(payload.updated_at);applyGooglePayload(payload,false);tick();setSyncState('ok','Google Sheet · بروزرسانی '+formatTime())}catch(e){setSyncState('error','Google Sheet · خطای داده')}}else setSyncState('error','Google Sheet · اتصال ناموفق')};try{xhr.send(null)}catch(e){setSyncState('error','Google Sheet · اتصال ناموفق')}}
   function weeklyRows(){var a=[],i;for(i=1;i<=5;i++)a.push({week:i,imp:num(data['w'+i+'Imp'],0),clicks:num(data['w'+i+'Clicks'],0),rank:num(data['w'+i+'Rank'],0)});return a}function monthlySEO(){return{rows:weeklyRows(),impressions:num(data.monthlyImpressions,0),clicks:num(data.monthlyClicks,0),ctr:num(data.monthlyCTR,0),rank:num(data.monthlyRank,0)}}
-  function calc(){var seo=monthlySEO(),t=targets[data.month]||targets['مهر'],vr=ratio(data.views,t.views),fallbackVisibility=Math.max((data.views<=t.views?15*vr:15+(vr-1)*15*0.5)+Math.min(5,5*ratio(percentPoints(data.nonFollower),percentPoints(t.nonFollower))),20*ratio(data.followers,t.followers))+(seo.rank>0?Math.min(40,20*(t.rank/seo.rank)):0),fallbackLead=40*ratio(data.leads,t.leads),fallbackMgmt=Math.min(6,clamp(data.content,0,100)/100*6)+Math.min(5,clamp(data.projects,0,100)/100*5)+Math.min(3,clamp(data.website,0,100)/100*3)+Math.min(3,clamp(data.design,0,100)/100*3)+Math.min(3,clamp(data.reporting,0,100)/100*3),visibility=data.visibilityScore>=0?data.visibilityScore:fallbackVisibility,lead=data.leadScoreDirect>=0?data.leadScoreDirect:fallbackLead,mgmt=data.mgmtScoreDirect>=0?data.mgmtScoreDirect:fallbackMgmt,total=data.totalScoreDirect>=0?data.totalScoreDirect:(visibility+lead+mgmt);return{t:t,seo:seo,visibility:visibility,lead:lead,mgmt:mgmt,total:total}}
+  function calc(){var seo=monthlySEO(),t=targets[data.month]||targets['مهر'],vr=ratio(data.views,t.views),fallbackVisibility=(data.views<=t.views?7.5*vr:7.5+(vr-1)*7.5*0.5)+Math.min(2.5,2.5*ratio(percentPoints(data.nonFollower),percentPoints(t.nonFollower)))+10*ratio(data.followers,t.followers)+(seo.rank>0?Math.min(40,20*(t.rank/seo.rank)):0),fallbackLead=40*ratio(data.leads,t.leads),fallbackMgmt=Math.min(6,clamp(data.content,0,100)/100*6)+Math.min(5,clamp(data.projects,0,100)/100*5)+Math.min(3,clamp(data.website,0,100)/100*3)+Math.min(3,clamp(data.design,0,100)/100*3)+Math.min(3,clamp(data.reporting,0,100)/100*3),visibility=data.visibilityScore>=0?data.visibilityScore:fallbackVisibility,lead=data.leadScoreDirect>=0?data.leadScoreDirect:fallbackLead,mgmt=data.mgmtScoreDirect>=0?data.mgmtScoreDirect:fallbackMgmt,total=data.totalScoreDirect>=0?data.totalScoreDirect:(visibility+lead+mgmt);return{t:t,seo:seo,visibility:visibility,lead:lead,mgmt:mgmt,total:total}}
   function render(){var s=calc(),t=s.t,total=Math.max(0,s.total),seo=s.seo,visPct=Math.min(s.visibility/40*100,100),leadPct=Math.min(s.lead/40*100,100),mgmtPct=Math.min(s.mgmt/20*100,100),totalPct=Math.min(total,100),ahead=total>105,on=total>=95&&total<=105,behind=total<95;setText('totalScore',faPercent(total));setText('totalScoreCard',fa(total));setText('visScore',fa(s.visibility));setText('leadScore',fa(s.lead));setText('leadTotalCount',faInt(data.leads));setText('leadMonthTarget',faInt(t.leads));setText('leadFinalTarget',faInt(targets['اسفند'].leads));setText('mgmtScore',fa(s.mgmt));setWidth('visBar',visPct);setWidth('leadBar',leadPct);setWidth('mgmtBar',mgmtPct);setWidth('totalBar',totalPct);setText('visPct',faPercent(visPct));setText('leadPct',faPercent(leadPct));setText('mgmtPct',faPercent(mgmtPct));setText('totalPct',faPercent(totalPct));toggleClass(by('stAhead'),'active',ahead);toggleClass(by('stOn'),'active',on);toggleClass(by('stBehind'),'active',behind);setText('cmpImpr',faCompact(seo.impressions));setText('cmpClicks',faPercent(t.clicks?Math.min(seo.clicks/t.clicks*100,999):0));setText('cmpLeads',faPercent(t.leads?Math.min(data.leads/t.leads*100,999):0));setText('cmpRank',seo.rank?faPercent(t.rank/seo.rank*100):'۰٪');renderDetail(s);renderSocial(s)}
   function renderDetail(s){
   var t=s.t,seo=s.seo,finalT=targets['اسفند'],m=data.month,page=by('detailPage'),tbody=by('weeklyBody'),i,r,tr,ctr,rc;
@@ -1400,10 +1400,10 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
 
 function renderSocial(s){
   var t=s.t,vr=ratio(data.views,t.views),fr=ratio(data.followers,t.followers),nr=ratio(percentPoints(data.nonFollower),percentPoints(t.nonFollower));
-  var vscore=(data.views<=t.views?15*vr:15+(vr-1)*15*.5)+Math.min(5,5*nr),fscore=20*fr;
+  var vscore=(data.views<=t.views?7.5*vr:7.5+(vr-1)*7.5*.5)+Math.min(2.5,2.5*nr),fscore=10*fr;
   var keys=['Content','Projects','Website','Design','Reporting'],vals=[data.content,data.projects,data.website,data.design,data.reporting],weights=[6,5,3,3,3],i,earned;
-  setText('svMonth',data.month);setText('svIgScore',fa(Math.max(vscore,fscore)));
-  setText('svIgRoute',fscore>=vscore?'فالوورها':'ویو + نان‌فالوور');
+  setText('svMonth',data.month);setText('svIgScore',fa(vscore+fscore));
+  setText('svIgRoute','۱۰ امتیاز ویو/نان‌فالوور + ۱۰ امتیاز فالوور');
   setText('svViews',faInt(data.views));setText('svViewsTarget','هدف ماه: '+faInt(t.views));setText('svViewsPct',faPercent(vr*100));setWidth('svViewsBar',vr*100);
   setText('svFollowers',faInt(data.followers));setText('svFollowersTarget','هدف ماه: '+faInt(t.followers));setText('svFollowersPct',faPercent(fr*100));setWidth('svFollowersBar',fr*100);
   setText('svNonFollower',faPercent(percentPoints(data.nonFollower)));setText('svNonFollowerTarget','هدف ماه: '+faPercent(percentPoints(t.nonFollower)));setText('svNonFollowerPct',faPercent(nr*100));setWidth('svNonFollowerBar',nr*100);
