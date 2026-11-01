@@ -898,31 +898,61 @@
  .detail-page .seo-tv-micro>.v22-metric span{font-size:9px!important}
  .detail-page .seo-tv-weekly-sub{font-size:10px!important}
 }
-/* Third TV: compact Visibility 40 / Management 20 detail, Samsung/Tizen-safe flexbox */
-.social-tv-vis-summary{height:11%;-webkit-flex:0 0 11%;flex:0 0 11%;min-height:0;display:-webkit-flex;display:flex;-webkit-flex-direction:row;flex-direction:row;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center}
-.social-tv-vis-summary>div{box-sizing:border-box;width:49%;height:82%;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;padding:4px 12px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.055)}
-.social-tv-vis-summary span{font-size:15px;font-weight:800}.social-tv-vis-summary small{font-size:11px;color:#a9bfce;font-weight:500;margin-right:6px}.social-tv-vis-summary b{font-size:28px;color:#FDC000;direction:ltr}
-.social-tv-vis-metrics{height:67%;-webkit-flex:0 0 67%;flex:0 0 67%;min-height:0;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:space-between;justify-content:space-between}
+/* Third TV: separate Instagram /20 and SEO ranking /20 within Visibility /40.
+   Use traditional flexbox for older TV browsers; Instagram metrics stay together. */
+.social-tv-vis-groups{height:78%;-webkit-flex:0 0 78%;flex:0 0 78%;min-height:0;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:space-between;justify-content:space-between}
+.social-tv-vis-group{box-sizing:border-box;direction:rtl;width:100%;min-height:0;border:1px solid rgba(253,192,0,.34);border-radius:15px;padding:9px 11px;overflow:hidden;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column}
+.social-tv-vis-instagram{height:62%;-webkit-flex:0 0 62%;flex:0 0 62%;background:rgba(12,52,69,.42)}
+.social-tv-vis-seo{height:36%;-webkit-flex:0 0 36%;flex:0 0 36%;border-color:rgba(113,193,220,.44);background:rgba(12,38,62,.68)}
+.social-tv-vis-group-head{height:17%;-webkit-flex:0 0 17%;flex:0 0 17%;min-height:0;display:-webkit-flex;display:flex;-webkit-flex-direction:row;flex-direction:row;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;border-bottom:1px solid rgba(255,255,255,.18);padding-bottom:4px;box-sizing:border-box}
+.social-tv-vis-seo .social-tv-vis-group-head{height:25%;-webkit-flex:0 0 25%;flex:0 0 25%}
+.social-tv-vis-group-title{min-width:0}
+.social-tv-vis-group-title strong{display:block;font-size:20px;line-height:1.2;color:#fff}
+.social-tv-vis-group-title small{display:block;font-size:11px;margin-top:3px;color:#aac8dc;font-weight:400}
+.social-tv-vis-group-score{display:-webkit-flex;display:flex;-webkit-flex-direction:row;flex-direction:row;-webkit-align-items:center;align-items:center;-webkit-justify-content:space-between;justify-content:space-between;box-sizing:border-box;min-width:130px;white-space:nowrap;border:1px solid rgba(253,192,0,.36);border-radius:9px;background:rgba(253,192,0,.1);padding:3px 9px}
+.social-tv-vis-seo .social-tv-vis-group-score{border-color:rgba(113,193,220,.35);background:rgba(113,193,220,.08)}
+.social-tv-vis-group-score b{font-size:27px;color:#FDC000;font-weight:900;direction:ltr}
+.social-tv-vis-group-score span{font-size:10px;color:#e4d6a5;margin-right:10px}
+.social-tv-vis-ig-grid{height:81%;-webkit-flex:0 0 81%;flex:0 0 81%;min-height:0;display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;-webkit-justify-content:space-between;justify-content:space-between}
 .social-tv-vis-pair{height:49%;width:100%;min-height:0;display:-webkit-flex;display:flex;-webkit-flex-direction:row;flex-direction:row;-webkit-justify-content:space-between;justify-content:space-between}
-.social-tv-vis-pair>.social-tv-vis-stat{width:49%;-webkit-flex:0 0 49%;flex:0 0 49%;height:100%;min-height:0;box-sizing:border-box;padding:11px 12px 9px;overflow:hidden}
-.social-tv-vis-stat .social-tv-stat-main{min-height:27px}.social-tv-vis-stat .social-tv-stat-main span{font-size:15px;line-height:1.25}.social-tv-vis-stat .social-tv-stat-main span small{font-size:11px;display:block;color:#b6cee0;font-weight:500;margin-top:3px}.social-tv-vis-stat .social-tv-stat-main b{font-size:25px}
-.social-tv-vis-stat .social-tv-stat-hint{font-size:11px;line-height:1.35}.social-tv-vis-stat .social-tv-stat-hint strong{font-size:12px;white-space:nowrap}
-.social-tv-vis-earned{display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;font-size:12px;color:#c9dbe6}.social-tv-vis-earned strong{font-size:20px;color:#FDC000}
-.social-tv-unit{display:block;font-size:11px;line-height:1.25;color:#a7dccc;font-weight:700}
-.social-tv-vis-stat .social-tv-bar{height:6px}
-.social-tv-vis .social-tv-note{height:7%;-webkit-flex:0 0 7%;flex:0 0 7%;font-size:12px;padding-top:10px;text-align:right}
+.social-tv-vis-pair>.social-tv-vis-stat{width:49%;-webkit-flex:0 0 49%;flex:0 0 49%;height:100%;min-height:0;box-sizing:border-box;padding:7px 10px;overflow:hidden}
+.social-tv-vis-follower-row{height:49%;width:100%;min-height:0}
+.social-tv-vis-follower-row>.social-tv-vis-stat{width:100%;height:100%;padding:7px 11px}
+.social-tv-vis-seo-stat{height:73%;-webkit-flex:0 0 73%;flex:0 0 73%;min-height:0;padding-top:5px;box-sizing:border-box}
+.social-tv-vis-seo-stat>.social-tv-vis-stat{width:100%;height:100%;padding:6px 11px}
+.social-tv-vis-stat .social-tv-stat-main{min-height:0}
+.social-tv-vis-stat .social-tv-stat-main span{font-size:14px;line-height:1.2}
+.social-tv-vis-stat .social-tv-stat-main span small{font-size:10px;display:block;color:#b6cee0;font-weight:500;margin-top:2px}
+.social-tv-vis-stat .social-tv-stat-main b{font-size:22px}
+.social-tv-vis-stat .social-tv-stat-hint{font-size:11px;line-height:1.25}
+.social-tv-vis-stat .social-tv-stat-hint strong{font-size:11px;white-space:nowrap}
+.social-tv-vis-earned{display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;font-size:11px;color:#c9dbe6}
+.social-tv-vis-earned strong{font-size:17px;color:#FDC000}
+.social-tv-unit{display:block;font-size:10px;line-height:1.2;color:#a7dccc;font-weight:700}
+.social-tv-vis-stat .social-tv-bar{height:5px}
+.social-tv-vis .social-tv-note{height:7%;-webkit-flex:0 0 7%;flex:0 0 7%;font-size:11px;padding-top:7px;text-align:right}
 .social-tv-mgmt .social-tv-mgmt-stats{height:75%;-webkit-flex:0 0 75%;flex:0 0 75%}
 .social-tv-mgmt .social-tv-mgmt-stat{height:18.7%;padding:8px 13px}
 .social-tv-mgmt .social-tv-mgmt-stat .social-tv-unit{font-size:11px}
 .social-tv-mgmt .social-tv-note{height:3%;-webkit-flex:0 0 3%;padding-top:3px}
 @media screen and (max-width:1280px){
- .social-tv-vis-summary span{font-size:11px}.social-tv-vis-summary small{font-size:9px}.social-tv-vis-summary b{font-size:21px}
- .social-tv-vis-pair>.social-tv-vis-stat{padding:7px 8px 6px}
- .social-tv-vis-stat .social-tv-stat-main span{font-size:11px}.social-tv-vis-stat .social-tv-stat-main span small{font-size:9px}.social-tv-vis-stat .social-tv-stat-main b{font-size:19px}
- .social-tv-vis-stat .social-tv-stat-hint{font-size:9px}.social-tv-vis-stat .social-tv-stat-hint strong{font-size:10px}
- .social-tv-vis-earned{font-size:10px}.social-tv-vis-earned strong{font-size:16px}
- .social-tv-vis-stat .social-tv-unit,.social-tv-mgmt .social-tv-mgmt-stat .social-tv-unit{font-size:9px}
- .social-tv-vis .social-tv-note{font-size:10px}
+ .social-tv-vis-group{padding:5px 7px;border-radius:11px}
+ .social-tv-vis-group-title strong{font-size:14px}
+ .social-tv-vis-group-title small{font-size:9px;margin-top:0}
+ .social-tv-vis-group-score{min-width:91px;padding:2px 5px}
+ .social-tv-vis-group-score b{font-size:19px}
+ .social-tv-vis-group-score span{font-size:8px;margin-right:5px}
+ .social-tv-vis-pair>.social-tv-vis-stat{padding:5px 7px}
+ .social-tv-vis-follower-row>.social-tv-vis-stat,.social-tv-vis-seo-stat>.social-tv-vis-stat{padding:5px 7px}
+ .social-tv-vis-stat .social-tv-stat-main span{font-size:10px}
+ .social-tv-vis-stat .social-tv-stat-main span small{font-size:8px}
+ .social-tv-vis-stat .social-tv-stat-main b{font-size:17px}
+ .social-tv-vis-stat .social-tv-stat-hint{font-size:9px}
+ .social-tv-vis-stat .social-tv-stat-hint strong{font-size:9px}
+ .social-tv-vis-earned{font-size:9px}
+ .social-tv-vis-earned strong{font-size:14px}
+ .social-tv-vis-stat .social-tv-unit,.social-tv-mgmt .social-tv-mgmt-stat .social-tv-unit{font-size:8px}
+ .social-tv-vis .social-tv-note{font-size:9px}
 }
 
 /* Third TV slide: old Samsung/Tizen flexbox layout, IG physically left, management right */
@@ -1210,43 +1240,55 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
           <div><span class="social-tv-kicker">VISIBILITY · ۴۰ امتیاز پایه</span><h3>دیده‌شدن</h3><p>اینستاگرام ۲۰ + رتبه سئو ۲۰</p></div>
           <div class="social-tv-score"><strong id="svVisibilityScore">—</strong><small>از ۴۰ پایه</small></div>
         </div>
-        <div class="social-tv-vis-summary">
-          <div><span>اینستاگرام <small>وزن ۲۰</small></span><b id="svIgScore">—</b></div>
-          <div><span>رتبه سئو <small>وزن ۲۰</small></span><b id="svSeoRankScore">—</b></div>
-        </div>
-        <div class="social-tv-vis-metrics">
-          <div class="social-tv-vis-pair">
-            <div class="social-tv-stat social-tv-vis-stat">
+        <div class="social-tv-vis-groups">
+          <section class="social-tv-vis-group social-tv-vis-instagram" aria-label="جزئیات اینستاگرام از ۲۰ امتیاز پایه">
+            <div class="social-tv-vis-group-head">
+              <div class="social-tv-vis-group-title"><strong>اینستاگرام</strong><small>ویو ۷٫۵ + غیرفالوور ۲٫۵ + فالوور ۱۰</small></div>
+              <div class="social-tv-vis-group-score"><b id="svIgScore">—</b><span>از ۲۰ امتیاز پایه</span></div>
+            </div>
+            <div class="social-tv-vis-ig-grid">
+              <div class="social-tv-vis-pair">
+                <div class="social-tv-stat social-tv-vis-stat">
               <div class="social-tv-stat-main"><span>ویو ماهانه <small>وزن ۷٫۵</small></span><b id="svViews">—</b></div>
               <div class="social-tv-stat-hint"><span id="svViewsTarget">مبنا — · هدف —</span><strong id="svViewsPct">—</strong></div>
               <div class="social-tv-vis-earned"><span>امتیاز</span><strong id="svViewsScore">—</strong></div>
               <div class="social-tv-unit" id="svViewsUnit">ارزش هر ۱۰۰۰ ویو: —</div>
               <div class="social-tv-bar"><i id="svViewsBar"></i></div>
             </div>
-            <div class="social-tv-stat social-tv-vis-stat">
+                <div class="social-tv-stat social-tv-vis-stat">
               <div class="social-tv-stat-main"><span>غیرفالوورها <small>وزن ۲٫۵</small></span><b id="svNonFollower">—</b></div>
               <div class="social-tv-stat-hint"><span id="svNonFollowerTarget">هدف —</span><strong id="svNonFollowerPct">—</strong></div>
               <div class="social-tv-vis-earned"><span>امتیاز</span><strong id="svNonFollowerScore">—</strong></div>
               <div class="social-tv-unit" id="svNonFollowerUnit">ارزش هر ۱ واحد درصد: —</div>
               <div class="social-tv-bar"><i id="svNonFollowerBar"></i></div>
             </div>
-          </div>
-          <div class="social-tv-vis-pair">
-            <div class="social-tv-stat social-tv-vis-stat">
+              </div>
+              <div class="social-tv-vis-follower-row">
+                <div class="social-tv-stat social-tv-vis-stat">
               <div class="social-tv-stat-main"><span>کل فالوورها <small>وزن ۱۰</small></span><b id="svFollowers">—</b></div>
               <div class="social-tv-stat-hint"><span id="svFollowersTarget">مبنا — · هدف —</span><strong id="svFollowersPct">—</strong></div>
               <div class="social-tv-vis-earned"><span>امتیاز</span><strong id="svFollowersScore">—</strong></div>
               <div class="social-tv-unit" id="svFollowersUnit">ارزش هر فالوور بالای مبنا: —</div>
               <div class="social-tv-bar"><i id="svFollowersBar"></i></div>
             </div>
-            <div class="social-tv-stat social-tv-vis-stat social-tv-vis-rank">
+              </div>
+            </div>
+          </section>
+          <section class="social-tv-vis-group social-tv-vis-seo" aria-label="جزئیات رتبه سئو از ۲۰ امتیاز پایه">
+            <div class="social-tv-vis-group-head">
+              <div class="social-tv-vis-group-title"><strong>رتبه سئو</strong><small>میانگین رتبه ۷۲ کلمه کلیدی</small></div>
+              <div class="social-tv-vis-group-score"><b id="svSeoRankScore">—</b><span>از ۲۰ امتیاز پایه</span></div>
+            </div>
+            <div class="social-tv-vis-seo-stat">
+              <div class="social-tv-stat social-tv-vis-stat social-tv-vis-rank">
               <div class="social-tv-stat-main"><span>رتبه ۷۲ کلمه <small>وزن ۲۰</small></span><b id="svRank">—</b></div>
               <div class="social-tv-stat-hint"><span id="svRankTarget">مبنا — · هدف —</span><strong id="svRankPct">—</strong></div>
               <div class="social-tv-vis-earned"><span>امتیاز</span><strong id="svRankScore">—</strong></div>
               <div class="social-tv-unit" id="svRankUnit">ارزش هر ۱ رتبه بهبود: —</div>
               <div class="social-tv-bar"><i id="svRankBar"></i></div>
             </div>
-          </div>
+            </div>
+          </section>
         </div>
         <p class="social-tv-note social-tv-vis-note">امتیاز رشد ویو، فالوور و رتبه از مبنای ماه قبل و بدون سقف است؛ غیرفالوور سقف ۲٫۵ دارد.</p>
       </section>
