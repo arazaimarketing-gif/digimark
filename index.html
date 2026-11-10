@@ -1112,6 +1112,38 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
   .social-tv-mgmt-only span{font-size:15px}
 }
 
+/* Lead KPI breakdown: score, target, earned points per valid lead, and channel counts */
+.social-tv-lead-meta{
+  min-height:44px;-webkit-flex:0 0 44px;flex:0 0 44px;
+  display:-webkit-flex;display:flex;-webkit-flex-direction:row;flex-direction:row;
+  -webkit-justify-content:space-between;justify-content:space-between;
+  -webkit-align-items:stretch;align-items:stretch;
+  padding-top:9px;box-sizing:border-box;
+}
+.social-tv-lead-meta-item{
+  box-sizing:border-box;width:32.5%;-webkit-flex:0 0 32.5%;flex:0 0 32.5%;
+  display:-webkit-flex;display:flex;-webkit-flex-direction:row;flex-direction:row;
+  -webkit-justify-content:center;justify-content:center;
+  -webkit-align-items:center;align-items:center;
+  border:1px solid rgba(125,231,194,.19);border-radius:9px;
+  background:rgba(8,24,30,.34);padding:3px 7px;white-space:nowrap;
+}
+.social-tv-lead-meta-item span{font-size:12px;color:#cce1df;margin-left:6px}
+.social-tv-lead-meta-item b{font-size:21px;color:#FDC000;font-weight:900;direction:ltr}
+.social-tv-leads .social-tv-score strong{font-size:35px}
+.social-tv-leads .social-tv-card-head{min-height:62px}
+.social-tv-leads .social-tv-lead-split{padding-top:9px}
+.social-tv-leads .social-tv-lead-stat strong{font-size:47px;margin-top:8px}
+@media screen and (max-width:1280px){
+  .social-tv-lead-meta{min-height:36px;-webkit-flex:0 0 36px;flex:0 0 36px;padding-top:5px}
+  .social-tv-lead-meta-item{padding:2px 4px}
+  .social-tv-lead-meta-item span{font-size:9px;margin-left:3px}
+  .social-tv-lead-meta-item b{font-size:15px}
+  .social-tv-leads .social-tv-score strong{font-size:26px}
+  .social-tv-leads .social-tv-card-head{min-height:50px}
+  .social-tv-leads .social-tv-lead-stat strong{font-size:33px;margin-top:3px}
+}
+
 </style>
 </head>
 <body>
@@ -1354,7 +1386,12 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
         <section class="social-tv-card social-tv-leads" aria-label="تفکیک لیدهای معتبر ماهانه">
           <div class="social-tv-card-head">
             <div><span class="social-tv-kicker">LEAD GENERATION</span><h3>لیدهای معتبر</h3><p>تفکیک ورودی ماهانه سایت و اینستاگرام</p></div>
-            <div class="social-tv-score"><strong id="svLeadTotal">—</strong><small>لید کل ماه</small></div>
+            <div class="social-tv-score"><strong id="svLeadScore">—</strong><small>امتیاز لید از ۴۰</small></div>
+          </div>
+          <div class="social-tv-lead-meta" aria-label="وزن هر لید و تارگت ماه">
+            <div class="social-tv-lead-meta-item"><span>هدف ماه</span><b id="svLeadTarget">—</b></div>
+            <div class="social-tv-lead-meta-item"><span>هر لید</span><b id="svLeadValue">—</b><span>امتیاز</span></div>
+            <div class="social-tv-lead-meta-item"><span>لید کل</span><b id="svLeadTotal">—</b></div>
           </div>
           <div class="social-tv-lead-split">
             <div class="social-tv-lead-stat site"><span>🌐 وب‌سایت</span><strong id="svLeadSite">—</strong><small>لید معتبر سایت</small></div>
@@ -1537,6 +1574,9 @@ function renderSocial(s){
   setText('svFollowers',faInt(data.followers));setText('svFollowersTarget','مبنا '+faInt(b.followers)+' · هدف '+faInt(t.followers));setText('svFollowersPct',faPercent(fpct));setText('svFollowersScore',fa(followersScore));setText('svFollowersUnit','هر فالوور بالای مبنا = '+faFixed(10/(t.followers-b.followers),4)+' امتیاز');setWidth('svFollowersBar',fpct);
   setText('svNonFollower',faPercent(percentPoints(data.nonFollower)));setText('svNonFollowerTarget','هدف '+faPercent(percentPoints(t.nonFollower)));setText('svNonFollowerPct',faPercent(nr*100));setText('svNonFollowerScore',fa(nonFollowerScore));setText('svNonFollowerUnit','هر ۱ واحد درصد = '+faFixed(2.5/percentPoints(t.nonFollower),3)+' امتیاز (حداکثر ۲٫۵)');setWidth('svNonFollowerBar',nr*100);
   setText('svRank',rankActual>0?fa(rankActual):'—');setText('svRankTarget','مبنا '+fa(b.rank)+' · هدف '+fa(t.rank));setText('svRankPct',rankActual>0?faPercent(progressPct(rankActual,b.rank,t.rank)):'—');setText('svRankScore',rankActual>0?fa(rankScore):'—');setText('svRankUnit','هر ۱ رتبه بهبود = '+faFixed(20/(b.rank-t.rank),2)+' امتیاز');setWidth('svRankBar',rankActual>0?progressPct(rankActual,b.rank,t.rank):0);
+  setText('svLeadScore',fa(s.lead));
+  setText('svLeadTarget',t.leads>0?faInt(t.leads):'—');
+  setText('svLeadValue',t.leads>0?faFixed(40/t.leads,2):'—');
   setText('svLeadTotal',faInt(data.leads));
   setText('svLeadSite',siteLeads>=0?faInt(siteLeads):'—');
   setText('svLeadInstagram',instagramLeads>=0?faInt(instagramLeads):'—');
