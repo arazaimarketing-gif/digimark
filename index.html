@@ -1054,6 +1054,82 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
 .kpi-card.kpi-green .lead-kpi-mini-item small{font-size:9px!important;color:rgba(241,247,251,.76)!important;font-weight:400!important;}
 .kpi-card.kpi-green .lead-kpi-mini-item b{font-size:13px!important;color:#FDC000!important;font-weight:800!important;font-family:Tahoma,Arial,sans-serif!important;margin-top:2px!important;}
 @media(max-width:1320px){.kpi-card.kpi-green .lead-kpi-mini-targets{gap:3px!important}.kpi-card.kpi-green .lead-kpi-mini-item small{font-size:8px!important}.kpi-card.kpi-green .lead-kpi-mini-item b{font-size:11px!important}.kpi-card.kpi-green .lead-kpi-foot>.percent{font-size:12px!important}}
+
+/* TV slide 3: right half split into valid leads (top) and management total (bottom).
+   Keep old Samsung/Tizen flexbox compatibility. */
+.social-tv-right-stack{
+  box-sizing:border-box;direction:rtl;width:49.2%;height:100%;min-height:0;
+  -webkit-flex:0 0 49.2%;flex:0 0 49.2%;
+  display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;
+  -webkit-justify-content:space-between;justify-content:space-between;
+}
+.social-tv-right-stack>.social-tv-card{
+  box-sizing:border-box;width:100%;height:49.2%;min-height:0;
+  -webkit-flex:0 0 49.2%;flex:0 0 49.2%;
+  padding:15px 22px 16px;
+}
+.social-tv-right-stack .social-tv-card-head{
+  height:auto;min-height:66px;-webkit-flex:0 0 auto;flex:0 0 auto;
+  padding-bottom:10px;
+}
+.social-tv-right-stack .social-tv-card-head h3{font-size:27px;line-height:1.17}
+.social-tv-right-stack .social-tv-card-head p{font-size:12px}
+.social-tv-right-stack .social-tv-score{min-width:105px}
+.social-tv-right-stack .social-tv-score strong{font-size:32px}
+.social-tv-leads{
+  border-top:2px solid #69f2ae;
+  background:linear-gradient(165deg,rgba(19,62,60,.96),rgba(9,31,39,.94));
+}
+.social-tv-leads .social-tv-kicker{color:#78f0b1}
+.social-tv-leads .social-tv-score{border-color:rgba(105,242,174,.4);background:rgba(105,242,174,.10)}
+.social-tv-leads .social-tv-score strong{color:#78f0b1}
+.social-tv-lead-split{
+  min-height:0;-webkit-flex:1 1 0;flex:1 1 0;
+  display:-webkit-flex;display:flex;-webkit-flex-direction:row;flex-direction:row;
+  -webkit-justify-content:space-between;justify-content:space-between;
+  -webkit-align-items:stretch;align-items:stretch;
+  padding-top:12px;
+}
+.social-tv-lead-stat{
+  box-sizing:border-box;width:49%;height:100%;-webkit-flex:0 0 49%;flex:0 0 49%;
+  background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.14);
+  border-radius:15px;min-width:0;
+  display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;
+  -webkit-align-items:center;align-items:center;
+  -webkit-justify-content:center;justify-content:center;
+  text-align:center;padding:8px 10px;
+}
+.social-tv-lead-stat span{font-size:21px;font-weight:800;color:#f2f9ff}
+.social-tv-lead-stat strong{font-size:54px;line-height:1.15;font-weight:900;color:#78f0b1;margin-top:12px}
+.social-tv-lead-stat.ig strong{color:#99b9ff}
+.social-tv-lead-stat small{font-size:12px;color:#acc6d6;margin-top:6px}
+.social-tv-mgmt-compact{
+  border-top:2px solid #ffc05c;
+  background:linear-gradient(170deg,rgba(56,48,35,.96),rgba(26,31,36,.94));
+}
+.social-tv-mgmt-only{
+  min-height:0;-webkit-flex:1 1 0;flex:1 1 0;
+  display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;
+  -webkit-align-items:center;align-items:center;
+  -webkit-justify-content:center;justify-content:center;
+}
+.social-tv-mgmt-only strong{font-size:95px;font-weight:900;color:#FDC000;line-height:1.15}
+.social-tv-mgmt-only span{font-size:20px;color:#f4e5cb;margin-top:2px}
+@media screen and (max-width:1280px){
+  .social-tv-right-stack>.social-tv-card{padding:10px 12px 11px}
+  .social-tv-right-stack .social-tv-card-head{min-height:51px;padding-bottom:6px}
+  .social-tv-right-stack .social-tv-card-head h3{font-size:21px}
+  .social-tv-right-stack .social-tv-card-head p{font-size:10px}
+  .social-tv-right-stack .social-tv-score{min-width:77px;padding:5px 8px}
+  .social-tv-right-stack .social-tv-score strong{font-size:25px}
+  .social-tv-lead-split{padding-top:8px}
+  .social-tv-lead-stat span{font-size:15px}
+  .social-tv-lead-stat strong{font-size:36px;margin-top:6px}
+  .social-tv-lead-stat small{font-size:10px;margin-top:2px}
+  .social-tv-mgmt-only strong{font-size:65px}
+  .social-tv-mgmt-only span{font-size:15px}
+}
+
 </style>
 </head>
 <body>
@@ -1231,7 +1307,7 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
   <div class="social-tv-bg"></div>
   <div class="social-tv-content">
     <div class="social-tv-head">
-      <div><h2>جزئیات دیده‌شدن و مدیریت</h2><p>وزن پایه: دیده‌شدن ۴۰ امتیاز + مدیریت ۲۰ امتیاز</p></div>
+      <div><h2>جزئیات دیده‌شدن، لید و مدیریت</h2><p>وزن پایه: دیده‌شدن ۴۰ + لید ۴۰ + مدیریت ۲۰ امتیاز</p></div>
       <div class="social-tv-head-date">ماه <b id="svMonth">مهر</b><small id="svDate">—</small></div>
     </div>
     <div class="social-tv-cols">
@@ -1292,26 +1368,24 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
         </div>
         <p class="social-tv-note social-tv-vis-note">امتیاز رشد ویو، فالوور و رتبه از مبنای ماه قبل و بدون سقف است؛ غیرفالوور سقف ۲٫۵ دارد.</p>
       </section>
-      <section class="social-tv-card social-tv-mgmt">
-        <div class="social-tv-card-head">
-          <div><span class="social-tv-kicker">MANAGEMENT</span><h3>مدیریت دپارتمان</h3><p>ارزیابی پنج بخش با وزن‌های جدید</p></div>
-          <div class="social-tv-score"><strong id="svMgmtScore">—</strong><small>از ۲۰ امتیاز</small></div>
-        </div>
-        <div class="social-tv-method">تحقق مدیریت: <strong id="svMgmtPct">—</strong></div>
-        <div class="social-tv-mgmt-stats">
-          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>محتوا و کانال‌ها <small>۶ امتیاز</small></span><b id="svContentScore">—</b></div>
-            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svContentPct">—</strong></div><div class="social-tv-unit" id="svContentUnit">ارزش هر ۱٪ اجرا: —</div><div class="social-tv-bar"><i id="svContentBar"></i></div></div>
-          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>پروژه‌های مارکتینگ <small>۵ امتیاز</small></span><b id="svProjectsScore">—</b></div>
-            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svProjectsPct">—</strong></div><div class="social-tv-unit" id="svProjectsUnit">ارزش هر ۱٪ اجرا: —</div><div class="social-tv-bar"><i id="svProjectsBar"></i></div></div>
-          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>سایت و زیرساخت <small>۳ امتیاز</small></span><b id="svWebsiteScore">—</b></div>
-            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svWebsitePct">—</strong></div><div class="social-tv-unit" id="svWebsiteUnit">ارزش هر ۱٪ اجرا: —</div><div class="social-tv-bar"><i id="svWebsiteBar"></i></div></div>
-          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>طراحی و هویت بصری <small>۳ امتیاز</small></span><b id="svDesignScore">—</b></div>
-            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svDesignPct">—</strong></div><div class="social-tv-unit" id="svDesignUnit">ارزش هر ۱٪ اجرا: —</div><div class="social-tv-bar"><i id="svDesignBar"></i></div></div>
-          <div class="social-tv-stat social-tv-mgmt-stat"><div class="social-tv-stat-main"><span>مدیریت و گزارش‌دهی <small>۳ امتیاز</small></span><b id="svReportingScore">—</b></div>
-            <div class="social-tv-stat-hint"><span>درصد اجرا</span><strong id="svReportingPct">—</strong></div><div class="social-tv-unit" id="svReportingUnit">ارزش هر ۱٪ اجرا: —</div><div class="social-tv-bar"><i id="svReportingBar"></i></div></div>
-        </div>
-        <p class="social-tv-note">هر زیرشاخص حداکثر به اندازه وزن خودش امتیاز می‌گیرد.</p>
-      </section>
+      <div class="social-tv-right-stack">
+        <section class="social-tv-card social-tv-leads" aria-label="تفکیک لیدهای معتبر ماهانه">
+          <div class="social-tv-card-head">
+            <div><span class="social-tv-kicker">LEAD GENERATION</span><h3>لیدهای معتبر</h3><p>تفکیک ورودی ماهانه سایت و اینستاگرام</p></div>
+            <div class="social-tv-score"><strong id="svLeadTotal">—</strong><small>لید کل ماه</small></div>
+          </div>
+          <div class="social-tv-lead-split">
+            <div class="social-tv-lead-stat site"><span>🌐 وب‌سایت</span><strong id="svLeadSite">—</strong><small>لید معتبر سایت</small></div>
+            <div class="social-tv-lead-stat ig"><span>📷 اینستاگرام</span><strong id="svLeadInstagram">—</strong><small>لید معتبر اینستاگرام</small></div>
+          </div>
+        </section>
+        <section class="social-tv-card social-tv-mgmt social-tv-mgmt-compact" aria-label="امتیاز کل مدیریت">
+          <div class="social-tv-card-head">
+            <div><span class="social-tv-kicker">MANAGEMENT</span><h3>مدیریت دپارتمان</h3></div>
+          </div>
+          <div class="social-tv-mgmt-only"><strong id="svMgmtScore">—</strong><span>از ۲۰ امتیاز</span></div>
+        </section>
+      </div>
     </div>
     <div class="social-tv-foot" id="svSource">نمایش آنلاین داده‌های Google Sheets</div>
   </div>
@@ -1486,22 +1560,18 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
 function renderSocial(s){
   var t=s.t,b=monthlyBase(data.month),rankActual=num(data.seoRankActual,0)||num(data.monthlyRank,0),vpct=progressPct(data.views,b.views,t.views),fpct=progressPct(data.followers,b.followers,t.followers),nr=ratio(percentPoints(data.nonFollower),percentPoints(t.nonFollower));
   var viewsScore=progressScore(data.views,b.views,t.views,7.5),nonFollowerScore=Math.min(2.5,Math.max(0,2.5*nr)),followersScore=progressScore(data.followers,b.followers,t.followers,10),rankScore=rankActual>0?progressScore(rankActual,b.rank,t.rank,20):0;
-  var igScore=viewsScore+nonFollowerScore+followersScore,keys=['Content','Projects','Website','Design','Reporting'],vals=[data.content,data.projects,data.website,data.design,data.reporting],weights=[6,5,3,3,3],i,earned;
+  var igScore=viewsScore+nonFollowerScore+followersScore,siteLeads=num(data.seoWebLeads,-1),instagramLeads=siteLeads>=0&&data.leads>=siteLeads?data.leads-siteLeads:-1;
   setText('svMonth',data.month);
   setText('svVisibilityScore',fa(s.visibility));setText('svIgScore',fa(igScore));setText('svSeoRankScore',fa(rankScore));
   setText('svViews',faInt(data.views));setText('svViewsTarget','مبنا '+faCompact(b.views)+' · هدف '+faCompact(t.views));setText('svViewsPct',faPercent(vpct));setText('svViewsScore',fa(viewsScore));setText('svViewsUnit','هر ۱۰۰۰ ویو رشد = '+faFixed(7500/(t.views-b.views),3)+' امتیاز');setWidth('svViewsBar',vpct);
   setText('svFollowers',faInt(data.followers));setText('svFollowersTarget','مبنا '+faInt(b.followers)+' · هدف '+faInt(t.followers));setText('svFollowersPct',faPercent(fpct));setText('svFollowersScore',fa(followersScore));setText('svFollowersUnit','هر فالوور بالای مبنا = '+faFixed(10/(t.followers-b.followers),4)+' امتیاز');setWidth('svFollowersBar',fpct);
   setText('svNonFollower',faPercent(percentPoints(data.nonFollower)));setText('svNonFollowerTarget','هدف '+faPercent(percentPoints(t.nonFollower)));setText('svNonFollowerPct',faPercent(nr*100));setText('svNonFollowerScore',fa(nonFollowerScore));setText('svNonFollowerUnit','هر ۱ واحد درصد = '+faFixed(2.5/percentPoints(t.nonFollower),3)+' امتیاز (حداکثر ۲٫۵)');setWidth('svNonFollowerBar',nr*100);
   setText('svRank',rankActual>0?fa(rankActual):'—');setText('svRankTarget','مبنا '+fa(b.rank)+' · هدف '+fa(t.rank));setText('svRankPct',rankActual>0?faPercent(progressPct(rankActual,b.rank,t.rank)):'—');setText('svRankScore',rankActual>0?fa(rankScore):'—');setText('svRankUnit','هر ۱ رتبه بهبود = '+faFixed(20/(b.rank-t.rank),2)+' امتیاز');setWidth('svRankBar',rankActual>0?progressPct(rankActual,b.rank,t.rank):0);
-  setText('svMgmtScore',fa(s.mgmt));setText('svMgmtPct',faPercent(s.mgmt/20*100));
-  for(i=0;i<keys.length;i++){
-    earned=clamp(num(vals[i],0),0,100)/100*weights[i];
-    setText('sv'+keys[i]+'Score',fa(earned)+' / '+faInt(weights[i]));
-    setText('sv'+keys[i]+'Pct',faPercent(num(vals[i],0)));
-    setText('sv'+keys[i]+'Unit','هر ۱٪ اجرا = '+faFixed(weights[i]/100,2)+' امتیاز');
-    setWidth('sv'+keys[i]+'Bar',num(vals[i],0));
-  }
-  setText('svSource',data.totalScoreDirect>=0?'Google Sheets · جزئیات دیده‌شدن و مدیریت · ماه '+data.month:'داده اولیه؛ در انتظار همگام‌سازی گوگل‌شیت');
+  setText('svLeadTotal',faInt(data.leads));
+  setText('svLeadSite',siteLeads>=0?faInt(siteLeads):'—');
+  setText('svLeadInstagram',instagramLeads>=0?faInt(instagramLeads):'—');
+  setText('svMgmtScore',fa(s.mgmt));
+  setText('svSource',data.totalScoreDirect>=0?'Google Sheets · دیده‌شدن، لید و مدیریت · ماه '+data.month:'داده اولیه؛ در انتظار همگام‌سازی گوگل‌شیت');
 }
 
 function tick(){setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d);setText('svDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%3)+3)%3;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(document.body,'show-social',currentPage===2);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1);toggleClass(by('dot2'),'active',currentPage===2)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
