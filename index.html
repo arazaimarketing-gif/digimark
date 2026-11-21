@@ -1144,6 +1144,10 @@ body.show-social .social-tv-page{opacity:1;visibility:visible;pointer-events:aut
   .social-tv-leads .social-tv-lead-stat strong{font-size:33px;margin-top:3px}
 }
 
+
+/* Azar 1405: preserve Aban art; switch using Tehran calendar */
+html.tv-azar .scene,html.tv-azar .detail-page .detail-bg,html.tv-azar .detail-page.mehr-neutral .detail-bg{background-image:url('assets/background-azar-1405.png')!important;}
+html.tv-azar .social-tv-bg{background-image:linear-gradient(110deg,rgba(9,23,35,.92),rgba(25,29,32,.89)),url('assets/background-azar-1405.png')!important;}
 </style>
 </head>
 <body>
@@ -1585,7 +1589,7 @@ function renderSocial(s){
   setText('svSource',data.totalScoreDirect>=0?'Google Sheets · دیده‌شدن، لید و مدیریت · ماه '+data.month:'داده اولیه؛ در انتظار همگام‌سازی گوگل‌شیت');
 }
 
-function tick(){setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d);setText('svDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%3)+3)%3;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(document.body,'show-social',currentPage===2);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1);toggleClass(by('dot2'),'active',currentPage===2)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
+function tick(){var j=jalaliNow(),root=document.documentElement,azar=(j[0]===1405&&j[1]>=9);if(hasClass(root,'tv-azar')!==azar)toggleClass(root,'tv-azar',azar);setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d);setText('svDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%3)+3)%3;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(document.body,'show-social',currentPage===2);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1);toggleClass(by('dot2'),'active',currentPage===2)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
 
   /* Internet radio streams only; no local music dependencies */
   /* V36: Persian Radio Faaz replaces Vanilla; V35 Internet radio trial. Direct HTTPS MP3, no iframe, scripts or account needed.
