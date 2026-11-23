@@ -492,6 +492,19 @@
   }
 
 
+  /* TV-only historical month selector */
+  .tv-month-picker{position:fixed;left:2vw;bottom:8.3vh;z-index:150;direction:rtl;font-family:Tahoma,Arial,sans-serif}
+  .tv-month-trigger{min-height:39px;border:1px solid rgba(253,192,0,.57);border-radius:999px;padding:7px 15px;background:rgba(8,16,28,.83);color:#fff;font:700 12px Tahoma,Arial,sans-serif;cursor:pointer;box-shadow:0 7px 19px rgba(0,0,0,.25)}
+  .tv-month-trigger b{color:#FDC000;font-size:14px}
+  .tv-month-panel{display:none;position:absolute;bottom:calc(100% + 10px);left:0;width:240px;max-width:90vw;padding:13px;background:rgba(7,16,27,.97);border:1px solid rgba(253,192,0,.48);border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.4)}
+  .tv-month-panel.open{display:block}
+  .tv-month-panel h3{font:700 14px Tahoma,Arial,sans-serif;color:#FDC000;margin:0 0 10px}
+  .tv-month-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+  .tv-month-option,.tv-month-current{border:1px solid rgba(253,192,0,.32);background:rgba(255,255,255,.09);color:#fff;font:700 13px Tahoma,Arial,sans-serif;min-height:38px;border-radius:9px;cursor:pointer}
+  .tv-month-option.active{background:rgba(253,192,0,.30);border-color:#FDC000;color:#fff2bd}
+  .tv-month-current{display:block;width:100%;margin-top:9px;background:rgba(92,242,166,.14);border-color:rgba(92,242,166,.5)}
+  .tv-month-caption{font-size:10px;line-height:1.7;color:#b9c7d2;margin:9px 1px 0}
+  @media(max-width:900px){.tv-month-picker{bottom:8vh;left:1.5vw}.tv-month-trigger{font-size:11px;padding:6px 10px}.tv-month-panel{width:220px}}
   /* Internet radio only: no local music assets or playlists */
   .radio-player{position:fixed;z-index:95;right:2vw;bottom:1.6vh;display:flex;align-items:center;direction:rtl;padding:6px;border-radius:999px;background:rgba(8,16,28,.62);border:1px solid rgba(253,192,0,.28);box-shadow:0 6px 18px rgba(0,0,0,.22)}
   .radio-launch-button{border:0;border-radius:999px;color:#fff;padding:7px 16px;min-height:34px;font-size:13px;font-family:Tahoma,Arial,sans-serif;cursor:pointer}
@@ -1413,6 +1426,22 @@ html.tv-azar .social-tv-bg{background-image:linear-gradient(110deg,rgba(9,23,35,
     <div class="social-tv-foot" id="svSource">نمایش آنلاین داده‌های Google Sheets</div>
   </div>
 </div>
+<div class="tv-month-picker" id="tvMonthPicker">
+  <button class="tv-month-trigger" id="tvMonthTrigger" type="button" aria-expanded="false" aria-controls="tvMonthPanel">🗓 نمایش ماه: <b id="tvMonthLabel">آذر</b> ▾</button>
+  <div class="tv-month-panel" id="tvMonthPanel">
+    <h3>نمایش آرشیو TV · سال ۱۴۰۵</h3>
+    <div class="tv-month-grid" id="tvMonthGrid">
+      <button class="tv-month-option" data-tv-month="مهر" type="button">مهر</button>
+      <button class="tv-month-option" data-tv-month="آبان" type="button">آبان</button>
+      <button class="tv-month-option" data-tv-month="آذر" type="button">آذر</button>
+      <button class="tv-month-option" data-tv-month="دی" type="button">دی</button>
+      <button class="tv-month-option" data-tv-month="بهمن" type="button">بهمن</button>
+      <button class="tv-month-option" data-tv-month="اسفند" type="button">اسفند</button>
+    </div>
+    <button class="tv-month-current" id="tvMonthCurrent" type="button">↻ بازگشت به ماه جاری</button>
+    <p class="tv-month-caption">فقط ماه نمایش TV تغییر می‌کند؛ شیت‌های KPI و پاداش دست‌نخورده می‌مانند.</p>
+  </div>
+</div>
 <div class="radio-player" title="رادیوهای اینترنتی">
   <button class="radio-launch-button radio-test-launch" id="radioTestLaunch" type="button">رادیو آنلاین</button>
 </div>
@@ -1515,9 +1544,9 @@ html.tv-azar .social-tv-bg{background-image:linear-gradient(110deg,rgba(9,23,35,
   function pad2(n){return n<10?'0'+n:String(n)}
   function formatTime(){var d=tehranDate();return pdigits(pad2(d.getUTCHours())+':'+pad2(d.getUTCMinutes())+':'+pad2(d.getUTCSeconds()))}
   function formatDate(){var d=tehranDate(),j=jalaliNow(),wd=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'][d.getUTCDay()];return wd+'، '+pdigits(j[2])+' '+months[j[1]-1]+' '+pdigits(j[0])}
-  function load(){var o={};try{o=JSON.parse(localStorage.getItem('pascal_kpi_v2')||localStorage.getItem('pascal_kpi_v1')||'{}')||{}}catch(e){}return merge(defaults,o)}var data=load(),dm=detectedPersianMonth();if(dm)data.month=dm;function save(){try{localStorage.setItem('pascal_kpi_v2',JSON.stringify(data))}catch(e){}}
+  function load(){var o={};try{o=JSON.parse(localStorage.getItem('pascal_kpi_v2')||localStorage.getItem('pascal_kpi_v1')||'{}')||{}}catch(e){}return merge(defaults,o)}var data=load(),dm=detectedPersianMonth(),tvMonthOverride=null,tvMonthlyPayload=null;if(dm)data.month=dm;function save(){try{localStorage.setItem('pascal_kpi_v2',JSON.stringify(data))}catch(e){}}
   function setText(id,val){var el=by(id);if(el)el.innerHTML=String(val)}function setWidth(id,val){var el=by(id);if(el)el.style.width=clamp(val,0,100)+'%'}function setSyncState(state,label){var b=by('syncBadge'),t=by('syncText');if(!b||!t)return;removeClass(b,'ok');removeClass(b,'error');removeClass(b,'syncing');addClass(b,state);t.innerHTML=label}
-  function applyGooglePayload(payload,fromCache){var i,row,wanted,t,af,wr,idx;if(!payload||!payload.monthly||!payload.monthly.length)throw new Error('Invalid payload');for(i=0;i<payload.monthly.length;i++){var pr=payload.monthly[i],pm=normalMonth(pr.month),pt=targets[pm];if(!pt)continue;pt.views=num(pr.target_reel_views,pt.views);pt.rank=num(pr.target_avg_rank_72,pt.rank);var pf=num(pr.followers_outcome_target,0);if(pf>0)pt.followers=pf}wanted=detectedPersianMonth()||data.month||'مهر';row=null;for(i=0;i<payload.monthly.length;i++){if(normalMonth(payload.monthly[i].month)===normalMonth(wanted)){row=payload.monthly[i];break}}if(!row)throw new Error('Month not found');t=targets[wanted]||targets['مهر'];t.views=num(row.target_reel_views,t.views);t.median=num(row.target_median_7d,t.median);t.nonFollower=percentPoints(row.target_non_follower!=null?row.target_non_follower:t.nonFollower);t.leads=num(row.target_leads,t.leads);t.clicks=num(row.target_clicks,t.clicks);t.rank=num(row.target_avg_rank_72,t.rank);if(num(row.followers_outcome_target,0)>0)t.followers=num(row.followers_outcome_target,t.followers);data.month=wanted;data.views=num(row.reel_views,0);data.median=num(row.median_7d,0);data.nonFollower=percentPoints(row.non_follower);data.nonFollowerReach=num(row.non_follower_reach,0);data.followersGained=num(row.followers_gained,0);data.reels=num(row.reels_published,0);data.sharesPer1k=num(row.shares_per_1k,0);data.savesPer1k=num(row.saves_per_1k,0);data.leads=num(row.leads,0);data.monthlyImpressions=num(row.impressions,0);data.monthlyClicks=num(row.clicks,0);data.monthlyCTR=num(row.ctr,0);if(data.monthlyCTR>0&&data.monthlyCTR<1)data.monthlyCTR=data.monthlyCTR*100;data.monthlyRank=num(row.avg_rank_72,0);data.content=num(row.mgmt_content,0);data.projects=num(row.mgmt_projects,0);data.website=num(row.mgmt_website,0);data.design=num(row.mgmt_design,0);data.reporting=num(row.mgmt_reporting,0);data.visibilityScore=num(row.visibility_score_40!=null?row.visibility_score_40:row.visibility_score_35,-1);data.leadScoreDirect=num(row.lead_score_40,-1);data.mgmtScoreDirect=num(row.mgmt_score_20!=null?row.mgmt_score_20:row.mgmt_score_25,-1);data.totalScoreDirect=num(row.total_score_100,-1);
+  function applyGooglePayload(payload,fromCache){var i,row,wanted,t,af,wr,idx;if(!payload||!payload.monthly||!payload.monthly.length)throw new Error('Invalid payload');for(i=0;i<payload.monthly.length;i++){var pr=payload.monthly[i],pm=normalMonth(pr.month),pt=targets[pm];if(!pt)continue;pt.views=num(pr.target_reel_views,pt.views);pt.rank=num(pr.target_avg_rank_72,pt.rank);var pf=num(pr.followers_outcome_target,0);if(pf>0)pt.followers=pf}wanted=tvMonthOverride||detectedPersianMonth()||data.month||'مهر';row=null;for(i=0;i<payload.monthly.length;i++){if(normalMonth(payload.monthly[i].month)===normalMonth(wanted)){row=payload.monthly[i];break}}if(!row)throw new Error('Month not found');tvMonthlyPayload=payload;t=targets[wanted]||targets['مهر'];t.views=num(row.target_reel_views,t.views);t.median=num(row.target_median_7d,t.median);t.nonFollower=percentPoints(row.target_non_follower!=null?row.target_non_follower:t.nonFollower);t.leads=num(row.target_leads,t.leads);t.clicks=num(row.target_clicks,t.clicks);t.rank=num(row.target_avg_rank_72,t.rank);if(num(row.followers_outcome_target,0)>0)t.followers=num(row.followers_outcome_target,t.followers);data.month=wanted;data.views=num(row.reel_views,0);data.median=num(row.median_7d,0);data.nonFollower=percentPoints(row.non_follower);data.nonFollowerReach=num(row.non_follower_reach,0);data.followersGained=num(row.followers_gained,0);data.reels=num(row.reels_published,0);data.sharesPer1k=num(row.shares_per_1k,0);data.savesPer1k=num(row.saves_per_1k,0);data.leads=num(row.leads,0);data.monthlyImpressions=num(row.impressions,0);data.monthlyClicks=num(row.clicks,0);data.monthlyCTR=num(row.ctr,0);if(data.monthlyCTR>0&&data.monthlyCTR<1)data.monthlyCTR=data.monthlyCTR*100;data.monthlyRank=num(row.avg_rank_72,0);data.content=num(row.mgmt_content,0);data.projects=num(row.mgmt_projects,0);data.website=num(row.mgmt_website,0);data.design=num(row.mgmt_design,0);data.reporting=num(row.mgmt_reporting,0);data.visibilityScore=num(row.visibility_score_40!=null?row.visibility_score_40:row.visibility_score_35,-1);data.leadScoreDirect=num(row.lead_score_40,-1);data.mgmtScoreDirect=num(row.mgmt_score_20!=null?row.mgmt_score_20:row.mgmt_score_25,-1);data.totalScoreDirect=num(row.total_score_100,-1);
  data.seoWebTarget=num(row.seo_web_target,0);
  data.seoWebSales=row.seo_web_sales==null||row.seo_web_sales===''?-1:num(row.seo_web_sales,-1);
  data.seoWebRelated=row.seo_web_related==null||row.seo_web_related===''?-1:num(row.seo_web_related,-1);
@@ -1589,8 +1618,21 @@ function renderSocial(s){
   setText('svSource',data.totalScoreDirect>=0?'Google Sheets · دیده‌شدن، لید و مدیریت · ماه '+data.month:'داده اولیه؛ در انتظار همگام‌سازی گوگل‌شیت');
 }
 
-function tick(){var j=jalaliNow(),root=document.documentElement,azar=(j[0]===1405&&j[1]>=9);if(hasClass(root,'tv-azar')!==azar)toggleClass(root,'tv-azar',azar);setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d);setText('svDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%3)+3)%3;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(document.body,'show-social',currentPage===2);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1);toggleClass(by('dot2'),'active',currentPage===2)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
+function tick(){var j=jalaliNow(),root=document.documentElement,azar=(['آذر','دی','بهمن','اسفند'].indexOf(data.month)>=0);if(hasClass(root,'tv-azar')!==azar)toggleClass(root,'tv-azar',azar);setText('time',formatTime());var d=formatDate();setText('date',d);setText('detailDate',d);setText('svDate',d)}var currentPage=0,ROTATE_MS=600000,rotateTimer=null;function setPage(i){currentPage=((i%3)+3)%3;toggleClass(document.body,'show-detail',currentPage===1);toggleClass(document.body,'show-social',currentPage===2);toggleClass(by('dot0'),'active',currentPage===0);toggleClass(by('dot1'),'active',currentPage===1);toggleClass(by('dot2'),'active',currentPage===2)}function nextPage(){setPage(currentPage+1)}function prevPage(){setPage(currentPage-1)}function restartRotation(){if(rotateTimer)clearInterval(rotateTimer);rotateTimer=setInterval(nextPage,ROTATE_MS)}function manualPage(i){setPage(i);restartRotation()}
 
+  /* TV-only month archive. All three TV slides read the chosen month. */
+  function updateTvMonthUi(){
+    var current=tvMonthOverride||detectedPersianMonth()||data.month,grid=by('tvMonthGrid'),btns=grid?grid.getElementsByTagName('button'):[],i,active;
+    setText('tvMonthLabel',current);
+    for(i=0;i<btns.length;i++){active=btns[i].getAttribute('data-tv-month')===current;toggleClass(btns[i],'active',active);btns[i].setAttribute('aria-pressed',active?'true':'false')}
+    if(by('tvMonthCurrent'))by('tvMonthCurrent').disabled=!tvMonthOverride;
+  }
+  function closeTvMonthPanel(){removeClass(by('tvMonthPanel'),'open');if(by('tvMonthTrigger'))by('tvMonthTrigger').setAttribute('aria-expanded','false')}
+  function chooseTvMonth(m){tvMonthOverride=m||null;closeTvMonthPanel();updateTvMonthUi();if(tvMonthlyPayload){applyGooglePayload(tvMonthlyPayload,true)}else{syncGoogleSheet()}tick()}
+  if(by('tvMonthTrigger'))by('tvMonthTrigger').onclick=function(){var panel=by('tvMonthPanel'),open=!hasClass(panel,'open');toggleClass(panel,'open',open);this.setAttribute('aria-expanded',open?'true':'false')};
+  if(by('tvMonthGrid'))by('tvMonthGrid').onclick=function(e){var t=e.target||e.srcElement;while(t&&t!==this&&!t.getAttribute('data-tv-month'))t=t.parentNode;if(t&&t!==this)chooseTvMonth(t.getAttribute('data-tv-month'))};
+  if(by('tvMonthCurrent'))by('tvMonthCurrent').onclick=function(){chooseTvMonth(null)};
+  updateTvMonthUi();
   /* Internet radio streams only; no local music dependencies */
   /* V36: Persian Radio Faaz replaces Vanilla; V35 Internet radio trial. Direct HTTPS MP3, no iframe, scripts or account needed.
      HTMLMediaElement works without CORS for ordinary playback on Samsung TV. */
