@@ -752,12 +752,6 @@
   .radio-local-btn{width:100%;margin-top:8px;font-size:13px}
   .radio-test-status{min-height:41px;padding:9px 11px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-size:12px;line-height:1.8;display:block}
   @media screen and (max-width:1100px){.radio-test-panel{right:1.5vw;bottom:8vh;width:365px}.radio-test-title{font-size:16px}.radio-station-btn{font-size:13px}}
-  .radiomusic-layer{display:none;position:fixed;z-index:160;top:0;right:0;bottom:0;left:0;background:rgba(3,8,14,.84);align-items:center;justify-content:center;direction:rtl}
-  .radiomusic-layer.open{display:flex}
-  .radiomusic-box{display:flex;flex-direction:column;width:94vw;max-width:1120px;height:84vh;min-height:350px;box-sizing:border-box;padding:10px;border:1px solid rgba(253,192,0,.55);border-radius:15px;background:#09111a;box-shadow:0 26px 70px rgba(0,0,0,.7);overflow:hidden}
-  .radiomusic-header{display:flex;align-items:center;justify-content:space-between;padding:5px 10px 10px;color:#FDC000;font-weight:700;font-size:16px}
-  .radiomusic-note{font-size:12px;color:#d7e0eb;padding:2px 10px 10px;line-height:1.5}
-  @media screen and (max-width:750px){.radiomusic-box{height:90vh;width:98vw;padding:6px}.radiomusic-header{font-size:14px}.radiomusic-note{font-size:11px}}
 .v36-followers{margin-top:10px!important;padding:9px 12px!important;display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:6px 12px!important}.v36-followers span{flex:1!important;min-width:165px}.v36-followers strong{font-size:26px!important;margin:0!important}.v36-followers em{width:100%}
 
 /* V38 Samsung TV compatibility. Use the same flexbox supported by older Tizen browsers.
@@ -1465,20 +1459,9 @@ html.tv-azar .social-tv-bg{background-image:linear-gradient(110deg,rgba(9,23,35,
   <div class="radio-test-actions">
     <button class="radio-station-btn" id="testDeepNova" type="button">▶ DeepNova · Deep House</button>
     <button class="radio-station-btn" id="testGroove" type="button">▶ Groove Salad · آرامش‌بخش</button>
-    <button class="radio-station-btn" id="testRadioMusic" type="button" title="پخش RadioMusic داخل داشبورد">▶ RadioMusic · موزیک فارسی</button>
   </div>
   <span class="radio-test-status" id="radioTestStatus" role="status" aria-live="polite">در حال تلاش برای پخش خودکار DeepNova ...</span>
   <button class="radio-station-btn radio-local-btn" id="radioBackToLocal" type="button">■ قطع رادیو</button>
-</div>
-<div id="radioMusicLayer" class="radiomusic-layer" role="dialog" aria-modal="true" aria-label="پخش RadioMusic در داشبورد" aria-hidden="true">
-  <div class="radiomusic-box">
-    <div class="radiomusic-header">
-      <span>RadioMusic · پخش در داشبورد</span>
-      <button type="button" id="radioMusicClose" class="radio-close" aria-label="بستن پخش RadioMusic">×</button>
-    </div>
-    <div class="radiomusic-note">برای شروع پخش، دکمه پخش داخل سایت را بزنید. اگر محتوای سایت نشان داده نشد، ممکن است نمایش در پنجره داخلی را مسدود کرده باشد.</div>
-    <iframe id="radioMusicFrame" title="پخش‌کننده RadioMusic" allow="autoplay; encrypted-media" loading="lazy" style="display:block;width:100%;flex:1;min-height:0;border:0;background:#fff"></iframe>
-  </div>
 </div>
 
 <div class="page-nav" id="pageNav" title="تغییر اسلاید">
@@ -1655,7 +1638,7 @@ function tick(){var j=jalaliNow(),root=document.documentElement,azar=(['آذر',
   if(by('tvMonthCurrent'))by('tvMonthCurrent').onclick=function(){chooseTvMonth(null)};
   updateTvMonthUi();
   /* Internet radio streams only; no local music dependencies */
-  /* Direct audio: DeepNova and SomaFM Groove Salad; RadioMusic uses an in-dashboard embedded site. */
+  /* Direct audio streams: DeepNova and SomaFM Groove Salad. */
   var RADIO_CHANNELS={
     deepnova:{name:'DeepNova',url:'https://a8.asurahosting.com:8820/radio.mp3'},
     groove:{name:'Groove Salad',url:'https://ice5.somafm.com/groovesalad-128-mp3'}
@@ -1671,21 +1654,6 @@ function tick(){var j=jalaliNow(),root=document.documentElement,azar=(['آذر',
     if(radioLaunch)radioLaunch.textContent=radioActive&&radioReady?'رادیو: '+RADIO_CHANNELS[radioActive].name:'رادیو آنلاین';
   }
   function closeRadioPanel(){removeClass(radioPanel,'open')}
-  function closeRadioMusic(){
-    var layer=by('radioMusicLayer'),frame=by('radioMusicFrame');
-    if(layer){removeClass(layer,'open');layer.setAttribute('aria-hidden','true')}
-    if(frame)frame.removeAttribute('src');
-  }
-  function openRadioMusic(){
-    var layer=by('radioMusicLayer'),frame=by('radioMusicFrame');
-    if(!layer||!frame)return;
-    stopRadio();
-    closeRadioPanel();
-    frame.src='https://radiomusic.app/';
-    addClass(layer,'open');
-    layer.setAttribute('aria-hidden','false');
-    radioMessage('RadioMusic داخل داشبورد باز شد. برای پخش، کنترل‌های داخل سایت را بزن.');
-  }
   function stopRadio(){
     if(radioTimeout){clearTimeout(radioTimeout);radioTimeout=null}
     radioActive='';radioReady=false;radioAutoplayBlocked=false;
@@ -1699,7 +1667,6 @@ function tick(){var j=jalaliNow(),root=document.documentElement,azar=(['آذر',
     radioMessage(msg+' — می‌توانید رادیوی دیگر را امتحان کنید.');
   }
   function startRadio(id,isAutoplay){
-    closeRadioMusic();
     var channel=RADIO_CHANNELS[id],r;
     if(!channel||!radioAudio)return;
     if(radioTimeout){clearTimeout(radioTimeout);radioTimeout=null}
@@ -1731,10 +1698,6 @@ function tick(){var j=jalaliNow(),root=document.documentElement,azar=(['آذر',
   if(by('radioTestClose'))by('radioTestClose').onclick=closeRadioPanel;
   if(by('testDeepNova'))by('testDeepNova').onclick=function(){startRadio('deepnova',false)};
    if(by('testGroove'))by('testGroove').onclick=function(){startRadio('groove',false)};
-   if(by('testRadioMusic'))by('testRadioMusic').onclick=openRadioMusic;
-   if(by('radioMusicClose'))by('radioMusicClose').onclick=closeRadioMusic;
-   if(by('radioMusicLayer'))by('radioMusicLayer').onclick=function(e){if(e.target===this)closeRadioMusic()};
-   document.addEventListener('keydown',function(e){if(e.key==='Escape'||e.keyCode===27)closeRadioMusic()});
    if(by('radioUnlock'))by('radioUnlock').onclick=function(){startRadio('deepnova',false)};
   if(by('radioBackToLocal'))by('radioBackToLocal').onclick=function(){stopRadio()};
   radioUi();
