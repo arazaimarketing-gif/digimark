@@ -1459,10 +1459,9 @@ html.tv-azar .social-tv-bg{background-image:linear-gradient(110deg,rgba(9,23,35,
   <div class="radio-test-actions">
     <button class="radio-station-btn" id="testDeepNova" type="button">▶ DeepNova · Deep House</button>
     <button class="radio-station-btn" id="testGroove" type="button">▶ Groove Salad · آرامش‌بخش</button>
-    <button class="radio-station-btn" id="testRemix" type="button">▶ Remix Bazaar · ریمیکس فارسی</button>
+    <a class="radio-station-btn" id="testRadioMusic" href="https://radiomusic.app/" target="_blank" rel="noopener noreferrer" title="باز کردن RadioMusic در تب جدید" style="display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center">↗ RadioMusic · موزیک فارسی</a>
   </div>
   <span class="radio-test-status" id="radioTestStatus" role="status" aria-live="polite">در حال تلاش برای پخش خودکار DeepNova ...</span>
-  <a id="radioRemixLink" class="radio-station-btn" href="https://atlasbeats.ir/radio?ch=remix-bazaar" target="_blank" rel="noopener noreferrer" style="display:none;text-align:center;text-decoration:none;margin-top:8px">↗ باز کردن ریمیکس بازار در سایت اصلی</a>
   <button class="radio-station-btn radio-local-btn" id="radioBackToLocal" type="button">■ قطع رادیو</button>
 </div>
 
@@ -1640,19 +1639,17 @@ function tick(){var j=jalaliNow(),root=document.documentElement,azar=(['آذر',
   if(by('tvMonthCurrent'))by('tvMonthCurrent').onclick=function(){chooseTvMonth(null)};
   updateTvMonthUi();
   /* Internet radio streams only; no local music dependencies */
-  /* Internet radio: DeepNova, SomaFM chill and AtlasBeats remixes. */
+  /* Direct audio: DeepNova and SomaFM Groove Salad; RadioMusic opens its official website. */
   var RADIO_CHANNELS={
     deepnova:{name:'DeepNova',url:'https://a8.asurahosting.com:8820/radio.mp3'},
-    groove:{name:'Groove Salad',url:'https://ice5.somafm.com/groovesalad-128-mp3'},
-    remix:{name:'Remix Bazaar',url:'https://atlasbeats.ir/radio/remix-bazaar.mp3',web:'https://atlasbeats.ir/radio?ch=remix-bazaar'}
+    groove:{name:'Groove Salad',url:'https://ice5.somafm.com/groovesalad-128-mp3'}
   };
   var radioAudio=by('radioTestAudio'),radioLaunch=by('radioTestLaunch'),radioPanel=by('radioTestPanel');
-  var radioStatus=by('radioTestStatus'),radioActive='',radioReady=false,radioTimeout=null,radioAutoplayBlocked=false,radioRemixRetried=false;
+  var radioStatus=by('radioTestStatus'),radioActive='',radioReady=false,radioTimeout=null,radioAutoplayBlocked=false;
   function radioMessage(msg){if(radioStatus)radioStatus.textContent=msg}
   function radioUi(){
     toggleClass(by('testDeepNova'),'active',radioActive==='deepnova');
     toggleClass(by('testGroove'),'active',radioActive==='groove');
-    toggleClass(by('testRemix'),'active',radioActive==='remix');
     toggleClass(by('radioUnlock'),'visible',radioAutoplayBlocked);
     toggleClass(radioLaunch,'online',!!radioActive&&radioReady);
     if(radioLaunch)radioLaunch.textContent=radioActive&&radioReady?'رادیو: '+RADIO_CHANNELS[radioActive].name:'رادیو آنلاین';
@@ -1667,35 +1664,23 @@ function tick(){var j=jalaliNow(),root=document.documentElement,azar=(['آذر',
   }
   function radioFail(msg){
     if(!radioActive)return;
-    if(radioActive==='remix'&&!radioRemixRetried){
-      radioRemixRetried=true;
-      startRadio('remix',false,true);
-      radioMessage('اتصال ریمیکس بازار برقرار نشد؛ تلاش مجدد با بارگذاری تازه ...');
-      return;
-    }
-    var failedRemix=radioActive==='remix';
     stopRadio();
-    if(failedRemix){
-      radioMessage(msg+' — سرور ریمیکس بازار پاسخ نداد؛ از لینک پخش مستقیم زیر استفاده کن.');
-      if(by('radioRemixLink'))by('radioRemixLink').style.display='block';
-    }else radioMessage(msg+' — می‌توانید رادیوی دیگر را امتحان کنید.');
+    radioMessage(msg+' — می‌توانید رادیوی دیگر را امتحان کنید.');
   }
-  function startRadio(id,isAutoplay,retrying){
+  function startRadio(id,isAutoplay){
     var channel=RADIO_CHANNELS[id],r;
-    if(!retrying)radioRemixRetried=false;
-    if(by('radioRemixLink'))by('radioRemixLink').style.display='none';
     if(!channel||!radioAudio)return;
     if(radioTimeout){clearTimeout(radioTimeout);radioTimeout=null}
     radioActive=id;radioReady=false;radioAutoplayBlocked=false;
     radioMessage('در حال اتصال به '+channel.name+' ... چند ثانیه صبر کن.');
     try{
-      radioAudio.pause();radioAudio.src=channel.url+(retrying?'?retry='+Date.now():'');radioAudio.load();radioUi();
+      radioAudio.pause();radioAudio.src=channel.url;radioAudio.load();radioUi();
       r=radioAudio.play();
       if(r&&typeof r.catch==='function')r.catch(function(e){if(radioActive!==id)return;
         if(isAutoplay&&e&&e.name==='NotAllowedError'){radioAutoplayBlocked=true;if(radioTimeout){clearTimeout(radioTimeout);radioTimeout=null}radioMessage('پخش خودکار توسط مرورگر مسدود شد؛ یک‌بار روی «شروع صدای DeepNova» بزن.');radioUi();return}
         radioFail('مرورگر اجازه پخش نداد یا اتصال برقرار نشد')});
     }catch(e){radioFail('مرورگر تلویزیون امکان پخش این استریم را نداشت');return}
-    if(!radioAutoplayBlocked)radioTimeout=setTimeout(function(){if(radioActive===id&&!radioReady)radioFail('اتصال رادیو برقرار نشد')},retrying?20000:15000);
+    if(!radioAutoplayBlocked)radioTimeout=setTimeout(function(){if(radioActive===id&&!radioReady)radioFail('اتصال رادیو برقرار نشد')},15000);
   }
   if(radioAudio){
     radioAudio.addEventListener('playing',function(){
@@ -1714,7 +1699,7 @@ function tick(){var j=jalaliNow(),root=document.documentElement,azar=(['آذر',
   if(by('radioTestClose'))by('radioTestClose').onclick=closeRadioPanel;
   if(by('testDeepNova'))by('testDeepNova').onclick=function(){startRadio('deepnova',false)};
    if(by('testGroove'))by('testGroove').onclick=function(){startRadio('groove',false)};
-   if(by('testRemix'))by('testRemix').onclick=function(){startRadio('remix',false)};
+   if(by('testRadioMusic'))by('testRadioMusic').onclick=function(){stopRadio();radioMessage('RadioMusic در تب جدید باز شد؛ پخش را از سایت انتخاب کن.')}
    if(by('radioUnlock'))by('radioUnlock').onclick=function(){startRadio('deepnova',false)};
   if(by('radioBackToLocal'))by('radioBackToLocal').onclick=function(){stopRadio()};
   radioUi();
